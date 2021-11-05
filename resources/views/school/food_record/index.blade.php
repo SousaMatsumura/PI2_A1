@@ -25,5 +25,5 @@
     <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('vendor/datatables/dataTables.defaults.js') }}"></script>
-    <script src="{{ asset('js/school/inventory/index.js') }}"></script>
+    <script src="{{ asset('js/school/food_records/index.js') }}"></script>
 @endpush

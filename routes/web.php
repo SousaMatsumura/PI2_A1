@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\School\{
     Dashboard\DashboardController as SchoolDashboardController,
-    Inventory\InventoryController as SchoolInventoryController,
+    FoodRecord\FoodRecordController as SchoolFoodRecordControllerController,
     Consumption\ConsumptionController as SchoolConsumptionController
 };
 use App\Http\Controllers\Secretary\Dashboard\DashboardController as SecretaryDashboardController;
@@ -19,7 +19,7 @@ Route::middleware('auth')->group(function(){
 
     Route::middleware('institution.type:SCHOOL')->prefix('escola')->group(function(){
         Route::get('painel', [SchoolDashboardController::class, 'index'])->name('school.dashboard.index');
-        Route::get('estoque', [SchoolInventoryController::class, 'index'])->name('school.inventory.index');
+        Route::get('estoque', [SchoolFoodRecordControllerController::class, 'index'])->name('school.food_record.index');
         Route::get('consumos', [SchoolConsumptionController::class, 'index'])->name('school.consumption.index');
         Route::get('consumo/cadastrar', [SchoolConsumptionController::class, 'create'])->name('school.consumption.create');
         Route::post('consumo/cadastrar', [SchoolConsumptionController::class, 'store'])->name('school.consumption.store');
@@ -35,15 +35,11 @@ Route::middleware('auth')->group(function(){
 
 Route::get('teste', function(){
 
-
-    foreach(\App\Models\Inventory::all() as $inventory) {
-
-        echo $inventory->food->name.'<br>';
-        echo $inventory->school->user->name.'<br>';
-        echo $inventory->quantity.'<br>';
-        echo '<br>';
-
-    }
+    return \App\Models\FoodRecord::selectRaw('foods.id as id, foods.name as food, foods.unit as unit, sum(food_records.amount) as amount')
+    ->join('foods', 'foods.id', '=', 'food_records.food_id')
+    ->where('institution_id', 1)
+    ->groupBy('foods.name')
+    ->get();
 
 
 });

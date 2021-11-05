@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Institution;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,11 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        if(Institution::count() === 0) {
-            $this->call([
-                \Database\Seeders\User\Institution\SchoolSeeder::class,
-                \Database\Seeders\User\Institution\SecretarySeeder::class,
-            ]);
-        }
+        $this->call([
+            \Database\Seeders\User\Institution\SchoolSeeder::class,
+            \Database\Seeders\User\Institution\SecretarySeeder::class,
+            \Database\Seeders\Food\FoodSeeder::class,
+            \Database\Seeders\Institution\FoodRecordSeeder::class
+        ]);
     }
 }

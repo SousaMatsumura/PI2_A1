@@ -28,4 +28,9 @@ class Institution extends Model
     {
         return $this->hasOne(User::class);
     }
+
+    public function foodRecords()
+    {
+        return $this->hasMany(FoodRecord::class);
+    }
 }

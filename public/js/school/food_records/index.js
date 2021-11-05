@@ -5,8 +5,8 @@ $('#inventory-table').DataTable({
     serverSide: true,
     columns: [
         { data: 'id', name: 'id' },
-        { data: 'food.name' },
-        { data: 'food.unit', className: 'text-center' },
-        { data: 'quantity', className: 'text-center' }
+        { data: 'food' },
+        { data: 'unit', className: 'text-center' },
+        { data: 'amount', className: 'text-center' }
     ]
 })
