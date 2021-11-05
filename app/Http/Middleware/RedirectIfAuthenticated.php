@@ -6,6 +6,7 @@ use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Services\UserService;
 
 class RedirectIfAuthenticated
 {
@@ -23,7 +24,10 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+
+                $institutionType = Auth::user()->institution->type;
+
+                return redirect(UserService::getDashboardRouteBasedOnUserInstitutionType($institutionType));
             }
         }
 
