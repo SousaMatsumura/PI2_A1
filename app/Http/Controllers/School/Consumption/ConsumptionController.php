@@ -25,14 +25,14 @@ class ConsumptionController extends Controller
 
     public function create()
     {
-        $inventoryItems = Auth::user()->school->inventories;
+        $foodRecords = Auth::user()->institution->foodRecords()->groupByFood()->get();
         
-        return view('school.consumption.create', compact('inventoryItems'));
+        return view('school.consumption.create', compact('foodRecords'));
     }
 
     public function store(StoreRequest $request)
     {
-        $createdAt = Carbon::createFromFormat('d/m/Y', $request->inventory['created_at']);
+        $createdAt = Carbon::createFromFormat('d/m/Y', $request->food_record['created_at']);
 
         foreach($request->foods as $foodId => $value) {
             
@@ -40,10 +40,10 @@ class ConsumptionController extends Controller
 
             try {
 
-                Auth::user()->school->consumptions()->create([
+                Auth::user()->institution->consumptions()->create([
                     'created_at' => $createdAt,
                     'food_id' => $foodId,
-                    'quantity' => $value['quantity']
+                    'amount_consumed' => $value['amount_consumed']
                 ]);
 
                 DB::commit();
@@ -52,14 +52,14 @@ class ConsumptionController extends Controller
 
                 DB::rollback();
 
-                return $this->redirectBackWithDangerAlert('Não foi possível concluir a operação!');
+                return $this->redirectBackWithDangerAlert('Não foi possível concluir a operação!'.$exception->getMessage());
 
             }
             
 
         }
 
-        return $this->redirectBackWithSuccessAlert('O consumo do dia '.$request->inventory['created_at'].' foi cadastrado com sucesso!');
+        return $this->redirectBackWithSuccessAlert('O consumo do dia '.$request->food_record['created_at'].' foi cadastrado com sucesso!');
 
     }
 }

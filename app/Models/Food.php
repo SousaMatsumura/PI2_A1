@@ -18,4 +18,9 @@ class Food extends Model
         return $this->hasMany(FoodRecord::class);
     }
 
+    public function consumptions()
+    {
+        return $this->hasMany(Consumption::class);
+    }
+
 }

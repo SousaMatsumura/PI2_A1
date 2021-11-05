@@ -17,18 +17,18 @@
             </div>
             <div class="col-md-4">
                 <input 
-                    id="inventory-created-at" 
+                    id="food_record-created-at" 
                     type="text" 
-                    name="inventory[created_at]" 
-                    class="form-control @error('inventory.created_at') is-invalid @enderror" 
+                    name="food_record[created_at]" 
+                    class="form-control @error('food_record.created_at') is-invalid @enderror" 
                     placeholder="Buscar..." 
                     readonly
-                    value="{{ old('inventory.created_at') }}"
+                    value="{{ old('food_record.created_at') }}"
                     data-url="{{ route('school.consumption.index') }}"
                 >
-                @error('inventory.created_at')
+                @error('food_record.created_at')
                     <span class="text-danger d-block small">
-                        {{ $errors->first('inventory.created_at') }}
+                        {{ $errors->first('food_record.created_at') }}
                     </span>
                 @enderror
             </div>
@@ -51,22 +51,22 @@
                 </thead>
                 
                 <tbody>
-                    @foreach($inventoryItems as $item)
+                    @foreach($foodRecords as $record)
                     <tr class="bg-white">
-                        <td class="p-2">{{ $item->food->name }}</td>
-                        <td class="text-center">{{ $item->food->unit }}</td>
+                        <td class="p-2">{{ $record->food }}</td>
+                        <td class="text-center">{{ $record->unit }}</td>
                         <td class="w-25">
                             <div class="form-group m-0">
                                 <input 
                                     type="text" 
-                                    name="foods[{{ $item->food_id }}][quantity]" 
-                                    class="form-control form-control-sm border-top-0 border-left-0 border-right-0 rounded-0 text-center zero-left @error('foods.'.$item->food_id.'.quantity') is-invalid @enderror"
-                                    data-max="{{ $item->quantity }}"
-                                    value={{ old('foods.'.$item->food_id.'.quantity') ?: '00' }}
+                                    name="foods[{{ $record->id }}][amount_consumed]" 
+                                    class="form-control form-control-sm border-top-0 border-left-0 border-right-0 rounded-0 text-center zero-left @error('foods.'.$record->id.'.quantity') is-invalid @enderror"
+                                    data-max="{{ $record->amount }}"
+                                    value={{ old('foods.'.$record->id.'.amount_consumed') ?: '00' }}
                                 >
-                                @error('foods.'.$item->food_id.'.quantity')
+                                @error('foods.'.$record->id.'.amount_consumed')
                                     <span class="text-danger d-block small text-center">
-                                        {{ $errors->first('foods.'.$item->food_id.'.quantity') }}
+                                        {{ $errors->first('foods.'.$record->id.'.amount_consumed') }}
                                     </span>
                                 @enderror
                             </div>
@@ -94,7 +94,7 @@
     <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
     <script>
 
-        $('#inventory-created-at').datepicker({
+        $('#food_record-created-at').datepicker({
             locale: 'pt-br',
             uiLibrary: 'bootstrap4',
             iconsLibrary: 'fontawesome',
@@ -129,14 +129,14 @@
             },
         })
 
-        $(document).on('change', '#inventory-create-at', function(){
+        $(document).on('change', '#food_record-create-at', function(){
             console.log($(this).val())
         })
 
-        $('.zero-left').mask('90#', {
+        $('.zero-left').mask('0#', {
             onKeyPress: function(value, event, currentField) {
-                
-                value = parseInt(value.replace('0', '').replace('0', ''))
+                console.log(parseInt(value))
+                value = parseInt(value)
                 
                 if(value <= 9 && value.toString().length < 2) {
                     $(currentField).val(`0${value.toString()}`)
@@ -160,14 +160,14 @@
             }
         })
 
-        $('#consumption-forma').validate({
+        $('#consumption-form').validate({
             rules: {
-                'inventory[created_at]': {
+                'food_record[created_at]': {
                     required: true
                 }
             },
             messages: {
-                'inventory[created_at]': {
+                'food_record[created_at]': {
                     required: 'O campo dia é obrigatório.'
                 }
             }
