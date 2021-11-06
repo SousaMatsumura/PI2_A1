@@ -21,7 +21,7 @@ class CreateInstitutionsTable extends Migration
             $table->integer('meal_afternoon_demand')->default(0);
             $table->integer('meal_night_demand')->default(0);
             $table->string('phone');
-            $table->foreignId('address_id')->constrained();
+            //$table->foreignId('address_id')->constrained();
             $table->timestamps();
         });
     }

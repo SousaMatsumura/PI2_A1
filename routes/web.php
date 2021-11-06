@@ -7,7 +7,10 @@ use App\Http\Controllers\School\{
     FoodRecord\FoodRecordController as SchoolFoodRecordControllerController,
     Consumption\ConsumptionController as SchoolConsumptionController
 };
-use App\Http\Controllers\Secretary\Dashboard\DashboardController as SecretaryDashboardController;
+use App\Http\Controllers\Secretary\{
+    Dashboard\DashboardController as SecretaryDashboardController,
+    Institution\InstitutionController
+};
 
 Route::get('/', function () {
     return redirect('login');
@@ -27,6 +30,9 @@ Route::middleware('auth')->group(function(){
 
     Route::middleware('institution.type:SECRETARY')->prefix('secretaria')->group(function(){
         Route::get('painel', [SecretaryDashboardController::class, 'index'])->name('secretary.dashboard.index');
+        Route::get('instituicao', [InstitutionController::class, 'index'])->name('secretary.institution.index');
+        Route::get('instituicao/cadastrar', [InstitutionController::class, 'create'])->name('secretary.institution.create');
+        Route::post('instituicao', [InstitutionController::class, 'store'])->name('secretary.institution.store');
     });
     
 });
