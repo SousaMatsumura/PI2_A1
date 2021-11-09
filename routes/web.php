@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function(){
         Route::get('consumos', [SchoolConsumptionController::class, 'index'])->name('school.consumption.index');
         Route::get('consumo/cadastrar', [SchoolConsumptionController::class, 'create'])->name('school.consumption.create');
         Route::post('consumo/cadastrar', [SchoolConsumptionController::class, 'store'])->name('school.consumption.store');
+        Route::patch('consumo/atualizar', [SchoolConsumptionController::class, 'update'])->name('school.consumption.update');
     });
 
     Route::middleware('institution.type:SECRETARY')->prefix('secretaria')->group(function(){
@@ -40,12 +41,5 @@ Route::middleware('auth')->group(function(){
 
 
 Route::get('teste', function(){
-
-    return \App\Models\FoodRecord::selectRaw('foods.id as id, foods.name as food, foods.unit as unit, sum(food_records.amount) as amount')
-    ->join('foods', 'foods.id', '=', 'food_records.food_id')
-    ->where('institution_id', 1)
-    ->groupBy('foods.name')
-    ->get();
-
 
 });

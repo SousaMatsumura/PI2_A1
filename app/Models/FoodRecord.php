@@ -17,9 +17,19 @@ class FoodRecord extends Model
 
     public function scopeGroupByFood($query)
     {
-        return $query->selectRaw('foods.id as id, foods.name as food, foods.unit as unit, sum(food_records.amount) as amount')
+        return $query->selectRaw(
+            'foods.id AS food_id, 
+            foods.name AS food_name, 
+            foods.unit AS food_unit, 
+            SUM(food_records.amount) AS amount,
+            (SELECT 
+                SUM(consumptions.amount_consumed) FROM consumptions WHERE consumptions.food_id = foods.id
+            ) AS amount_consumed,
+            (SELECT amount - amount_consumed) AS amount_remaining
+            '
+        )
         ->join('foods', 'foods.id', '=', 'food_records.food_id')
-        ->groupBy('foods.name');
+        ->groupBy('foods.id');
     }
 
     public function food()

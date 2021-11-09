@@ -12,8 +12,16 @@ class Consumption extends Model
     protected $fillable = [
         'food_id',
         'institution_id',
-        'amount_consumed'
+        'amount_consumed',
+        'created_at'
     ];
+
+    public function scopeGroupByFood($query)
+    {
+        $query->selectRaw('consumptions.created_at, foods.id as id, foods.name as food, foods.unit as unit, sum(consumptions.amount_consumed) as amount_consumed')
+        ->join('foods', 'foods.id', '=', 'consumptions.food_id')
+        ->groupBy('foods.id');
+    }
 
     public function food()
     {
