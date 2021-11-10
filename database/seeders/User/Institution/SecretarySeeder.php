@@ -18,20 +18,20 @@ class SecretarySeeder extends Seeder
      */
     public function run()
     {
+        $institution = Institution::create([
+            'name' => 'Secretaria de Educação de Caraguatatuba',
+            'type' => 'SECRETARY',
+            'phone' => '(12) 3897-7000'
+        ]);
+        
         $address = Address::create([
             'zipcode' => '11665-050',
             'street' => 'Avenida Rio de Janeiro',
             'number' => '860',
             'district' => 'Indaiá',
             'city' => 'Caraguatatuba',
-            'state' => 'SP'
-        ]);
-
-        $institution = Institution::create([
-            'name' => 'Secretaria de Educação de Caraguatatuba',
-            'type' => 'SECRETARY',
-            'address_id' => $address->id,
-            'phone' => '(12) 3897-7000'
+            'state' => 'SP',
+            'institution_id' => $institution->id
         ]);
 
         User::create([

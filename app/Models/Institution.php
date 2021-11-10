@@ -15,18 +15,17 @@ class Institution extends Model
         'meal_morning_demand',
         'meal_afternoon_demand',
         'meal_night_demand',
-        'phone',
-        'address_id'
+        'phone'
     ];
 
     public function address()
     {
-        return $this->belongsTo(Address::class);
+        return $this->hasOne(Address::class);
     }
 
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->hasMany(User::class);
     }
 
     public function foodRecords()

@@ -8,7 +8,7 @@
 
 @section('content')
     
-    <table id="inventory-table" class="table w-100">
+    <table id="inventory-table" class="table table-striped w-100">
         <thead class="bg-primary text-white">
             <tr>
                 <th>ID</th>

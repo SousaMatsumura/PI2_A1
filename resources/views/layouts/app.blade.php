@@ -289,7 +289,7 @@
                     @if(session()->has('alert'))
 
                     <div class="alert bg-{{ session('alert')['type'] }} alert-dismissible fade show text-white" role="alert">
-                        <strong><i class="fa fa-fw fa-{{ session('alert')['icon'] }}"></i></strong> {{ session('alert')['message'] }}
+                        <strong><i class="fa fa-fw fa-{{ session('alert')['icon'] }}"></i></strong> {!! session('alert')['message'] !!}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>

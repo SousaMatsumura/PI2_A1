@@ -22,7 +22,10 @@ class CreateAddressesTable extends Migration
             $table->string('district');
             $table->string('city');
             $table->char('state', 2);
+            $table->unsignedBigInteger('institution_id');
             $table->timestamps();
+
+            $table->foreign('institution_id')->references('id')->on('institutions');
         });
     }
 
