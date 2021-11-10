@@ -2,10 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\School\{
     Dashboard\DashboardController as SchoolDashboardController,
     FoodRecord\FoodRecordController as SchoolFoodRecordControllerController,
-    Consumption\ConsumptionController as SchoolConsumptionController
+    Consumption\ConsumptionController as SchoolConsumptionController,
+    Meal\MealController as SchoolMealController
 };
 use App\Http\Controllers\Secretary\Dashboard\DashboardController as SecretaryDashboardController;
 
@@ -23,6 +25,8 @@ Route::middleware('auth')->group(function(){
         Route::get('consumos', [SchoolConsumptionController::class, 'index'])->name('school.consumption.index');
         Route::get('consumo/cadastrar', [SchoolConsumptionController::class, 'create'])->name('school.consumption.create');
         Route::post('consumo/cadastrar', [SchoolConsumptionController::class, 'store'])->name('school.consumption.store');
+        Route::get('cardapio/cadastrar', [SchoolMealController::class, 'index'])->name('school.meal.index');
+        Route::post('cardapio/cadastrar', [SchoolMealController::class, 'store'])->name('school.meal.store');
     });
 
     Route::middleware('institution.type:SECRETARY')->prefix('secretaria')->group(function(){
