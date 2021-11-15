@@ -30,122 +30,46 @@
     </div>
 
     <form action="{{ route('school.meal.store')}}" method="POST">
-        @csrf
+        @csrf        
         <div class="col-md-3">
             <div class="form-group">
-                <p>Café da Manhã</p>
             </div>
+        </div>
+        <div class="form-group">
+        <input type="hidden" name="meal[mealtime]" list="mealtimelist" class="form-control {{ $errors->has('meal.mealtime') ? 'is-invalid' : '' }}" value="{{ old('meal.mealtime') }}">
+            <label for="mealtimelist">Escolha o horário da refeição:</label>
+            <select id="mealtimelist">
+                <option value="">--escolha uma opção--</option>
+                <option value="BKFT">café da manhã</option>
+                <option value="LNC">almoço</option>
+                <option value="SNCK">lanche da tarde</option>
+                <option value="DIN">jantar</option>
+            </select>
+            <!-- var x = document.getElementById("mealtime"); -->
+            <div class="invalid-feedback">{{ $errors->first('meal.mealtime') }}</div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <div class="form-group">                    
-                    <input type="text" name="meal[name]" class="form-control {{ $errors->has('meal.name') ? 'is-invalid' : '' }}" 
-                    placeholder="Refeição" value="{{ old('meal.name') }}">
+                <div class="form-group">
+                    <input type="text" name="meal[name]" class="form-control {{ $errors->has('meal.name') ? 'is-invalid' : '' }}" placeholder="Refeição" value="{{ old('meal.name') }}">
                     <div class="invalid-feedback">{{ $errors->first('meal.name') }}</div>
                 </div>
             </div>
-        
+
             <div class="col-md-3">
                 <div class="form-group">
-                    <input type="text" name="meal[amount]" class="form-control amount {{ $errors->has('meal.amount') ? 'is-invalid' : '' }}"
-                    placeholder="Refeições servidas" value="{{ old('meal.amount') }}">
+                    <input type="text" name="meal[amount]" class="form-control amount {{ $errors->has('meal.amount') ? 'is-invalid' : '' }}" placeholder="Refeições servidas" value="{{ old('meal.amount') }}">
                     <div class="invalid-feedback">{{ $errors->first('meal.amount') }}</div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <input type="text" name="meal[repeat]" class="form-control repeat {{ $errors->has('meal.repeat') ? 'is-invalid' : '' }}" id="repeat" 
-                    id="repeat[0]" placeholder="Repetições servidas" value="{{ old('meal.repeat') }}">
+                    <input type="text" name="meal[repeat]" class="form-control repeat {{ $errors->has('meal.repeat') ? 'is-invalid' : '' }}" id="repeat" id="repeat[0]" placeholder="Repetições servidas" value="{{ old('meal.repeat') }}">
                     <div class="invalid-feedback">{{ $errors->first('meal.repeat') }}</div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="form-group">
-                <p>Almoço</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <input type="text" name="meal[name]" class="form-control {{ $errors->has('meal.name') ? 'is-invalid' : '' }}" 
-                    id="meal1"placeholder="Refeição" value="{{ old('meal.name') }}">
-                    <div class="invalid-feedback">{{ $errors->first('meal.name') }}</div>
-                </div>
-            </div>        
-            <div class="col-md-3">
-                <div class="form-group">
-                    <input type="text" name="meal[amount]" class="form-control amount {{ $errors->has('meal.amount') ? 'is-invalid' : '' }}" 
-                    id="amount1"placeholder="Refeições servidas" value="{{ old('meal.amount') }}">
-                    <div class="invalid-feedback">{{ $errors->first('meal.amount') }}</div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <input type="text" name="meal[repeat]" class="form-control repeat {{ $errors->has('meal.repeat') ? 'is-invalid' : '' }}" id="repeat" 
-                    id="repeat1]" placeholder="Repetições servidas" value="{{ old('meal.repeat') }}">
-                    <div class="invalid-feedback">{{ $errors->first('meal.repeat') }}</div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <p>Lanche da Tarde</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <input type="text" name="meal[name]" class="form-control {{ $errors->has('meal.name') ? 'is-invalid' : '' }}" 
-                    id="meal2"placeholder="Refeição" value="{{ old('meal.name') }}">
-                    <div class="invalid-feedback">{{ $errors->first('meal.name') }}</div>
-                </div>
-            </div>        
-            <div class="col-md-3">
-                <div class="form-group">
-                    <input type="text" name="meal[amount]" class="form-control amount {{ $errors->has('meal.amount') ? 'is-invalid' : '' }}" 
-                    id="amount2"placeholder="Refeições servidas" value="{{ old('meal.amount') }}">
-                    <div class="invalid-feedback">{{ $errors->first('meal.amount') }}</div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <input type="text" name="meal[repeat]" class="form-control repeat {{ $errors->has('meal.repeat') ? 'is-invalid' : '' }}" 
-                    id="repeat2" placeholder="Repetições servidas" value="{{ old('meal.repeat') }}">
-                    <div class="invalid-feedback">{{ $errors->first('meal.repeat') }}</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="form-group">
-                <p>Janta</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <input type="text" name="meal[name]" class="form-control {{ $errors->has('meal.name') ? 'is-invalid' : '' }}" 
-                    id="meal3"placeholder="Refeição" value="{{ old('meal.name') }}">
-                    <div class="invalid-feedback">{{ $errors->first('meal.name') }}</div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <input type="text" name="meal[amount]" class="form-control amount {{ $errors->has('meal.amount') ? 'is-invalid' : '' }}" 
-                    id="amount3"placeholder="Refeições servidas" value="{{ old('meal.amount') }}">
-                    <div class="invalid-feedback">{{ $errors->first('meal.amount') }}</div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <input type="text" name="meal[repeat]" class="form-control repeat {{ $errors->has('meal.repeat') ? 'is-invalid' : '' }}" 
-                    id="repeat3" placeholder="Repetições servidas" value="{{ old('meal.repeat') }}">
-                    <div class="invalid-feedback">{{ $errors->first('meal.repeat') }}</div>
-                </div>
-            </div>
-        </div>
 
         <button type="submit" class="btn btn-success btn-block mt-3">
             Cadastrar
