@@ -46,5 +46,5 @@ Route::middleware('auth')->group(function(){
 
 
 Route::get('teste', function(){
-
+    return view('test.index');
 });
