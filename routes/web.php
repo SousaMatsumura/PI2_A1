@@ -11,6 +11,7 @@ use App\Http\Controllers\Secretary\{
     Dashboard\DashboardController as SecretaryDashboardController,
     Institution\InstitutionController
 };
+use App\Models\Institution;
 
 Route::get('/', function () {
     return redirect('login');
@@ -34,6 +35,10 @@ Route::middleware('auth')->group(function(){
         Route::get('instituicao', [InstitutionController::class, 'index'])->name('secretary.institution.index');
         Route::get('instituicao/cadastrar', [InstitutionController::class, 'create'])->name('secretary.institution.create');
         Route::post('instituicao', [InstitutionController::class, 'store'])->name('secretary.institution.store');
+        Route::get('{institution}', [InstitutionController::class, 'show'])->name('secretary.institution.show');
+        Route::get('{institution}/edit', [InstitutionController::class, 'edit'])->name('secretary.institution.edit');
+        Route::put('{instituicao}', [InstitutionController::class, 'update'])->name('secretary.institution.update');
+        Route::delete('{institution}', [InstitutionController::class, 'destroy'])->name('secretary.institution.destroy');
     });
     
 });

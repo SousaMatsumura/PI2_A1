@@ -54,4 +54,43 @@ class InstitutionController extends Controller
             return "Mensagem: " . $exception->getMessage();
         };
     }
+
+    public function show(Institution $institution){
+        return view('secretary.institutions.show', [
+            'institution' => $institution,
+            
+        ]);
+    }
+
+    public function edit(Institution $institution)
+    {   
+        $address = $institution->address;
+        
+        return view('secretary.institutions.edit', compact('institution', 'address'));
+    }
+
+    public function update(Institution $institution, RegisterInstitutionRequest $request)
+    {
+
+        $requestData = $request->validated();
+        
+        $institution->update($requestData['institution']);
+        $address = $institution->address();
+        $address->update($requestData['address']);
+
+        return redirect()
+            ->route('secretary.institutions.index')
+            ->with('success', 'Instituição atualizada com sucesso!');
+    }
+
+    public function destroy(Institution $institution)
+    {
+        
+        $institution->address()->delete();
+        $institution->delete();
+
+        return redirect()
+            ->route('secretary.institution.index')
+            ->with('success', 'Instituição deletada com sucesso!');
+    }
 }

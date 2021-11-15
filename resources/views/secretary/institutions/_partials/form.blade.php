@@ -78,7 +78,7 @@
                     name="address[zipcode]"
                     id="zipcode"
                     class="form-control zipcode {{$errors->has('address.zipcode') ? 'is-invalid' : '' }}"
-                    value="{{ old('address.zipcode') }}"
+                    value="{{ old('zipcode', isset($address) ? $address->zipcode : '') }}"]
                 >
                 <div class="invalid-feedback">{{$errors->first('address.zipcode')}}</div>
             </div>
@@ -91,7 +91,7 @@
                     name="address[state]"
                     id="state"
                     class="form-control state {{$errors->has('address.state') ? 'is-invalid' : '' }}"
-                    value="{{ old('address.state') }}"
+                    value="{{ old('state', isset($address) ? $address->state : '') }}"]
                 >
                 <div class="invalid-feedback">{{$errors->first('address.state')}}</div>
             </div>
@@ -104,7 +104,7 @@
                     name="address[city]"
                     id="city"
                     class="form-control {{$errors->has('address.city') ? 'is-invalid' : '' }}"
-                    value="{{ old('address.city') }}"
+                    value="{{ old('city', isset($address) ? $address->city : '') }}"]
                 >
                 <div class="invalid-feedback">{{$errors->first('address.city')}}</div>
             </div>
@@ -117,7 +117,7 @@
                     name="address[street]"
                     id="street"
                     class="form-control {{$errors->has('address.street') ? 'is-invalid' : '' }}"
-                    value="{{ old('address.street') }}"
+                    value="{{ old('street', isset($address) ? $address->street : '') }}"]
                 >
                 <div class="invalid-feedback">{{$errors->first('address.street')}}</div>
             </div>
@@ -130,7 +130,7 @@
                     name="address[number]"
                     id="number"
                     class="form-control {{$errors->has('address.number') ? 'is-invalid' : '' }}"                    
-                    value="{{ old('address.number') }}"
+                    value="{{ old('number', isset($address) ? $address->number : '') }}"]
                 >
                 <div class="invalid-feedback">{{$errors->first('address.number')}}</div>
             </div>
@@ -143,7 +143,7 @@
                     name="address[district]"
                     id="district"
                     class="form-control {{$errors->has('address.district') ? 'is-invalid' : '' }}"
-                    value="{{ old('address.district') }}"
+                    value="{{ old('district', isset($address) ? $address->district : '') }}"]
                 >
                 <div class="invalid-feedback">{{$errors->first('address.district')}}</div>
             </div>
@@ -155,7 +155,7 @@
                     type="text"
                     name="address[complement]"
                     class="form-control {{$errors->has('address.complement') ? 'is-invalid' : '' }}"
-                    value="{{ old('address.complement') }}"
+                    value="{{ old('complement', isset($address) ? $address->complement : '') }}"]
                 >
                 <div class="invalid-feedback">{{$errors->first('address.complement')}}</div>
             </div>
