@@ -279,23 +279,31 @@
                 <!-- End of Topbar -->
                 @endauth
 
-                <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    @auth
-                    <h1 class="h3 mb-4 text-gray-800">@yield('title')</h1>
-                    @endauth
                     @if(session()->has('alert'))
 
-                    <div class="alert bg-{{ session('alert')['type'] }} alert-dismissible fade show text-white" role="alert">
-                        <strong><i class="fa fa-fw fa-{{ session('alert')['icon'] }}"></i></strong> {!! session('alert')['message'] !!}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                        <div class="alert bg-{{ session('alert')['type'] }} alert-dismissible fade show text-white" role="alert">
+                            <strong><i class="fa fa-fw fa-{{ session('alert')['icon'] }}"></i></strong> {!! session('alert')['message'] !!}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
 
                     @endif
+
+
+                    @auth
+                        <div class="row align-items-center my-4">
+                            <div class="col-md-6">
+                                <h1 class="h3 m-0 text-gray-800">@yield('title')</h1>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                @yield('options')
+                            </div>
+                        </div>
+                    @endauth
+
                     @yield('content')
 
                 </div>

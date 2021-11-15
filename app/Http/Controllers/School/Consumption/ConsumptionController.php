@@ -29,10 +29,18 @@ class ConsumptionController extends Controller
         }
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        $foodRecords = Auth::user()->institution->foodRecords()->groupByFood()->get();
+        $foodRecords = Auth::user()->institution->foodRecords()->groupByFood();
+
+        if($request->has('pesquisa')) {
+            $foodRecords->where('foods.name', 'like', '%'.$request->pesquisa.'%');
+        }
+
+        $foodRecords = $foodRecords->get();
         
+        session()->flashInput($request->input());
+
         return view('school.consumption.create', compact('foodRecords'));
     }
 
