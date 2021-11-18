@@ -5,12 +5,12 @@
             <label for="name">Nome</label>
             <input
                 type="text"
-                class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
+                class="form-control {{ $errors->has('institution.name') ? 'is-invalid' : '' }}"
                 id="name"
                 name="institution[name]"
                 value="{{ old('name', isset($institution) ? $institution->name : '') }}"
             >
-            <div class="invalid-feedback">{{ $errors->first('name') }}</div>
+            <div class="invalid-feedback">{{ $errors->first('institution.name') }}</div>
         </div>
     </div>
     <div class="col-lg-3">
@@ -18,12 +18,12 @@
             <label for="meal_morning_demand">Demanda da manhã</label>
             <input
                 type="text"
-                class="form-control {{ $errors->has('meal_morning_demand') ? 'is-invalid' : '' }}"
+                class="form-control {{ $errors->has('institution.meal_morning_demand') ? 'is-invalid' : '' }}"
                 id="meal_morning_demand"
                 name="institution[meal_morning_demand]"
                 value="{{ old('meal_morning_demand', isset($institution) ? $institution->meal_morning_demand : '') }}"
             >
-            <div class="invalid-feedback">{{ $errors->first('meal_morning_demand') }}</div>
+            <div class="invalid-feedback">{{ $errors->first('institution.meal_morning_demand') }}</div>
         </div>
     </div>
     <div class="col-lg-3">
@@ -31,12 +31,12 @@
             <label for="meal_afternoon_demand">Demanda da tarde</label>
             <input
                 type="text"
-                class="form-control {{ $errors->has('meal_afternoon_demand') ? 'is-invalid' : '' }}"
+                class="form-control {{ $errors->has('institution.meal_afternoon_demand') ? 'is-invalid' : '' }}"
                 id="meal_afternoon_demand"
                 name="institution[meal_afternoon_demand]"
                 value="{{ old('meal_afternoon_demand', isset($institution) ? $institution->meal_afternoon_demand : '') }}"
             >
-            <div class="invalid-feedback">{{ $errors->first('meal_afternoon_demand') }}</div>
+            <div class="invalid-feedback">{{ $errors->first('institution.meal_afternoon_demand') }}</div>
         </div>
     </div>
     <div class="col-lg-3">
@@ -44,12 +44,12 @@
             <label for="meal_night_demand">Demanda da noite</label>
             <input
                 type="text"
-                class="form-control {{ $errors->has('meal_night_demand') ? 'is-invalid' : '' }}"
+                class="form-control {{ $errors->has('institution.meal_night_demand') ? 'is-invalid' : '' }}"
                 id="meal_night_demand"
                 name="institution[meal_night_demand]"
                 value="{{ old('meal_night_demand', isset($institution) ? $institution->meal_night_demand : '') }}"
             >
-            <div class="invalid-feedback">{{ $errors->first('meal_night_demand') }}</div>
+            <div class="invalid-feedback">{{ $errors->first('institution.meal_night_demand') }}</div>
         </div>
     </div>
     <div class="col-lg-3">
@@ -57,12 +57,12 @@
             <label for="phone">Telefone</label>
             <input
                 type="text"
-                class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}"
+                class="form-control {{ $errors->has('institution.phone') ? 'is-invalid' : '' }}"
                 id="phone"
                 name="institution[phone]"
                 value="{{ old('phone', isset($institution) ? $institution->phone : '') }}"
             >
-            <div class="invalid-feedback">{{ $errors->first('phone') }}</div>
+            <div class="invalid-feedback">{{$errors->first('institution.phone')}}</div>
         </div>
     </div>
 
@@ -86,7 +86,42 @@
         <div class="col-md-2">
             <div class="form-group">
             <label for="state">UF</label>
-                <input
+                <select
+                    type="text"
+                    name="address[state]"
+                    id="state"
+                    class="form-control state {{$errors->has('address.state') ? 'is-invalid' : '' }}">
+                    <option value="{{ old('state', isset($address) ? $address->state : '') }}">{{ old('state', isset($address) ? $address->state : 'Selecione o estado') }}</option>
+                    <option value="AC">AC</option>
+                    <option value="AL">AL</option>
+                    <option value="AP">AP</option>
+                    <option value="AM">AM</option>
+                    <option value="BA">BA</option>
+                    <option value="CE">CE</option>
+                    <option value="DF">DF</option>
+                    <option value="ES">ES</option>
+                    <option value="GO">GO</option>
+                    <option value="MA">MA</option>
+                    <option value="MT">MT</option>
+                    <option value="MS">MS</option>
+                    <option value="MG">MG</option>
+                    <option value="PA">PA</option>
+                    <option value="PB">PB</option>
+                    <option value="PR">PR</option>
+                    <option value="PE">PE</option>
+                    <option value="PI">PI</option>
+                    <option value="RJ">RJ</option>
+                    <option value="RN">RN</option>
+                    <option value="RS">RS</option>
+                    <option value="RO">RO</option>
+                    <option value="RR">RR</option>
+                    <option value="SC">SC</option>
+                    <option value="SP">SP</option>
+                    <option value="SE">SE</option>
+                    <option value="TO">TO</option>
+                
+                </select>
+                <!--<input
                     type="text"
                     name="address[state]"
                     id="state"
@@ -94,6 +129,7 @@
                     value="{{ old('state', isset($address) ? $address->state : '') }}"]
                 >
                 <div class="invalid-feedback">{{$errors->first('address.state')}}</div>
+                -->
             </div>
         </div>
         <div class="col-md-7">
@@ -163,3 +199,11 @@
     </div>
 </div>
 <button type="submit" class="btn btn-success mt-2">Salvar</button>
+
+<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('vendor/jquery-mask/jquery.mask.min.js) }}"></script>
+<script>
+    //$('.zipcode').mask('00000-000');
+    //x$('.phone').mask('(00) 0000-00000');
+    
+</script>
