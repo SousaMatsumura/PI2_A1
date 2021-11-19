@@ -6,6 +6,7 @@
     .block-btn {
         min-width: 60px !important;
         min-height: 60px !important;
+        text-align: center;
     }
 </style>
 
@@ -41,8 +42,15 @@
     
         <div class="col-12 col-sm-4 col-lg-3 my-2 col-6">
             <a href="#" class="btn btn-block btn-primary d-flex flex-sm-column" style="min-height: 60px">
-            <span>Dados da</span>
-            <span>Escola</span>
+                <span>Dados da</span>
+                <span>Escola</span>
+            </a>
+        </div>
+
+        <div class="col-12 col-sm-4 col-lg-3 my-2 col-6">
+            <a href="{{ url('/secretaria/instituicao') }}"
+                class="btn btn-block btn-success d-flex flex-sm-column" style="min-height: 60px">
+                <span>Voltar</span>
             </a>
         </div>
     </div>

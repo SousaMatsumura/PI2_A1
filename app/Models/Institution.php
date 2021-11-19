@@ -16,7 +16,7 @@ class Institution extends Model
         'meal_morning_demand',
         'meal_afternoon_demand',
         'meal_night_demand',
-        'phone'
+        'phone',
     ];
 
     public function address()
@@ -24,7 +24,7 @@ class Institution extends Model
         return $this->hasOne(Address::class);
     }
 
-    public function user()
+    public function users()
     {
         return $this->hasMany(User::class);
     }

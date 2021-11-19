@@ -13,7 +13,13 @@
     </form>   
 @endsection
 
+<!--
 @push('js')
+
+    /***
+        Não entendi o que isso está fazendo aqui. Vai dar problema se eu comentar?
+    */
+
     <script src="{{ asset('vendor/gijgo/gijgo.min.js') }}"></script>
     <script src="{{ asset('vendor/gijgo/messages.pt-br.js') }}"></script>
     <script src="{{ asset('vendor/jquery-mask/jquery.mask.min.js') }}"></script>
@@ -103,3 +109,6 @@
 
     </script>
 @endpush
+-->
+
+    

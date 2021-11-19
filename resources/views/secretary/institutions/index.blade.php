@@ -61,6 +61,8 @@
         </tbody>
     </table>
 
+    {{ $institutions->links() }}
+
 @endsection
 
 @push('js')

@@ -25,9 +25,9 @@ class RegisterInstitutionRequest extends FormRequest
     {
         return [
             'institution.name' => 'required',
-            'institution.meal_morning_demand' => ['required', 'numeric', 'integer', 'min:1', 'max:5'],
-            'institution.meal_afternoon_demand' => ['required', 'numeric', 'integer', 'min:1', 'max:5'],
-            'institution.meal_night_demand' => ['required', 'numeric', 'integer', 'min:1', 'max:5'],
+            'institution.meal_morning_demand' => ['required', 'numeric', 'integer'],
+            'institution.meal_afternoon_demand' => ['required', 'numeric', 'integer'],
+            'institution.meal_night_demand' => ['required', 'numeric', 'integer'],
             'institution.phone' => ['required', 'min:14', 'max:15'],
             
             'address.zipcode' => 'required',
