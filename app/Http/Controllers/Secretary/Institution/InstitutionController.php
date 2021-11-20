@@ -21,7 +21,7 @@ class InstitutionController extends Controller
         if(isset($request->search) && $request->search !== ''){
             $institutions->where('name', 'like', '%' . $request->search . '%');
         }
-
+        
         return view('secretary.institutions.index', [
             'institutions' => $institutions->paginate(5),
             'search' => isset($request->search) ? $request->search : '',

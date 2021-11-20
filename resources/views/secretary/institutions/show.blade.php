@@ -13,7 +13,7 @@
 <div class="vertical-align-center">
     <div class="row justify-content-center">
         <div class="col-12 col-sm-4 col-lg-3 my-2 col-4">
-            <a href="#" class="btn btn-block btn-primary d-flex flex-sm-column" style="min-height: 60px">
+            <a href="{{ route('secretary.institution.consumption.index', $institution) }}" class="btn btn-block btn-primary d-flex flex-sm-column" style="min-height: 60px">
                 <span>Consumo</span>
                 <span>Diário</span>
             </a>
@@ -25,7 +25,7 @@
             </a>
         </div>
         <div class="col-12 col-sm-4 col-lg-3 my-2 col-4">
-            <a href="#" class="btn btn-block btn-primary d-flex flex-sm-column" style="min-height: 60px">
+            <a href="{{ route('secretary.institution.foodRecord.index', $institution) }}" class="btn btn-block btn-primary d-flex flex-sm-column" style="min-height: 60px">
                 <span>Entrada de</span>
                 <span>Alimentos</span>
             </a>
@@ -41,7 +41,7 @@
         </div>
     
         <div class="col-12 col-sm-4 col-lg-3 my-2 col-6">
-            <a href="#" class="btn btn-block btn-primary d-flex flex-sm-column" style="min-height: 60px">
+            <a href="{{ route('secretary.institution.data.index', $institution) }}" class="btn btn-block btn-primary d-flex flex-sm-column" style="min-height: 60px">
                 <span>Dados da</span>
                 <span>Escola</span>
             </a>

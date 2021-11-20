@@ -9,7 +9,10 @@ use App\Http\Controllers\School\{
 };
 use App\Http\Controllers\Secretary\{
     Dashboard\DashboardController as SecretaryDashboardController,
-    Institution\InstitutionController
+    Institution\InstitutionController,
+    Institution\Data\InstitutionDataController,
+    Institution\Consumption\InstitutionConsumptionController,
+    Institution\FoodRecord\InstitutionFoodRecordController
 };
 use App\Models\Institution;
 
@@ -39,6 +42,10 @@ Route::middleware('auth')->group(function(){
         Route::get('{institution}/edit', [InstitutionController::class, 'edit'])->name('secretary.institution.edit');
         Route::put('{instituicao}', [InstitutionController::class, 'update'])->name('secretary.institution.update');
         Route::delete('{institution}', [InstitutionController::class, 'destroy'])->name('secretary.institution.destroy');
+
+        Route::get('{institution}/data', [InstitutionDataController::class, 'index'])->name('secretary.institution.data.index');
+        Route::get('{institution}/consumption', [InstitutionConsumptionController::class, 'index'])->name('secretary.institution.consumption.index');
+        Route::get('{institution}/foodRecord', [InstitutionFoodRecordController::class, 'index'])->name('secretary.institution.foodRecord.index');
     });
     
 });
