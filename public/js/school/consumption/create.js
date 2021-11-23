@@ -1,6 +1,7 @@
 var submitButton = $('#submit-button')
 var form = $('#consumption-form')
 var submitRoute = location.href
+var foodsCard = $('#foods-card')
 
 let datepicker = $('#food-record-created-at').datepicker({
     language: 'pt-BR',
@@ -79,6 +80,8 @@ function setForm(params = {}) {
         },
         success:function(response) {
             
+            foodsCard.hide()
+
             const consumptions = response.consumptions
 
             if(consumptions.length > 0) {
@@ -104,6 +107,8 @@ function setForm(params = {}) {
             form.prop('action', submitRoute)
 
             addInputFoodsRules()
+
+            foodsCard.fadeIn().show()
 
         },
         error:function(error) {
@@ -133,7 +138,15 @@ datepicker.on('changeDate', function(e){
 
 $('.digits').mask('0#', {
     onKeyPress: function(value, event, currentField) {
-        $(currentField).val(addLeftZero(value))
+        
+        let max = parseInt($(currentField).data('max'))
+
+        if(value <= max) {
+            $(currentField).val(addLeftZero(value))
+        } else {
+            $(currentField).val(value.substring(0, value.length - 1))
+        }
+        
     }
 })
 
