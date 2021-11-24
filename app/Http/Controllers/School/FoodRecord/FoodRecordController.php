@@ -4,18 +4,20 @@ namespace App\Http\Controllers\School\FoodRecord;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\School;
+use Auth;
 
 class FoodRecordController extends Controller
 {
     public function index(Request $request)
     {
-        if($request->ajax()) {
-            return datatables()->of(
-                auth()->user()->institution->foodRecords()->groupByFood()
-            )->toJson();
+        $foodRecords = Auth::user()->institution->foodRecords()->groupByFood();
+
+        if($request->has('pesquisa')) {
+            $foodRecords->where('foods.name', 'like', '%'.$request->pesquisa.'%');
         }
 
-        return view('school.food_record.index');
+        $foodRecords = $foodRecords->paginate(10);
+
+        return view('school.food_record.index', compact('foodRecords'));
     }
 }

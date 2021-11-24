@@ -9,7 +9,14 @@ use App\Http\Controllers\School\{
     Consumption\ConsumptionController as SchoolConsumptionController,
     Meal\MealController as SchoolMealController
 };
-use App\Http\Controllers\Secretary\Dashboard\DashboardController as SecretaryDashboardController;
+use App\Http\Controllers\Secretary\{
+    Dashboard\DashboardController as SecretaryDashboardController,
+    Institution\InstitutionController,
+    Institution\Data\InstitutionDataController,
+    Institution\Consumption\InstitutionConsumptionController,
+    Institution\FoodRecord\InstitutionFoodRecordController
+};
+use App\Models\Institution;
 
 Route::get('/', function () {
     return redirect('login');
@@ -25,12 +32,26 @@ Route::middleware('auth')->group(function(){
         Route::get('consumos', [SchoolConsumptionController::class, 'index'])->name('school.consumption.index');
         Route::get('consumo/cadastrar', [SchoolConsumptionController::class, 'create'])->name('school.consumption.create');
         Route::post('consumo/cadastrar', [SchoolConsumptionController::class, 'store'])->name('school.consumption.store');
+        Route::patch('consumo/atualizar', [SchoolConsumptionController::class, 'update'])->name('school.consumption.update');
+      
         Route::get('cardapio/cadastrar', [SchoolMealController::class, 'index'])->name('school.meal.index');
         Route::post('cardapio/cadastrar', [SchoolMealController::class, 'store'])->name('school.meal.store');
+
     });
 
     Route::middleware('institution.type:SECRETARY')->prefix('secretaria')->group(function(){
         Route::get('painel', [SecretaryDashboardController::class, 'index'])->name('secretary.dashboard.index');
+        Route::get('instituicao', [InstitutionController::class, 'index'])->name('secretary.institution.index');
+        Route::get('instituicao/cadastrar', [InstitutionController::class, 'create'])->name('secretary.institution.create');
+        Route::post('instituicao', [InstitutionController::class, 'store'])->name('secretary.institution.store');
+        Route::get('{institution}', [InstitutionController::class, 'show'])->name('secretary.institution.show');
+        Route::get('{institution}/edit', [InstitutionController::class, 'edit'])->name('secretary.institution.edit');
+        Route::put('{instituicao}', [InstitutionController::class, 'update'])->name('secretary.institution.update');
+        Route::delete('{institution}', [InstitutionController::class, 'destroy'])->name('secretary.institution.destroy');
+
+        Route::get('{institution}/data', [InstitutionDataController::class, 'index'])->name('secretary.institution.data.index');
+        Route::get('{institution}/consumption', [InstitutionConsumptionController::class, 'index'])->name('secretary.institution.consumption.index');
+        Route::get('{institution}/foodRecord', [InstitutionFoodRecordController::class, 'index'])->name('secretary.institution.foodRecord.index');
     });
     
 });
@@ -38,12 +59,5 @@ Route::middleware('auth')->group(function(){
 
 
 Route::get('teste', function(){
-
-    return \App\Models\FoodRecord::selectRaw('foods.id as id, foods.name as food, foods.unit as unit, sum(food_records.amount) as amount')
-    ->join('foods', 'foods.id', '=', 'food_records.food_id')
-    ->where('institution_id', 1)
-    ->groupBy('foods.name')
-    ->get();
-
-
+    return view('test.index');
 });

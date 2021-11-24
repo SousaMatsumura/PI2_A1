@@ -4,9 +4,9 @@ $('#inventory-table').DataTable({
     processing: true,
     serverSide: true,
     columns: [
-        { data: 'id', name: 'id' },
-        { data: 'food' },
-        { data: 'unit', className: 'text-center' },
-        { data: 'amount', className: 'text-center' }
+        { data: 'food_id', name: 'foods.id' },
+        { data: 'food_name', name: 'foods.name' },
+        { data: 'food_unit', name: 'foods.unit', className: 'text-center' },
+        { data: 'amount_remaining', className: 'text-center', searchable: false }
     ]
 })

@@ -18,20 +18,20 @@ class SchoolSeeder extends Seeder
      */
     public function run()
     {
+        $institution = Institution::create([
+            'name' => 'Ciefi Prof. Ricardo Luques Sammarco Serra',
+            'type' => 'SCHOOL',
+            'phone' => '(12) 3888-4186'
+        ]);
+        
         $address = Address::create([
             'zipcode' => '11666-530',
             'street' => 'Rua Aldo Marcuci',
             'number' => '300',
             'district' => 'Praia das Palmeiras',
             'city' => 'Caraguatatuba',
-            'state' => 'SP'
-        ]);
-
-        $institution = Institution::create([
-            'name' => 'Ciefi Prof. Ricardo Luques Sammarco Serra',
-            'type' => 'SCHOOL',
-            'address_id' => $address->id,
-            'phone' => '(12) 3888-4186'
+            'state' => 'SP',
+            'institution_id' => $institution->id
         ]);
 
         User::create([

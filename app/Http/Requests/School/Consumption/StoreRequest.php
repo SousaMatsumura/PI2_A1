@@ -25,18 +25,18 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'food_record.created_at' => ['required', 'date_format:d/m/Y'],
+            'consumption.created_at' => ['required', 'date_format:d/m/Y'],
         ];
 
-        /**foreach(request()->foods as $key => $value) {
-            
-            $inventoryItems = Auth::user()->school->inventories()->select('food_id', 'quantity')->get();
+        $foodRecords = Auth::user()->institution->FoodRecords()->groupByFood()->get();
 
-            $maxQuantity = $inventoryItems->where('food_id', $key)->first()->quantity;
-            
-            $rules['foods.'.$key.'.quantity'] = ['numeric', 'min:0', 'max:'.$maxQuantity.''];
+        foreach(request()->foods as $key => $value) {
 
-        }*/
+            $maxAmount = $foodRecords->where('food_id', $key)->first()->amount_remaining;
+            
+            $rules['foods.'.$key.'.amount_consumed'] = ['nullable', 'numeric', 'min:0', 'max:'.$maxAmount.''];
+
+        }
 
         return $rules;
     }
@@ -45,14 +45,14 @@ class StoreRequest extends FormRequest
     {
 
         $attributes = [
-            'food_record.created_at' => 'dia',
+            'consumption.created_at' => 'dia',
         ];
 
-        /**foreach(request()->foods as $key => $value) {
+        foreach(request()->foods as $key => $value) {
             
-            $attributes['foods.'.$key.'.quantity'] = 'quantidade';
+            $attributes['foods.'.$key.'.amount_consumed'] = 'quantidade';
 
-        }*/
+        }
         
         return $attributes;
     }

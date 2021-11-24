@@ -18,7 +18,7 @@ class CreateConsumptionsTable extends Migration
             $table->unsignedBigInteger('food_id');
             $table->foreign('food_id')->references('id')->on('foods');
             $table->foreignId('institution_id')->constrained();
-            $table->integer('amount_consumed');
+            $table->integer('amount_consumed')->default('0');
             $table->timestamps();
         });
     }

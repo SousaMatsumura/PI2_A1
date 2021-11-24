@@ -16,11 +16,12 @@ class Address extends Model
         'complement',
         'district',
         'city',
-        'state'
+        'state',
+        'institution_id',
     ];
 
     public function institution()
     {
-        return $this->hasOne(Institution::class);
+        return $this->belongsTo(Institution::class);
     }
 }

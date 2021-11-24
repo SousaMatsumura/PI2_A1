@@ -15,11 +15,32 @@ class FoodRecord extends Model
         'institution_id'
     ];
 
+    protected $appends = [
+        'amount_remaining'
+    ];
+
     public function scopeGroupByFood($query)
     {
-        return $query->selectRaw('foods.id as id, foods.name as food, foods.unit as unit, sum(food_records.amount) as amount')
+        return $query->selectRaw(
+            'foods.id AS food_id, 
+            foods.name AS food_name, 
+            foods.unit AS food_unit, 
+            SUM(food_records.amount) AS amount,
+            (SELECT 
+                SUM(consumptions.amount_consumed) FROM consumptions WHERE consumptions.food_id = foods.id
+            ) AS amount_consumed,
+            (SELECT amount - COALESCE(amount_consumed, 0)) AS amount_remaining
+            '
+        )
         ->join('foods', 'foods.id', '=', 'food_records.food_id')
-        ->groupBy('foods.name');
+        ->groupBy('foods.id');
+    }
+
+    public function getAmountRemainingAttribute()
+    {
+        $amountRemaining = $this->attributes['amount_remaining'];
+
+        return $amountRemaining <= 9 ? '0'.$amountRemaining : $amountRemaining;
     }
 
     public function food()

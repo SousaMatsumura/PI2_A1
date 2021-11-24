@@ -16,7 +16,7 @@
 <li class="nav-item">
     <a class="nav-link" href="{{ route('school.consumption.create') }}">
         <i class="fas fa-fw fa-calendar-check"></i>
-        <span>Cadastrar Consumo Diário</span>
+        <span>Consumo Diário</span>
     </a>
 </li>
 
