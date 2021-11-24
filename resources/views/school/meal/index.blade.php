@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="{{ asset('vendor/gijgo/gijgo.min.css') }}">
 @endpush
 
+
 @section('content')
 <form id="meal-form" action="{{ route('school.meal.store') }}" method="POST">
     @csrf
@@ -24,63 +25,106 @@
                     @enderror
                 </div>
             </div>
-
-
         </div>
     </div>
 
     <form action="{{ route('school.meal.store')}}" method="POST">
         @csrf        
-        <div class="col-md-3">
-            <div class="form-group">
-            </div>
-        </div>
-        <div class="form-group">
-        <input type="hidden" name="meal[mealtime]" list="mealtimelist" class="form-control {{ $errors->has('meal.mealtime') ? 'is-invalid' : '' }}" value="{{ old('meal.mealtime') }}">
-            <label for="mealtimelist">Escolha o horário da refeição:</label>
-            <select id="mealtimelist">
-                <option value="">--escolha uma opção--</option>
-                <option value="BKFT">café da manhã</option>
-                <option value="LNC">almoço</option>
-                <option value="SNCK">lanche da tarde</option>
-                <option value="DIN">jantar</option>
-            </select>
-            <!-- var x = document.getElementById("mealtime"); -->
-            <div class="invalid-feedback">{{ $errors->first('meal.mealtime') }}</div>
-        </div>
+        
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <input type="text" name="meal[name]" class="form-control {{ $errors->has('meal.name') ? 'is-invalid' : '' }}" placeholder="Refeição" value="{{ old('meal.name') }}">
+                    <input type="text" name="meal[name0]" class="form-control {{ $errors->has('meal.name') ? 'is-invalid' : '' }}" placeholder="Refeição" value="{{ old('meal.name') }}">
                     <div class="invalid-feedback">{{ $errors->first('meal.name') }}</div>
                 </div>
             </div>
 
             <div class="col-md-3">
                 <div class="form-group">
-                    <input type="text" name="meal[amount]" class="form-control amount {{ $errors->has('meal.amount') ? 'is-invalid' : '' }}" placeholder="Refeições servidas" value="{{ old('meal.amount') }}">
+                    <input type="text" name="meal[amount0]" class="form-control amount {{ $errors->has('meal.amount') ? 'is-invalid' : '' }}" placeholder="Refeições servidas" value="{{ old('meal.amount') }}">
                     <div class="invalid-feedback">{{ $errors->first('meal.amount') }}</div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <input type="text" name="meal[repeat]" class="form-control repeat {{ $errors->has('meal.repeat') ? 'is-invalid' : '' }}" id="repeat" id="repeat[0]" placeholder="Repetições servidas" value="{{ old('meal.repeat') }}">
+                    <input type="text" name="meal[repeat0]" class="form-control repeat {{ $errors->has('meal.repeat') ? 'is-invalid' : '' }}" id="repeat" id="repeat[0]" placeholder="Repetições servidas" value="{{ old('meal.repeat') }}">
                     <div class="invalid-feedback">{{ $errors->first('meal.repeat') }}</div>
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" name="meal[name1]" class="form-control {{ $errors->has('meal.name') ? 'is-invalid' : '' }}" placeholder="Refeição" value="{{ old('meal.name') }}">
+                    <div class="invalid-feedback">{{ $errors->first('meal.name') }}</div>
+                </div>
+            </div>
 
+            <div class="col-md-3">
+                <div class="form-group">
+                    <input type="text" name="meal[amount1]" class="form-control amount {{ $errors->has('meal.amount') ? 'is-invalid' : '' }}" placeholder="Refeições servidas" value="{{ old('meal.amount') }}">
+                    <div class="invalid-feedback">{{ $errors->first('meal.amount') }}</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <input type="text" name="meal[repeat1]" class="form-control repeat {{ $errors->has('meal.repeat') ? 'is-invalid' : '' }}" id="repeat" id="repeat[0]" placeholder="Repetições servidas" value="{{ old('meal.repeat') }}">
+                    <div class="invalid-feedback">{{ $errors->first('meal.repeat') }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" name="meal[name2]" class="form-control {{ $errors->has('meal.name') ? 'is-invalid' : '' }}" placeholder="Refeição" value="{{ old('meal.name') }}">
+                    <div class="invalid-feedback">{{ $errors->first('meal.name') }}</div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <input type="text" name="meal[amount2]" class="form-control amount {{ $errors->has('meal.amount') ? 'is-invalid' : '' }}" placeholder="Refeições servidas" value="{{ old('meal.amount') }}">
+                    <div class="invalid-feedback">{{ $errors->first('meal.amount') }}</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <input type="text" name="meal[repeat2]" class="form-control repeat {{ $errors->has('meal.repeat') ? 'is-invalid' : '' }}" id="repeat" id="repeat[0]" placeholder="Repetições servidas" value="{{ old('meal.repeat') }}">
+                    <div class="invalid-feedback">{{ $errors->first('meal.repeat') }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" name="meal[name3]" class="form-control {{ $errors->has('meal.name') ? 'is-invalid' : '' }}" placeholder="Refeição" value="{{ old('meal.name') }}">
+                    <div class="invalid-feedback">{{ $errors->first('meal.name') }}</div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <input type="text" name="meal[amount3]" class="form-control amount {{ $errors->has('meal.amount') ? 'is-invalid' : '' }}" placeholder="Refeições servidas" value="{{ old('meal.amount') }}">
+                    <div class="invalid-feedback">{{ $errors->first('meal.amount') }}</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <input type="text" name="meal[repeat3]" class="form-control repeat {{ $errors->has('meal.repeat') ? 'is-invalid' : '' }}" id="repeat" id="repeat[0]" placeholder="Repetições servidas" value="{{ old('meal.repeat') }}">
+                    <div class="invalid-feedback">{{ $errors->first('meal.repeat') }}</div>
+                </div>
+            </div>
+        </div>
 
         <button type="submit" class="btn btn-success btn-block mt-3">
             Cadastrar
         </button>
 
     </form>
+</form>
+@endsection
 
-
-    @endsection
-
-    @push('js')
+@push('js')
     <script src="{{ asset('vendor/gijgo/gijgo.min.js') }}"></script>
     <script src="{{ asset('vendor/gijgo/messages.pt-br.js') }}"></script>
     <script src="{{ asset('vendor/jquery-mask/jquery.mask.min.js') }}"></script>
@@ -144,7 +188,11 @@
             rules: {
                 'meal[created_at]': {
                     required: true
+                },
+                'meal[mealtime]': {
+                    required: true
                 }
+
             },
             messages: {
                 'meal[created_at]': {
@@ -152,7 +200,7 @@
                 }
             }
         })
-
+        
         $("input[name^='meal']").each(function() {
 
             $(this).rules('add', {

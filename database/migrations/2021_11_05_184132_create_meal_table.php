@@ -19,6 +19,7 @@ class CreateMealTable extends Migration
             $table->integer('amount');
             $table->integer('repeat');
             $table->string('name');
+            $table->foreignId('institution_id')->constrained();
             $table->timestamps();
         });
     }

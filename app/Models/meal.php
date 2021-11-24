@@ -13,4 +13,9 @@ class Meal extends Model
 
     protected $fillable = ['name', 'mealtime', 'amount', 'repeat', 'createdAt'];    
 
+    public function institution()
+    {
+        return $this->belongsTo(Institution::class);
+    }
+
 }
