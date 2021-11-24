@@ -12,7 +12,8 @@ use App\Http\Controllers\Secretary\{
     Institution\InstitutionController,
     Institution\Data\InstitutionDataController,
     Institution\Consumption\InstitutionConsumptionController,
-    Institution\FoodRecord\InstitutionFoodRecordController
+    Institution\FoodRecord\InstitutionFoodRecordController,
+    School\FoodRecordController as SecretarySchoolFoodRecordController
 };
 use App\Models\Institution;
 
@@ -46,6 +47,11 @@ Route::middleware('auth')->group(function(){
         Route::get('{institution}/data', [InstitutionDataController::class, 'index'])->name('secretary.institution.data.index');
         Route::get('{institution}/consumption', [InstitutionConsumptionController::class, 'index'])->name('secretary.institution.consumption.index');
         Route::get('{institution}/foodRecord', [InstitutionFoodRecordController::class, 'index'])->name('secretary.institution.foodRecord.index');
+        
+        Route::get('escola/entrada-alimentos', [SecretarySchoolFoodRecordController::class, 'index'])->name('secretary.school.food_record.index');
+        Route::get('escola/{institution}/entrada-alimentos', [SecretarySchoolFoodRecordController::class, 'create'])->name('secretary.school.food_record.create');
+        Route::post('escola/{institution}/entrada-alimentos', [SecretarySchoolFoodRecordController::class, 'store'])->name('secretary.school.food_record.store');
+        Route::patch('escola/{institution}/entrada-alimentos/atualizar', [SecretarySchoolFoodRecordController::class, 'update'])->name('secretary.school.food_record.update');
     });
     
 });
@@ -53,5 +59,13 @@ Route::middleware('auth')->group(function(){
 
 
 Route::get('teste', function(){
-    return view('test.index');
+    
+    $institution = \App\Models\Institution::find(2);
+
+    $foods = \App\Models\Food::getByInstitution(1)
+    ->get();
+
+
+    return $foods;
+
 });
