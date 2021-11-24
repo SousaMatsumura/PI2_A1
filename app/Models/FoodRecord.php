@@ -12,7 +12,8 @@ class FoodRecord extends Model
     protected $fillable = [
         'amount',
         'food_id',
-        'institution_id'
+        'institution_id',
+        'created_at'
     ];
 
     protected $appends = [
@@ -38,7 +39,7 @@ class FoodRecord extends Model
 
     public function getAmountRemainingAttribute()
     {
-        $amountRemaining = $this->attributes['amount_remaining'];
+        $amountRemaining = $this->attributes['amount_remaining'] ?? null;
 
         return $amountRemaining <= 9 ? '0'.$amountRemaining : $amountRemaining;
     }
