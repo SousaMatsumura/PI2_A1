@@ -7,6 +7,7 @@ use App\Http\Controllers\School\{
     Dashboard\DashboardController as SchoolDashboardController,
     FoodRecord\FoodRecordController as SchoolFoodRecordControllerController,
     Consumption\ConsumptionController as SchoolConsumptionController,
+    Menu\MenuController as SchoolMenuController,
     Meal\MealController as SchoolMealController
 };
 use App\Http\Controllers\Secretary\{
@@ -35,8 +36,13 @@ Route::middleware('auth')->group(function(){
         Route::post('consumo/cadastrar', [SchoolConsumptionController::class, 'store'])->name('school.consumption.store');
         Route::patch('consumo/atualizar', [SchoolConsumptionController::class, 'update'])->name('school.consumption.update');
       
-        Route::get('cardapio/cadastrar', [SchoolMealController::class, 'index'])->name('school.meal.index');
-        Route::post('cardapio/cadastrar', [SchoolMealController::class, 'store'])->name('school.meal.store');
+        // Route::get('cardapio/cadastrar', [SchoolMealController::class, 'index'])->name('school.meal.index');
+        // Route::post('cardapio/cadastrar', [SchoolMealController::class, 'store'])->name('school.meal.store');
+
+        Route::get('cardapios', [SchoolMenuController::class, 'index'])->name('school.menu.index');
+        Route::get('cardapio', [SchoolMenuController::class, 'create'])->name('school.menu.create');
+        Route::post('cardapio', [SchoolMenuController::class, 'store'])->name('school.menu.store');
+        Route::patch('cardapio/atualizar', [SchoolMenuController::class, 'update'])->name('school.menu.update');
 
     });
 
