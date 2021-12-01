@@ -17,7 +17,15 @@
                     <label class="my-auto">Dia:</label>
                 </div>
                 <div class="col-md-4">
-                    <input id="meal-created-at" type="text" name="meal[created_at]" class="form-control @error('meal.created_at') is-invalid @enderror" placeholder="Buscar..." readonly value="{{ old('meal.created_at') }}" data-url="{{ route('school.meal.index') }}">
+                    <div class="input-group rounded">
+                        <input id="meal-created-at" type="date" name="meal[created_at]" class="form-control text-white border-0 @error('meal.created_at') is-invalid @enderror" 
+                            placeholder="Buscar..." readonly value="{{ old('meal.created_at') }}" data-url="{{ route('school.meal.index') }}">
+                        <label class="input-group-append" for="meal-created-at">
+                            <span class="input-group-text border-0" id="meal-created-at-datepicker-icon">
+                                <i class="fa fa-fw fa-calendar text-primary" style="color:blue"></i>
+                            </span>
+                        </label>
+                </div>
                     @error('meal.created_at')
                     <span class="text-danger d-block small">
                         {{ $errors->first('meal.created_at') }}
@@ -29,8 +37,8 @@
     </div>
 
     <form action="{{ route('school.meal.store')}}" method="POST">
-        @csrf        
-        
+        @csrf
+
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -125,91 +133,91 @@
 @endsection
 
 @push('js')
-    <script src="{{ asset('vendor/gijgo/gijgo.min.js') }}"></script>
-    <script src="{{ asset('vendor/gijgo/messages.pt-br.js') }}"></script>
-    <script src="{{ asset('vendor/jquery-mask/jquery.mask.min.js') }}"></script>
-    <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
-    <script>
-        $('#meal-created-at').datepicker({
-            locale: 'pt-br',
-            uiLibrary: 'bootstrap4',
-            iconsLibrary: 'fontawesome',
-            format: 'dd/mm/yyyy',
-            showOnFocus: false,
-            change: function(event) {
-                $(this).valid()
+<script src="{{ asset('vendor/gijgo/gijgo.min.js') }}"></script>
+<script src="{{ asset('vendor/gijgo/messages.pt-br.js') }}"></script>
+<script src="{{ asset('vendor/jquery-mask/jquery.mask.min.js') }}"></script>
+<script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
+<script>
+    $('#meal-created-at').datepicker({
+        locale: 'pt-br',
+        uiLibrary: 'bootstrap4',
+        iconsLibrary: 'fontawesome',
+        format: 'dd/mm/yyyy',
+        showOnFocus: false,
+        change: function(event) {
+            $(this).valid()
 
-                const url = $(this).data('url')
-                const createdAt = $(this).val()
-                let value = $(this).val()
+            const url = $(this).data('url')
+            const createdAt = $(this).val()
+            let value = $(this).val()
 
-                value = value === $(this).val() ? value : $(this).val()
+            value = value === $(this).val() ? value : $(this).val()
 
-                if (value === $(this))
+            if (value === $(this))
 
-                    console.log(value)
+                console.log(value)
 
 
-            },
-        })
+        },
+    })
 
-        $(document).on('change', '#meal-create-at', function() {
-            console.log($(this).val())
-        })
+    $(document).on('change', '#meal-create-at', function() {
+        console.log($(this).val())
+    })
 
-        $('.zero-left').mask('0#', {
-            onKeyPress: function(value, event, currentField) {
-                console.log(parseInt(value))
-                value = parseInt(value)
+    $('.zero-left').mask('0#', {
+        onKeyPress: function(value, event, currentField) {
+            console.log(parseInt(value))
+            value = parseInt(value)
 
-                if (value <= 9 && value.toString().length < 2) {
-                    $(currentField).val(`0${value.toString()}`)
-                } else {
-                    $(currentField).val(value)
-                }
+            if (value <= 9 && value.toString().length < 2) {
+                $(currentField).val(`0${value.toString()}`)
+            } else {
+                $(currentField).val(value)
             }
-        })
+        }
+    })
 
-        jQuery.validator.setDefaults({
-            errorElement: 'span',
-            errorClass: 'invalid-feedback text-center',
-            errorPlacement: function(error, element) {
-                element.closest('.form-group').append(error);
+    jQuery.validator.setDefaults({
+        errorElement: 'span',
+        errorClass: 'invalid-feedback text-center',
+        errorPlacement: function(error, element) {
+            element.closest('.form-group').append(error);
+        },
+        highlight: function(element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    })
+
+    $('#meal-form').validate({
+        rules: {
+            'meal[created_at]': {
+                required: true
             },
-            highlight: function(element, errorClass, validClass) {
-                $(element).addClass('is-invalid');
-            },
-            unhighlight: function(element, errorClass, validClass) {
-                $(element).removeClass('is-invalid');
+            'meal[mealtime]': {
+                required: true
             }
-        })
 
-        $('#meal-form').validate({
-            rules: {
-                'meal[created_at]': {
-                    required: true
-                },
-                'meal[mealtime]': {
-                    required: true
-                }
+        },
+        messages: {
+            'meal[created_at]': {
+                required: 'O campo dia é obrigatório.'
+            }
+        }
+    })
 
-            },
+    $("input[name^='meal']").each(function() {
+
+        $(this).rules('add', {
+            required: true,
             messages: {
-                'meal[created_at]': {
-                    required: 'O campo dia é obrigatório.'
-                }
+                required: 'Preenchimento obrigatório.'
             }
         })
-        
-        $("input[name^='meal']").each(function() {
 
-            $(this).rules('add', {
-                required: true,
-                messages: {
-                    required: 'Preenchimento obrigatório.'
-                }
-            })
-
-        })
-    </script>
-    @endpush
+    })
+</script>
+@endpush
