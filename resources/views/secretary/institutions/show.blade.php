@@ -20,7 +20,7 @@
         </div>
     
         <div class="col-12 col-sm-4 col-lg-3 my-2 col-4">
-            <a href="#" class="btn btn-block btn-primary d-flex flex-sm-column" style="min-height: 60px">
+            <a href="{{ route('secretary.institution.meal.index', $institution) }}" class="btn btn-block btn-primary d-flex flex-sm-column" style="min-height: 60px">
                 <span> Cardápio <br> Diário </span>
             </a>
         </div>

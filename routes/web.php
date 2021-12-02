@@ -16,6 +16,7 @@ use App\Http\Controllers\Secretary\{
     Institution\Consumption\InstitutionConsumptionController,
     Institution\FoodRecord\InstitutionFoodRecordController,
     Institution\Report\InstitutionReportController,
+    Institution\Meal\InstitutionMealController,
     School\FoodRecordController as SecretarySchoolFoodRecordController
 };
 use App\Models\Institution;
@@ -55,6 +56,7 @@ Route::middleware('auth')->group(function(){
         Route::get('{institution}/consumption', [InstitutionConsumptionController::class, 'index'])->name('secretary.institution.consumption.index');
         Route::get('{institution}/foodRecord', [InstitutionFoodRecordController::class, 'index'])->name('secretary.institution.foodRecord.index');
         Route::get('{institution}/report', [InstitutionReportController::class, 'index'])->name('secretary.institution.report.index');
+        Route::get('{institution}/meal', [InstitutionMealController::class, 'index'])->name('secretary.institution.meal.index');
         
         Route::get('escola/entrada-alimentos', [SecretarySchoolFoodRecordController::class, 'index'])->name('secretary.school.food_record.index');
         Route::get('escola/{institution}/entrada-alimentos', [SecretarySchoolFoodRecordController::class, 'create'])->name('secretary.school.food_record.create');

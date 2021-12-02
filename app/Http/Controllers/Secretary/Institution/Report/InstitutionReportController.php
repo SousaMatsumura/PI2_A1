@@ -26,7 +26,12 @@ class InstitutionReportController extends Controller
             .' consumptions.institution_id = '.$institution->id
             .' order by consumptions.created_at, consumptions.amount_consumed DESC');
             
-        
+            $meals = DB::select('select meal.mealtime as time, meal.name as name,'
+                .' meal.amount as amount, meal.`repeat` as `repeat`,'
+                .' DATE_FORMAT(meal.created_at, "%d-%m-%Y") as created_at'
+                .' from meal where meal.institution_id = '.$institution->id
+                .' order by meal.created_at, meal.mealtime, meal.amount DESC');
+            
 
             /*for($i = 0; $i < count($foodRecords); $i++){
                 for($j = 0; $j < count($foodRecords); $j++){
@@ -41,6 +46,7 @@ class InstitutionReportController extends Controller
         return view('secretary.institutions.report.index', [
             'foodRecords' => $foodRecords,
             'consumptions' => $consumptions,
+            'meals' => $meals,
             'institution' => $institution,
             'search' => isset($request->search) ? $request->search : '',
         ]);

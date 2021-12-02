@@ -16,6 +16,7 @@
         </div>
     </form>
 
+    <!-- Colocando estoque e consumo juntos, ordenados por data, Precisa disso???
     @for ($i=0, $j=0; $i < count($foodRecords) && $j < count($consumptions); )
         @if(date('d-m-Y',strtotime($foodRecords[$i]->created_at)) <=
             date('d-m-Y',strtotime($consumptions[$j]->created_at)))
@@ -115,15 +116,16 @@
         
     @endfor
     <hr>
+    -->
 
     <table id="" class="table w-100">
         <thead class="bg-primary text-white">
             <tr> <th colspan=4 class="text-center">Estoque</th></tr>
             <tr>
+                <th>Data</th>
                 <th>Alimentos</th>
                 <th>Unidade</th>
                 <th>Quantidade</th>
-                <th>Data</th>
                 <!-- <th>Responsável</th> -->
             </tr>
         </thead>
@@ -132,6 +134,9 @@
             @foreach ($foodRecords as $foodRecord)
                 <tr>
                     <td class="align-middle">
+                        {{ $foodRecord->created_at }}
+                    </td>
+                    <td class="align-middle w-50">
                         {{ $foodRecord->name }}
                     </td>
                     <td class="align-middle">
@@ -139,9 +144,6 @@
                     </td>
                     <td class="align-middle">
                         {{ $foodRecord->amount }}
-                    </td>
-                    <td class="align-middle">
-                        {{ $foodRecord->created_at }}
                     </td>
                 </tr>                
             @endforeach
@@ -154,10 +156,10 @@
         <thead class="bg-primary text-white">
             <tr> <th colspan=4 class="text-center">Consumo</th></tr>
             <tr>
+                <th>Data</th>
                 <th>Alimentos</th>
                 <th>Unidade</th>
                 <th>Quantidade</th>
-                <th>Data</th>
             </tr>
         </thead>
         <tbody>
@@ -165,6 +167,9 @@
             @foreach ($consumptions as $consumption)                
                 <tr>
                     <td class="align-middle">
+                        {{ $consumption->created_at }}
+                    </td>
+                    <td class="align-middle w-50">
                         {{ $consumption->name }}
                     </td>
                     <td class="align-middle">
@@ -173,8 +178,54 @@
                     <td class="align-middle">
                         {{ $consumption->amount }}
                     </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+    <hr>
+
+    <table id="" class="table w-100">
+        <thead class="bg-primary text-white">
+            <tr> <th colspan=5 class="text-center">Cardápio</th></tr>
+            <tr>
+                <th>Data</th>
+                <th>Name</th>
+                <th>Período</th>
+                <th>Porções</th>
+                <th>Repetições</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- CONTEÚDO DA TABELA -->
+            @foreach ($meals as $meal)
+            <tr>
                     <td class="align-middle">
-                        {{ $consumption->created_at }}
+                        {{ $meal->created_at }}
+                    </td>
+                    <td class="align-middle w-50">
+                        {{ $meal->name }}
+                    </td>
+                    <td class="align-middle">
+                        @switch($meal->time)
+                            @case('breakfast')
+                                Café da manhã
+                                @break
+                            @case( 'lunch')
+                                Almoço
+                                @break
+                            @case('afternoon snack')
+                                Lanche da tarde
+                                @break
+                            @default
+                                Janta
+                        @endswitch
+                    </td>
+                    <td class="align-middle">
+                        {{ $meal->amount }}
+                    </td>
+                    <td class="align-middle">
+                        {{ $meal->repeat }}
                     </td>
                 </tr>
             @endforeach
@@ -189,7 +240,7 @@
             </a>
         </div>
         <div class="col-12 col-sm-4 col-lg-2 my-2 mt-4 col-6">
-            <a href="{{ route('secretary.institution.show', $institution->id) }}"
+        <a href="#" onclick="window.print();return false;"
                 class="btn btn-block btn-success d-flex flex-sm-column">
                 <span>Imprimir</span>
             </a>
