@@ -15,7 +15,7 @@ class CreateMealTable extends Migration
     {
         Schema::create('meal', function (Blueprint $table) {
             $table->id();
-            $table->enum('mealtime', ['breakfast', 'lunch', 'afternoon snack', 'dinner']);
+            $table->enum('mealtime', ['breakfast', 'lunch', 'afternoon_snack', 'dinner']);
             $table->integer('amount');
             $table->integer('repeat');
             $table->string('name');
