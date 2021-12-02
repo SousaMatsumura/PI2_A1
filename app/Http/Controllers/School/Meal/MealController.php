@@ -26,35 +26,35 @@ class MealController extends Controller
     
     public function store(MealRequest $request)
     {
-        return $request->all();
-        // $createdAt = Carbon::createFromFormat('d/m/Y', $request->meal['createdAt']);
+        $createdAt = Carbon::createFromFormat('d/m/Y', $request->meal['created_at']);
+        
+        foreach($request->meals as $mealtime => $data) {
+            
+            // dd($mealTime);
 
-        // foreach ($request->meal as $mealId => $value) {
+            DB::beginTransaction();
 
-        //     DB::beginTransaction();
+            try {
+                
+                Auth::user()->institution->meals()->create([
+                    'created_at' => $createdAt,
+                    'mealtime' => $mealtime,
+                    'name' => $data['name'],
+                    'amount' => $data['amount'],
+                    'repet' => $data['repeat']
+                ]);
 
-        //     try {
+                DB::commit();
 
-        //         Auth::user()->institution->meal()->create([
-        //             'createdAt' => $createdAt,
-        //             'meal_id' => $mealId,
-        //             'mealtime' => $value['mealtime'],
-        //             'amount' => $value['amount'],
-        //             'repeat' => $value['repeat'],
-        //             'name' => $value['name']
-        //         ]);
+            } catch(Exception $exception) {
 
-        //         DB::commit();
+                DB::rollback();
 
-        //     } catch (Exception $exception) {
+                return $this->redirectBackWithDangerAlert('Não foi possível concluir a operação!' . $exception->getMessage());
+            }
+        }
 
-        //         DB::rollback();
-
-        //         return $this->redirectBackWithDangerAlert('Não foi possível concluir a operação!' . $exception->getMessage());
-        //     }
-        // }
-
-        // return $this->redirectBackWithSuccessAlert('Cardápio cadastrado com sucesso!');
+        return $this->redirectBackWithSuccessAlert('Cardápio do dia '.$request->meal['created_at'].' cadastrado com sucesso!');
 
         
     }
