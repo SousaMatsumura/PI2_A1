@@ -21,9 +21,9 @@
 </li>
 
 <li class="nav-item">
-    <a class="nav-link" href="{{ route('school.dashboard.index') }}">
-        <i class="fas fa-fw fa-utensils"></i>
-        <span>Cardápio do Dia</span>
+    <a class="nav-link" href="{{ route('school.meal.index') }}">
+        <i class="fas fa-fw fa-calendar-check"></i>
+        <span>Cadastrar Cardápio do Dia</span>
     </a>
 </li>
 

@@ -313,12 +313,14 @@
 
                     @auth
                         <div class="row align-items-center my-4">
-                            <div class="col-md-6">
+                            <div class="col-md">
                                 <h1 class="h3 m-0 text-gray-800">@yield('title')</h1>
                             </div>
-                            <div class="col-md-6 text-right">
-                                @yield('options')
-                            </div>
+                            @hasSection('options')
+                                <div class="col-md-6 text-right">
+                                    @yield('options')
+                                </div>
+                            @endif
                         </div>
                     @endauth
 

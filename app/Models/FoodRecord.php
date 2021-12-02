@@ -12,7 +12,12 @@ class FoodRecord extends Model
     protected $fillable = [
         'amount',
         'food_id',
-        'institution_id'
+        'institution_id',
+        'created_at'
+    ];
+
+    protected $appends = [
+        'amount_remaining'
     ];
 
     public function scopeGroupByFood($query)
@@ -30,6 +35,13 @@ class FoodRecord extends Model
         )
         ->join('foods', 'foods.id', '=', 'food_records.food_id')
         ->groupBy('foods.id');
+    }
+
+    public function getAmountRemainingAttribute()
+    {
+        $amountRemaining = $this->attributes['amount_remaining'] ?? null;
+
+        return $amountRemaining <= 9 ? '0'.$amountRemaining : $amountRemaining;
     }
 
     public function food()

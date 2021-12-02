@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Cadastrar Consumo Diário')
+@section('title', 'Entrada de Alimentos: '.$institution->name)
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}">
 @endpush
 
 @section('content')
-    <form id="consumption-form" action="{{ route('school.consumption.store') }}" method="POST">
+    <form id="food-record-form" action="{{ route('secretary.school.food_record.store', $institution) }}" method="POST">
        
         @csrf
        
@@ -23,12 +23,12 @@
                             <input 
                                 id="food-record-created-at" 
                                 type="text" 
-                                name="consumption[created_at]" 
-                                class="form-control bg-primary text-white border-0 @error('consumption.created_at') is-invalid @enderror" 
+                                name="food_record[created_at]" 
+                                class="form-control bg-primary text-white border-primary @error('food_record.created_at') border-danger @enderror" 
                                 placeholder="Buscar..." 
                                 readonly
-                                value="{{ old('consumption.created_at') }}"
-                                data-url="{{ route('school.consumption.index') }}"
+                                value="{{ old('food_record.created_at') }}"
+                                data-url="{{ route('secretary.school.food_record.index', ['institution_id' => $institution->id]) }}"
                             >
                             <div class="input-group-append">
                                 <span class="input-group-text bg-primary border-0" id="food-record-created-at-datepicker-icon">
@@ -37,11 +37,14 @@
                             </div>
                         </div>
                         
-                        @error('consumption.created_at')
+                        @error('food_record.created_at')
                             <span class="text-danger d-block small">
-                                {{ $errors->first('consumption.created_at') }}
+                                {{ $errors->first('food_record.created_at') }}
                             </span>
                         @enderror
+                    </div>
+                    <div class="col-md text-right">
+                        <a href="{{ route('secretary.institution.show', $institution) }}" class="btn btn-primary">Voltar</a>
                     </div>
                 </div>
                 
@@ -59,29 +62,28 @@
                                 <th class="p-2">Alimentos</th>
                                 <th class="text-center">Unidade de Medida</th>
                                 <th class="text-center">Quantidade Atual</th>
-                                <th class="text-center">Quantidade Consumida</th>
+                                <th class="text-center">Entrada</th>
                             </tr>
                         </thead>
                         
                         <tbody>
-                            @foreach($foodRecords as $record)
+                            @foreach($foods as $food)
                                 <tr class="bg-white">
-                                    <td class="p-2">{{ $record->food_name }}</td>
-                                    <td class="text-center">{{ $record->food_unit }}</td>
-                                    <td class="text-center">{{ $record->amount_remaining }}</td>
+                                    <td class="p-2">{{ $food->name }}</td>
+                                    <td class="text-center">{{ $food->unit }}</td>
+                                    <td class="text-center">{{ $food->amount_remaining }}</td>
                                     <td class="w-25">
                                         <div class="form-group m-0">
                                             <input 
                                                 type="text" 
-                                                name="foods[{{ $record->food_id }}][amount_consumed]" 
+                                                name="foods[{{ $food->id }}][amount]" 
                                                 placeholder="00"
-                                                class="form-control form-control-sm border-top-0 border-left-0 border-right-0 rounded-0 text-center digits @error('foods.'.$record->food_id.'.amount_consumed') is-invalid @enderror"
-                                                data-max="{{ $record->amount_remaining }}"
-                                                value={{ old('foods.'.$record->food_id.'.amount_consumed')}}
+                                                class="form-control form-control-sm border-top-0 border-left-0 border-right-0 rounded-0 text-center digits @error('foods.'.$food->id.'.amount') is-invalid @enderror"
+                                                value={{ old('foods.'.$food->id.'.amount')}}
                                             >
-                                            @error('foods.'.$record->food_id.'.amount_consumed')
+                                            @error('foods.'.$food->id.'.amount')
                                                 <span class="text-danger d-block small text-center">
-                                                    {{ $errors->first('foods.'.$record->food_id.'.amount_consumed') }}
+                                                    {{ $errors->first('foods.'.$food->id.'.amount') }}
                                                 </span>
                                             @enderror
                                         </div>
@@ -94,7 +96,7 @@
                 </div>
                 <div class="text-center my-2">
                     <button id="submit-button" class="btn btn-primary active">
-                        Cadastrar Consumo Diário
+                        Cadastrar Entrada de Alimentos
                     </button>
                 </div>
             </div>
@@ -107,5 +109,5 @@
     <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js') }}"></script>
-    <script src="{{ asset('js/school/consumption/create.js') }}"></script>
+    <script src="{{ asset('js/secretary/food_record/create.js') }}"></script>
 @endpush

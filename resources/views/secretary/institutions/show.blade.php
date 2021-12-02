@@ -25,7 +25,7 @@
             </a>
         </div>
         <div class="col-12 col-sm-4 col-lg-3 my-2 col-4">
-            <a href="{{ route('secretary.institution.foodRecord.index', $institution) }}" class="btn btn-block btn-primary d-flex flex-sm-column" style="min-height: 60px">
+            <a href="{{ route('secretary.school.food_record.create', $institution) }}" class="btn btn-block btn-primary d-flex flex-sm-column" style="min-height: 60px">
                 <span>Entrada de</span>
                 <span>Alimentos</span>
             </a>

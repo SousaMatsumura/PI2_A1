@@ -1,5 +1,5 @@
 var submitButton = $('#submit-button')
-var form = $('#consumption-form')
+var form = $('#food-record-form')
 var submitRoute = location.href
 var foodsCard = $('#foods-card')
 
@@ -23,14 +23,14 @@ jQuery.validator.setDefaults({
     }
 })
 
-const validatedForm = $('#consumption-form').validate({
+const validatedForm = form.validate({
     rules: {
-        'consumption[created_at]': {
+        'food_record[created_at]': {
             required: true
         }
     },
     messages: {
-        'consumption[created_at]': {
+        'food_record[created_at]': {
             required: 'O campo dia é obrigatório.'
         }
     }
@@ -48,19 +48,10 @@ function addLeftZero(input) {
 function addInputFoodsRules() {
     $("input[name^='foods']").each(function() {
     
-        let max = $(this).data('max')
-        let value = parseInt($(this).val())
-
-        max = value ? max + value : max
-
-        
-        $(this).rules('remove', 'max')
         $(this).rules('add', {
-            max: max,
             digits: true,
             messages: {
-                max: `O campo quantidade não pode ser superior a {0}`,
-                digits: ''
+                digits: 'O campo entrada deve ser um número.'
             }
         })
 
@@ -82,15 +73,15 @@ function setForm(params = {}) {
             
             foodsCard.hide()
 
-            const consumptions = response.consumptions
+            const foodRecords = response.foodRecords
 
-            if(consumptions.length > 0) {
+            if(foodRecords.length > 0) {
 
-                consumptions.forEach(function(food){
-                    $(`[name="foods[${food.id}][amount_consumed]"]`).val(addLeftZero(food.amount_consumed))
+                foodRecords.forEach(function(food){
+                    $(`[name="foods[${food.food_id}][amount]"]`).val(addLeftZero(food.amount))
                 })
 
-                submitButton.text('Atualizar Consumo Diário')
+                submitButton.text('Atualizar Entrada de Alimentos')
                 submitRoute = response.route
                 form.append('<input type="hidden" name="_method" value="patch">')
 
@@ -99,7 +90,7 @@ function setForm(params = {}) {
                 $('.digits').val('')
 
                 submitRoute = location.href
-                submitButton.text('Cadastrar Consumo Diário')
+                submitButton.text('Cadastrar Entrada de Alimentos')
                 form.find('input[name="_method"]').remove()
 
             }
@@ -138,15 +129,7 @@ datepicker.on('changeDate', function(e){
 
 $('.digits').mask('0#', {
     onKeyPress: function(value, event, currentField) {
-        
-        let max = parseInt($(currentField).data('max'))
-
-        if(value <= max) {
-            $(currentField).val(addLeftZero(value))
-        } else {
-            $(currentField).val(value.substring(0, value.length - 1))
-        }
-        
+        $(currentField).val(addLeftZero(value))
     }
 })
 
