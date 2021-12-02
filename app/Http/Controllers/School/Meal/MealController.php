@@ -8,6 +8,7 @@ use Auth;
 use DB;
 use Exception;
 use Carbon\Carbon;
+use App\Http\Requests\School\Meal\MealRequest;
 
 class MealController extends Controller
 {
@@ -17,36 +18,44 @@ class MealController extends Controller
         return view('school.meal.index');
     }
 
-    
-    public function store(Request $request)
+    public function create(Request $request)
     {
-        $createdAt = Carbon::createFromFormat('d/m/Y', $request->meal['created_at']);
+        return view('school.meal.create');
+    }
 
-        foreach ($request->meal as $mealId => $value) {
+    
+    public function store(MealRequest $request)
+    {
+        return $request->all();
+        // $createdAt = Carbon::createFromFormat('d/m/Y', $request->meal['createdAt']);
 
-            DB::beginTransaction();
+        // foreach ($request->meal as $mealId => $value) {
 
-            try {
+        //     DB::beginTransaction();
 
-                Auth::user()->institution->meal()->create([
-                    'created_at' => $createdAt,
-                    'meal_id' => $mealId,
-                    'mealtime' => $value['mealtime'],
-                    'amount' => $value['amount'],
-                    'repeat' => $value['repeat'],
-                    'name' => $value['name']
-                ]);
+        //     try {
 
-                DB::commit();
+        //         Auth::user()->institution->meal()->create([
+        //             'createdAt' => $createdAt,
+        //             'meal_id' => $mealId,
+        //             'mealtime' => $value['mealtime'],
+        //             'amount' => $value['amount'],
+        //             'repeat' => $value['repeat'],
+        //             'name' => $value['name']
+        //         ]);
 
-            } catch (Exception $exception) {
+        //         DB::commit();
 
-                DB::rollback();
+        //     } catch (Exception $exception) {
 
-                return $this->redirectBackWithDangerAlert('Não foi possível concluir a operação!' . $exception->getMessage());
-            }
-        }
+        //         DB::rollback();
 
-        return $this->redirectBackWithSuccessAlert('Cardápio cadastrado com sucesso!');
+        //         return $this->redirectBackWithDangerAlert('Não foi possível concluir a operação!' . $exception->getMessage());
+        //     }
+        // }
+
+        // return $this->redirectBackWithSuccessAlert('Cardápio cadastrado com sucesso!');
+
+        
     }
 }
