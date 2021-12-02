@@ -36,7 +36,9 @@ Route::middleware('auth')->group(function(){
       
         Route::get('cardapios', [SchoolMealController::class, 'index'])->name('school.meal.index');
         Route::get('cardapio', [SchoolMealController::class, 'create'])->name('school.meal.create');
+        
         Route::post('cardapio', [SchoolMealController::class, 'store'])->name('school.meal.store');
+
         Route::patch('cardapio/atualizar', [SchoolMealController::class, 'update'])->name('school.meal.update');
 
     });

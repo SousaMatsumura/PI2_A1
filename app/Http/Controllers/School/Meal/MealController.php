@@ -42,11 +42,11 @@ class MealController extends Controller
                 ->where('mealtime', $mealtime)
                 ->firstOrFail();
 
-                $menu->name = $data['name'];
-                $menu->amount = $data['amount'];
-                $menu->repeat = $data['repeat'];
+                $meal->name = $data['name'];
+                $meal->amount = $data['amount'];
+                $meal->repeat = $data['repeat'];
 
-                $menu->save();
+                $meal->save();
 
                 DB::commit();
 
