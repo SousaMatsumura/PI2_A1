@@ -15,7 +15,54 @@ class MealController extends Controller
     
     public function index(Request $request)
     {
-        return view('school.meal.index');
+        if($request->ajax()) {
+            if($request->has('created_at')) {
+                $createdAt = Carbon::createFromFormat('d/m/Y', $request->created_at);
+
+                return [
+                    'meals' => Auth::user()->institution->meals()->whereDate('created_at', $createdAt)->get(),
+                    'route' => route('school.meal.update')
+                ];
+            }
+        }
+    }
+
+    public function update(MealRequest $request) {
+
+        $createdAt = Carbon::createFromFormat('d/m/Y', $request->meal['created_at']);
+        
+        foreach($request->meals as $mealtime => $data) {
+            
+            DB::beginTransaction();
+
+            try {
+                
+                $meal = Auth::user()->institution->meal()
+                ->whereDate('created_at', $createdAt)
+                ->where('mealtime', $mealtime)
+                ->firstOrFail();
+
+                $menu->name = $data['name'];
+                $menu->amount = $data['amount'];
+                $menu->repeat = $data['repeat'];
+
+                $menu->save();
+
+                DB::commit();
+
+            } catch(Exception $exception) {
+
+                DB::rollback();
+
+                return $this->redirectBackWithDangerAlert('Não foi possível concluir a operação!'.$exception->getMessage());
+
+            }
+            
+
+        }
+        
+        return $this->redirectBackWithSuccessAlert('Cardápio do dia '.$request->meal['created_at'].' foi atualizado com sucesso!');
+
     }
 
     public function create(Request $request)
