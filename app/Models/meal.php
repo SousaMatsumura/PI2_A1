@@ -11,7 +11,7 @@ class Meal extends Model
 
     public $table = 'meal';
 
-    protected $fillable = ['name', 'mealtime', 'amount', 'repeat', 'createdAt'];    
+    protected $fillable = ['name', 'mealtime', 'amount', 'repeat', 'institution_id', 'createdAt'];    
 
     public function institution()
     {
