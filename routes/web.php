@@ -12,7 +12,8 @@ use App\Http\Controllers\Secretary\{
     Institution\InstitutionController,
     Institution\Data\InstitutionDataController,
     Institution\Consumption\InstitutionConsumptionController,
-    Institution\FoodRecord\InstitutionFoodRecordController
+    Institution\FoodRecord\InstitutionFoodRecordController,
+    Institution\Report\InstitutionReportController
 };
 use App\Models\Institution;
 
@@ -46,6 +47,7 @@ Route::middleware('auth')->group(function(){
         Route::get('{institution}/data', [InstitutionDataController::class, 'index'])->name('secretary.institution.data.index');
         Route::get('{institution}/consumption', [InstitutionConsumptionController::class, 'index'])->name('secretary.institution.consumption.index');
         Route::get('{institution}/foodRecord', [InstitutionFoodRecordController::class, 'index'])->name('secretary.institution.foodRecord.index');
+        Route::get('{institution}/report', [InstitutionReportController::class, 'index'])->name('secretary.institution.report.index');
     });
     
 });

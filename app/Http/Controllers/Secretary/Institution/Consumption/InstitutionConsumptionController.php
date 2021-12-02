@@ -21,14 +21,16 @@ class InstitutionConsumptionController extends Controller
             .' foods.id = consumptions.food_id AND consumptions.institution_id = '.$institution->id
             .' order by foods.name, consumptions.amount_consumed');
 
-        //$consumptions = collect($consumptions);
-        /*if(isset($request->search) && $request->search !== ''){
-            foreach($consumptions as $consumption){
-                if(strpos($consumption['name'], $request->search)){
-                    unset($consumptions[$consumption]);
+        
+        
+        /* if(isset($request->search) && $request->search !== ''){
+            foreach($consumptions as &$consumption){
+                if(!str_contains($consumption->name, $request->search)){
+                    unset($consumption);
+                    
                 }
             }
-        }*/
+        } */
         
         return view('secretary.institutions.consumption.index', [
             'consumptions' => $consumptions,

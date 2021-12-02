@@ -28,20 +28,39 @@
         <tbody>
             <!-- CONTEÚDO DA TABELA -->
             @foreach ($consumptions as $consumption)
-                <tr>
-                    <td class="align-middle">
-                        {{ $consumption->name }}
-                    </td>
-                    <td class="align-middle">
-                        {{ $consumption->unit }}
-                    </td>
-                    <td class="align-middle">
-                        {{ $consumption->amount }}
-                    </td>
-                    <!-- <td class="align-middle">
-                        {{ $consumption->amount }}
-                    </td> -->
-                </tr>
+                @if(isset($search) && $search !== ''
+                    && str_contains(strtolower($consumption->name), strtolower($search)))
+                    <tr>
+                        <td class="align-middle">
+                            {{ $consumption->name }}
+                        </td>
+                        <td class="align-middle">
+                            {{ $consumption->unit }}
+                        </td>
+                        <td class="align-middle">
+                            {{ $consumption->amount }}
+                        </td>
+                        <!-- <td class="align-middle">
+                            {{ $consumption->amount }}
+                        </td> -->
+                    </tr>
+                @endif
+                @if(!isset($search) || $search === '')
+                    <tr>
+                        <td class="align-middle">
+                            {{ $consumption->name }}
+                        </td>
+                        <td class="align-middle">
+                            {{ $consumption->unit }}
+                        </td>
+                        <td class="align-middle">
+                            {{ $consumption->amount }}
+                        </td>
+                        <!-- <td class="align-middle">
+                            {{ $consumption->amount }}
+                        </td> -->
+                    </tr>
+                @endif
             @endforeach
         </tbody>
     </table>

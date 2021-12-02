@@ -29,20 +29,39 @@
         <tbody>
             <!-- CONTEÚDO DA TABELA -->
             @foreach ($foodRecords as $foodRecord)
-                <tr>
-                    <td class="align-middle">
-                        {{ $foodRecord->id }}
-                    </td>
-                    <td class="align-middle">
-                        {{ $foodRecord->name }}
-                    </td>
-                    <td class="align-middle">
-                        {{ $foodRecord->unit }}
-                    </td>
-                    <td class="align-middle">
-                        {{ $foodRecord->amount }}
-                    </td>
-                </tr>
+                @if(isset($search) && $search !== ''
+                    && str_contains(strtolower($foodRecord->name), strtolower($search)))
+                    <tr>
+                        <td class="align-middle">
+                            {{ $foodRecord->id }}
+                        </td>
+                        <td class="align-middle">
+                            {{ $foodRecord->name }}
+                        </td>
+                        <td class="align-middle">
+                            {{ $foodRecord->unit }}
+                        </td>
+                        <td class="align-middle">
+                            {{ $foodRecord->amount }}
+                        </td>
+                    </tr>
+                @endif
+                @if(!isset($search) || $search === '')
+                    <tr>
+                        <td class="align-middle">
+                            {{ $foodRecord->id }}
+                        </td>
+                        <td class="align-middle">
+                            {{ $foodRecord->name }}
+                        </td>
+                        <td class="align-middle">
+                            {{ $foodRecord->unit }}
+                        </td>
+                        <td class="align-middle">
+                            {{ $foodRecord->amount }}
+                        </td>
+                    </tr>
+                @endif
             @endforeach
         </tbody>
     </table>
