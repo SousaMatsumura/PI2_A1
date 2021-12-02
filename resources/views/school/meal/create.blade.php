@@ -20,7 +20,15 @@
                 <div class="col-md-4">
 
                     <div class="input-group bg-primary rounded">
-                        <input id="meal-created-at" type="text" name="meal[createdAt]" class="form-control bg-primary text-white border-0 @error('meal.createdAt') is-invalid @enderror" placeholder="Buscar..." readonly value="{{ old('meal.createdAt') }}">
+                        <input
+                            id="meal-created-at"
+                            type="text"
+                            name="meal[createdAt]"
+                            class="form-control bg-primary text-white border-0 @error('meal.createdAt') is-invalid @enderror"
+                            placeholder="Buscar..." 
+                            readonly value="{{ old('meal.createdAt') }}"
+                            data-url="{{ route('school.meal.index') }}"
+                        >
                         <div class="input-group-append">
                             <span class="input-group-text bg-primary border-0" id="meal-created-at-datepicker-icon">
                                 <i class="fa fa-fw fa-calendar text-white"></i>
@@ -354,7 +362,7 @@
                 created_at: params.created_at
             },
             success: function(response) {
-
+                console.log(response)
                 // mealsCard.hide()
 
                 // const consumptions = response.consumptions

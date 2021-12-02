@@ -34,8 +34,10 @@ Route::middleware('auth')->group(function(){
         Route::post('consumo/cadastrar', [SchoolConsumptionController::class, 'store'])->name('school.consumption.store');
         Route::patch('consumo/atualizar', [SchoolConsumptionController::class, 'update'])->name('school.consumption.update');
       
+        Route::get('cardapios', [SchoolMealController::class, 'index'])->name('school.meal.index');
         Route::get('cardapio', [SchoolMealController::class, 'create'])->name('school.meal.create');
         Route::post('cardapio', [SchoolMealController::class, 'store'])->name('school.meal.store');
+        Route::patch('cardapio/atualizar', [SchoolMealController::class, 'update'])->name('school.meal.update');
 
     });
 
