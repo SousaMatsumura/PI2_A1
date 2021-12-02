@@ -20,7 +20,15 @@
                 <div class="col-md-4">
 
                     <div class="input-group bg-primary rounded">
-                        <input id="meal-created-at" type="text" name="meal[createdAt]" class="form-control bg-primary text-white border-0 @error('meal.createdAt') is-invalid @enderror" placeholder="Buscar..." readonly value="{{ old('meal.createdAt') }}">
+                        <input
+                            id="meal-created-at"
+                            type="text"
+                            name="meal[createdAt]"
+                            class="form-control bg-primary text-white border-0 @error('meal.createdAt') is-invalid @enderror"
+                            placeholder="Buscar..." 
+                            readonly value="{{ old('meal.createdAt') }}"
+                            data-url="{{ route('school.meal.index') }}"
+                        >
                         <div class="input-group-append">
                             <span class="input-group-text bg-primary border-0" id="meal-created-at-datepicker-icon">
                                 <i class="fa fa-fw fa-calendar text-white"></i>
@@ -354,34 +362,34 @@
                 created_at: params.created_at
             },
             success: function(response) {
+                console.log(response)
+                mealsCard.hide()
 
-                // mealsCard.hide()
+                const meals = response.meals
 
-                // const consumptions = response.consumptions
+                if (meals.length > 0) {
 
-                // if (consumptions.length > 0) {
+                    meals.forEach(function(meal) {
+                        $(`[name="meals[${meal.id}][mealtime]"]`).val(addLeftZero(food.mealtime))
+                    })
 
-                //     consumptions.forEach(function(food) {
-                //         $(`[name="foods[${food.id}][amount_consumed]"]`).val(addLeftZero(food.amount_consumed))
-                //     })
+                    submitButton.text('Atualizar Consumo Diário')
+                    submitRoute = response.route
+                    form.append('<input type="hidden" name="_method" value="patch">')
 
-                //     submitButton.text('Atualizar Consumo Diário')
-                //     submitRoute = response.route
-                //     form.append('<input type="hidden" name="_method" value="patch">')
+                } else {
 
-                // } else {
+                    $('.digits').val('')
 
-                //     $('.digits').val('')
+                    submitRoute = location.href
+                    submitButton.text('Cadastrar Cardápio do Dia')
+                    form.find('input[name="_method"]').remove()
 
-                //     submitRoute = location.href
-                //     submitButton.text('Cadastrar Consumo Diário')
-                //     form.find('input[name="_method"]').remove()
+                }
 
-                // }
+                form.prop('action', submitRoute)
 
-                // form.prop('action', submitRoute)
-
-                // mealsCard.fadeIn().show()
+                mealsCard.fadeIn().show()
 
             },
             error: function(error) {
