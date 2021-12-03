@@ -2,9 +2,24 @@
 
 @section('title', 'Login')
 
+@push('css')
+    <style>
+
+        #content-wrapper {
+            min-height: 100vh;
+        }
+
+        .container-fluid {
+            min-height: 70vh !important;            
+            display: flex !important;
+            align-items: center !important;
+        }
+
+    </style>
+@endpush
+
 @section('content')
-    
-    <div class="card w-25 mx-auto bg-primary text-white my-4">
+    <div class="card w-25 mx-auto my-auto bg-primary text-white">
         <div class="card-body">
             <h1 class="text-center h3 font-weight-bold">Login</h1>
 
@@ -29,7 +44,7 @@
                     @enderror
                 </div>
                 <p class="small">
-                    Esqueceu sua senha? Clique <a href="#" class="text-white font-weight-bold">AQUI</a> para recuperar
+                    Esqueceu sua senha? Clique <a href="{{ route('password.request') }}" class="text-white font-weight-bold">AQUI</a> para recuperar
                 </p>
                 <button type="submit" class="btn btn-primary btn-block active">
                     Entrar
