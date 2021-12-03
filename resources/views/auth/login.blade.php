@@ -44,7 +44,7 @@
                     @enderror
                 </div>
                 <p class="small">
-                    Esqueceu sua senha? Clique <a href="#" class="text-white font-weight-bold">AQUI</a> para recuperar
+                    Esqueceu sua senha? Clique <a href="{{ route('password.request') }}" class="text-white font-weight-bold">AQUI</a> para recuperar
                 </p>
                 <button type="submit" class="btn btn-primary btn-block active">
                     Entrar

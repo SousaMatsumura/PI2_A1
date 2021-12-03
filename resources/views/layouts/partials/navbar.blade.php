@@ -7,7 +7,7 @@
     </button>
 
     @guest
-        <a href="" class="navbar-brand">
+        <a href="{{ route('login') }}" class="navbar-brand">
             {{ config('app.name') }}
         </a>
     @endguest
