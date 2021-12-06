@@ -2,11 +2,17 @@ var submitButton = $('#submit-button')
 var form = $('#consumption-form')
 var submitRoute = location.href
 var foodsCard = $('#foods-card')
+var startDate = new Date()
+var endDate = new Date()
 
-let datepicker = $('#food-record-created-at').datepicker({
+startDate.setDate(endDate.getDate() - 7)
+
+let datepicker = $('#consumption-created-at').datepicker({
     language: 'pt-BR',
     autoclose: true,
-    showOnFocus: false
+    showOnFocus: false,
+    startDate: startDate,
+    endDate: endDate
 })
 
 jQuery.validator.setDefaults({
@@ -52,7 +58,7 @@ function addInputFoodsRules() {
         let value = parseInt($(this).val())
 
         max = value ? max + value : max
-
+        max = parseInt(max)
         
         $(this).rules('remove', 'max')
         $(this).rules('add', {
@@ -118,7 +124,7 @@ function setForm(params = {}) {
 
 }
 
-$('#food-record-created-at-datepicker-icon').click(function(){
+$('#consumption-created-at-datepicker-icon').click(function(){
     datepicker.datepicker('show')
 })
 
@@ -134,7 +140,6 @@ datepicker.on('changeDate', function(e){
     })
 
 })
-
 
 $('.digits').mask('0#', {
     onKeyPress: function(value, event, currentField) {
@@ -158,3 +163,11 @@ if(datepicker.val()) {
         created_at: datepicker.val()
     })
 }
+
+$(window).on('load', function(){
+    $('.record-amount-remaining').each(function(){
+        let value = $(this).text() ? addLeftZero($(this).text()) : '00'
+
+        $(this).text(value)
+    })
+})

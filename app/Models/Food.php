@@ -17,10 +17,6 @@ class Food extends Model
         'unit'
     ];
 
-    protected $appends = [
-        'amount_remaining'
-    ];
-
     public function scopeGetByInstitution($query, $institutionId)
     {
         return $query->select(
@@ -32,13 +28,6 @@ class Food extends Model
             DB::raw('(SELECT amount - COALESCE(amount_consumed, 0)) AS amount_remaining')
         )
         ->groupBy('foods.id');
-    }
-
-    public function getAmountRemainingAttribute()
-    {
-        $amountRemaining = $this->attributes['amount_remaining'] ?? null;
-
-        return $amountRemaining <= 9 ? '0'.$amountRemaining : $amountRemaining;
     }
 
     public function records()

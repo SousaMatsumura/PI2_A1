@@ -1,0 +1,37 @@
+/* Mudar a cor do placeholder */
+.form-control.bg-primary::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #fff;
+    opacity: 1; /* Firefox */
+}
+
+.form-control.bg-primary:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #fff;
+}
+
+.form-control.bg-primary::-ms-input-placeholder { /* Microsoft Edge */
+    color: #fff;
+}
+
+/* Cursor para os ícones dos inputs */
+.input-group-append {
+    cursor: pointer;
+}
+
+/* Datepicker */
+.datepicker-dropdown {
+    font-size: 0.9rem;
+}
+
+.datepicker-days .day.active, .datepicker-days .day.active:hover {
+    background-color: #4e73df !important;
+    background-image: none;
+}
+
+.datepicker-days .day {
+    padding: 8px;
+}
+
+.datepicker-days .day.disabled {
+    opacity: 0.5;
+    cursor: not-allowed !important;
+}

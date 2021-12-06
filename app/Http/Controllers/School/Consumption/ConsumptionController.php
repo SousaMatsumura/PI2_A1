@@ -12,6 +12,7 @@ use App\Http\Requests\School\Consumption\{
     StoreRequest, 
     UpdateRequest
 };
+use App\Models\Food;
 
 class ConsumptionController extends Controller
 {
@@ -31,15 +32,13 @@ class ConsumptionController extends Controller
 
     public function create(Request $request)
     {
-        $foodRecords = Auth::user()->institution->foodRecords()->groupByFood();
+        $foodRecords = Food::getByInstitution(Auth::user()->institution_id);
 
         if($request->has('pesquisa')) {
             $foodRecords->where('foods.name', 'like', '%'.$request->pesquisa.'%');
         }
 
         $foodRecords = $foodRecords->get();
-        
-        session()->flashInput($request->input());
 
         return view('school.consumption.create', compact('foodRecords'));
     }
@@ -50,27 +49,30 @@ class ConsumptionController extends Controller
         
         foreach($request->foods as $foodId => $value) {
             
-            DB::beginTransaction();
+            if($value['amount_consumed']) {
 
-            try {
-                
-                Auth::user()->institution->consumptions()->create([
-                    'created_at' => $createdAt,
-                    'food_id' => $foodId,
-                    'amount_consumed' => $value['amount_consumed'] ?? 0
-                ]);
+                DB::beginTransaction();
 
-                DB::commit();
+                try {
+                    
+                    Auth::user()->institution->consumptions()->create([
+                        'created_at' => $createdAt,
+                        'food_id' => $foodId,
+                        'amount_consumed' => $value['amount_consumed']
+                    ]);
 
-            } catch(Exception $exception) {
+                    DB::commit();
 
-                DB::rollback();
+                } catch(Exception $exception) {
 
-                return $this->redirectBackWithDangerAlert('Não foi possível concluir a operação!'.$exception->getMessage());
+                    DB::rollback();
+
+                    return $this->redirectBackWithDangerAlert('Não foi possível concluir a operação!'.$exception->getMessage());
+
+                }
 
             }
             
-
         }
         
         return $this->redirectBackWithSuccessAlert('Consumo diário do dia '.$request->consumption['created_at'].' foi cadastrado com sucesso!');
@@ -83,29 +85,43 @@ class ConsumptionController extends Controller
         
         foreach($request->foods as $foodId => $value) {
             
-            DB::beginTransaction();
+            if($value['amount_consumed']) {
 
-            try {
-                
-                $consumption = Auth::user()->institution->consumptions()
-                ->whereDate('created_at', $createdAt)
-                ->where('food_id', $foodId)
-                ->firstOrFail();
+                DB::beginTransaction();
 
-                $consumption->amount_consumed = $value['amount_consumed'] ?? 0;
+                try {
 
-                $consumption->save();
+                    $consumption = Auth::user()->institution->consumptions()
+                    ->whereDate('created_at', $createdAt)
+                    ->where('food_id', $foodId)
+                    ->first();
 
-                DB::commit();
+                    if(!$consumption) {
+                        
+                        Auth::user()->institution->consumptions()->create([
+                            'created_at' => $createdAt,
+                            'food_id' => $foodId,
+                            'amount_consumed' => $value['amount_consumed']
+                        ]);
 
-            } catch(Exception $exception) {
+                    } else {
+                        
+                        $consumption->amount_consumed = $value['amount_consumed'];
+                        $consumption->save();
 
-                DB::rollback();
+                    }
 
-                return $this->redirectBackWithDangerAlert('Não foi possível concluir a operação!'.$exception->getMessage());
+                    DB::commit();
 
+
+                } catch(Exception $exception) {
+
+                    DB::rollback();
+
+                    return $this->redirectBackWithDangerAlert('Não foi possível concluir a operação!'.$exception->getMessage());
+
+                }
             }
-            
 
         }
         
