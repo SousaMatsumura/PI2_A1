@@ -17,7 +17,8 @@ use App\Http\Controllers\Secretary\{
     Institution\FoodRecord\InstitutionFoodRecordController,
     Institution\Report\InstitutionReportController,
     Institution\Meal\InstitutionMealController,
-    School\FoodRecordController as SecretarySchoolFoodRecordController
+    School\FoodRecordController as SecretarySchoolFoodRecordController,
+    User\UserController as SecretaryUserController
 };
 use App\Models\Institution;
 
@@ -51,21 +52,30 @@ Route::middleware('auth')->group(function(){
         Route::get('instituicao', [InstitutionController::class, 'index'])->name('secretary.institution.index');
         Route::get('instituicao/cadastrar', [InstitutionController::class, 'create'])->name('secretary.institution.create');
         Route::post('instituicao', [InstitutionController::class, 'store'])->name('secretary.institution.store');
-        Route::get('{institution}', [InstitutionController::class, 'show'])->name('secretary.institution.show');
-        Route::get('{institution}/edit', [InstitutionController::class, 'edit'])->name('secretary.institution.edit');
-        Route::put('{instituicao}', [InstitutionController::class, 'update'])->name('secretary.institution.update');
-        Route::delete('{institution}', [InstitutionController::class, 'destroy'])->name('secretary.institution.destroy');
+        Route::get('escola/{institution}', [InstitutionController::class, 'show'])->name('secretary.institution.show');
+        Route::get('escola/{institution}/edit', [InstitutionController::class, 'edit'])->name('secretary.institution.edit');
+        Route::put('escola/{instituicao}', [InstitutionController::class, 'update'])->name('secretary.institution.update');
+        Route::delete('escola/{institution}', [InstitutionController::class, 'destroy'])->name('secretary.institution.destroy');
 
-        Route::get('{institution}/data', [InstitutionDataController::class, 'index'])->name('secretary.institution.data.index');
-        Route::get('{institution}/consumption', [InstitutionConsumptionController::class, 'index'])->name('secretary.institution.consumption.index');
-        Route::get('{institution}/foodRecord', [InstitutionFoodRecordController::class, 'index'])->name('secretary.institution.foodRecord.index');
-        Route::get('{institution}/report', [InstitutionReportController::class, 'index'])->name('secretary.institution.report.index');
-        Route::get('{institution}/meal', [InstitutionMealController::class, 'index'])->name('secretary.institution.meal.index');
+        Route::get('escola/{institution}/data', [InstitutionDataController::class, 'index'])->name('secretary.institution.data.index');
+        Route::get('escola/{institution}/consumption', [InstitutionConsumptionController::class, 'index'])->name('secretary.institution.consumption.index');
+        Route::get('escola/{institution}/foodRecord', [InstitutionFoodRecordController::class, 'index'])->name('secretary.institution.foodRecord.index');
+        Route::get('escola/{institution}/report', [InstitutionReportController::class, 'index'])->name('secretary.institution.report.index');
+        Route::get('escola/{institution}/meal', [InstitutionMealController::class, 'index'])->name('secretary.institution.meal.index');
         
+        // Entrada de Alimentos
         Route::get('escola/entrada-alimentos', [SecretarySchoolFoodRecordController::class, 'index'])->name('secretary.school.food_record.index');
         Route::get('escola/{institution}/entrada-alimentos', [SecretarySchoolFoodRecordController::class, 'create'])->name('secretary.school.food_record.create');
         Route::post('escola/{institution}/entrada-alimentos', [SecretarySchoolFoodRecordController::class, 'store'])->name('secretary.school.food_record.store');
         Route::patch('escola/{institution}/entrada-alimentos/atualizar', [SecretarySchoolFoodRecordController::class, 'update'])->name('secretary.school.food_record.update');
+
+        // Funcionários (Usuários)
+        Route::get('funcionarios', [SecretaryUserController::class, 'index'])->name('secretary.user.index');
+        Route::get('funcionario/cadastrar', [SecretaryUserController::class, 'create'])->name('secretary.user.create');
+        Route::post('funcionario/cadastrar', [SecretaryUserController::class, 'store'])->name('secretary.user.store');
+        Route::get('funcionario/{user}/editar', [SecretaryUserController::class, 'edit'])->name('secretary.user.edit');
+        Route::put('funcionario/{user}/editar', [SecretaryUserController::class, 'update'])->name('secretary.user.update');
+        Route::delete('funcionario/{user}/excluir', [SecretaryUserController::class, 'destroy'])->name('secretary.user.destroy');
     });
     
 });

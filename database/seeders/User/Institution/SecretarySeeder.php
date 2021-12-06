@@ -37,7 +37,7 @@ class SecretarySeeder extends Seeder
         User::create([
             'name' => 'Tiago Villalobos',
             'username' => 'tiago',
-            'password' => bcrypt('tiago'),
+            'password' => 'tiago',
             'email' => 'tiagolimavillalobos@gmail.com',
             'phone' => '(12) 98190-4120',
             'institution_id' => $institution->id

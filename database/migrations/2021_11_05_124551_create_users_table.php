@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('phone');
             $table->foreignId('institution_id')->constrained();
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
