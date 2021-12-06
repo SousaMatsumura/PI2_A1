@@ -69,17 +69,3 @@ Route::middleware('auth')->group(function(){
     });
     
 });
-
-
-
-Route::get('teste', function(){
-    
-    $institution = \App\Models\Institution::find(2);
-
-    $foods = \App\Models\Food::getByInstitution(1)
-    ->get();
-
-
-    return $foods;
-
-});
