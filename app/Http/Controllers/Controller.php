@@ -47,7 +47,15 @@ class Controller extends BaseController
                 'message' => $message
             ]
         ])
-        ->withInput();
+        ->withInput()
+        ->with(request()->all());
+    }
+
+    public function setFlashList($elements)
+    {
+        session()->flash('list', [
+            'elements' => $elements
+        ]);
     }
 
     private function redirectBackWithAlert($type, $message)

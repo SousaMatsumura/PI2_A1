@@ -11,3 +11,10 @@
         <span>Funcionários</span>
     </a>
 </li>
+
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('secretary.food.index') }}">
+        <i class="fas fa-fw fa-utensils"></i>
+        <span>Alimentos</span>
+    </a>
+</li>

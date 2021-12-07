@@ -17,6 +17,7 @@ class CreateFoodsTable extends Migration
             $table->id();
             $table->string('name');
             $table->enum('unit', ['KG', 'L', 'MM', 'G', 'UN']);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

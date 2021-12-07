@@ -63,6 +63,7 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'institution.type' => \App\Http\Middleware\InstitutionType::class
+        'institution.type' => \App\Http\Middleware\InstitutionType::class,
+        'retrieve.softdelete' => \App\Http\Middleware\RetrieveSoftDelete::class,
     ];
 }

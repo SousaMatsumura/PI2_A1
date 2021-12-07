@@ -82,6 +82,13 @@
 
                         <div class="alert bg-{{ session('alert')['type'] }} alert-dismissible fade show text-white" role="alert">
                             <strong><i class="fa fa-fw fa-{{ session('alert')['icon'] }}"></i></strong> {!! session('alert')['message'] !!}
+                            @if(session()->has('list'))
+                                <ul>
+                                    @foreach(session('list')['elements'] as $element)
+                                        <li>{{ $element }}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
