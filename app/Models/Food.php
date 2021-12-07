@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use DB;
 
 class Food extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     public $table = 'foods';
 
@@ -28,6 +29,16 @@ class Food extends Model
             DB::raw('(SELECT amount - COALESCE(amount_consumed, 0)) AS amount_remaining')
         )
         ->groupBy('foods.id');
+    }
+
+    public function hasRecords()
+    {
+        return $this->records()->exists();
+    }
+
+    public function getRecordsInstitutionNames()
+    {
+        return $this->records()->groupBy('institution_id')->get()->load('institution')->pluck('institution.name');
     }
 
     public function records()

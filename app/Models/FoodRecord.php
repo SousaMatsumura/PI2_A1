@@ -48,4 +48,9 @@ class FoodRecord extends Model
     {
         return $this->belongsTo(Food::class);
     }
+
+    public function institution()
+    {
+        return $this->belongsTo(Institution::class);
+    }
 }
