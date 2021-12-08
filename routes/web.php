@@ -50,6 +50,14 @@ Route::middleware('auth')->group(function(){
     });
 
     Route::middleware('institution.type:SECRETARY')->prefix('secretaria')->group(function(){
+        
+        // Entrada de Alimentos
+        Route::get('escola/entrada-alimentos/', [SecretarySchoolFoodRecordController::class, 'index'])->name('secretary.school.food_record.index');
+        Route::get('escola/{institution}/entrada-alimentos', [SecretarySchoolFoodRecordController::class, 'create'])->name('secretary.school.food_record.create');
+        Route::post('escola/{institution}/entrada-alimentos', [SecretarySchoolFoodRecordController::class, 'store'])->name('secretary.school.food_record.store');
+        Route::patch('escola/{institution}/entrada-alimentos/atualizar', [SecretarySchoolFoodRecordController::class, 'update'])->name('secretary.school.food_record.update');
+        
+        
         Route::get('painel', [SecretaryDashboardController::class, 'index'])->name('secretary.dashboard.index');
         Route::get('instituicao', [InstitutionController::class, 'index'])->name('secretary.institution.index');
         Route::get('instituicao/cadastrar', [InstitutionController::class, 'create'])->name('secretary.institution.create');
@@ -65,11 +73,7 @@ Route::middleware('auth')->group(function(){
         Route::get('escola/{institution}/report', [InstitutionReportController::class, 'index'])->name('secretary.institution.report.index');
         Route::get('escola/{institution}/meal', [InstitutionMealController::class, 'index'])->name('secretary.institution.meal.index');
         
-        // Entrada de Alimentos
-        Route::get('escola/entrada-alimentos', [SecretarySchoolFoodRecordController::class, 'index'])->name('secretary.school.food_record.index');
-        Route::get('escola/{institution}/entrada-alimentos', [SecretarySchoolFoodRecordController::class, 'create'])->name('secretary.school.food_record.create');
-        Route::post('escola/{institution}/entrada-alimentos', [SecretarySchoolFoodRecordController::class, 'store'])->name('secretary.school.food_record.store');
-        Route::patch('escola/{institution}/entrada-alimentos/atualizar', [SecretarySchoolFoodRecordController::class, 'update'])->name('secretary.school.food_record.update');
+        
 
         // Funcionários (Usuários)
         Route::get('funcionarios', [SecretaryUserController::class, 'index'])->name('secretary.user.index');

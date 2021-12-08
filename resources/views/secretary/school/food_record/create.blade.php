@@ -71,7 +71,7 @@
                                 <tr class="bg-white">
                                     <td class="p-2">{{ $food->name }}</td>
                                     <td class="text-center">{{ $food->unit }}</td>
-                                    <td class="text-center">{{ $food->amount_remaining }}</td>
+                                    <td class="text-center food-amount-remaining">{{ $food->amount_remaining }}</td>
                                     <td class="w-25">
                                         <div class="form-group m-0">
                                             <input 

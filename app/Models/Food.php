@@ -18,17 +18,34 @@ class Food extends Model
         'unit'
     ];
 
-    public function scopeGetByInstitution($query, $institutionId)
+    public function scopeGetByInstitution($query, $institutionId, $createdAt = null)
     {
-        return $query->select(
+        $collection = $query->select(
             'foods.id',
             'foods.name',
-            'foods.unit',
-            DB::raw('(SELECT SUM(food_records.amount) FROM food_records WHERE food_records.food_id = foods.id AND food_records.institution_id = '.$institutionId.' ) AS amount'),
-            DB::raw('(SELECT SUM(consumptions.amount_consumed) FROM consumptions WHERE consumptions.food_id = foods.id AND consumptions.institution_id = '.$institutionId.' ) AS amount_consumed'),
-            DB::raw('(SELECT amount - COALESCE(amount_consumed, 0)) AS amount_remaining')
+            'foods.unit'
         )
-        ->groupBy('foods.id');
+        ->withSum(
+            ['records AS amount' => function($query) use($institutionId, $createdAt) {
+                $query->where('institution_id', $institutionId);
+
+                if($createdAt) $query->whereDate('created_at', $createdAt);
+            }],
+            'amount',
+        )
+        ->withSum(
+            ['consumptions AS amount_consumed' => fn ($query) => $query->where('institution_id', $institutionId)],
+            'amount_consumed'
+        )
+        ->get();
+        
+        $collection->map(function($food) {
+            $food->amount = $food->amount ?? 0;
+            $food->amount_consumed = $food->amount_consumed ?? 0;
+            $food->amount_remaining = $food->amount - $food->amount_consumed;
+        });
+
+        return $collection;
     }
 
     public function hasRecords()
