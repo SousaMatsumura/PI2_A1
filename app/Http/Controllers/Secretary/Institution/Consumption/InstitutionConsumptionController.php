@@ -19,6 +19,7 @@ class InstitutionConsumptionController extends Controller
         $consumptions = DB::select('select foods.name as name, foods.unit as unit,'
             .' consumptions.amount_consumed as amount from consumptions, foods where'
             .' foods.id = consumptions.food_id AND consumptions.institution_id = '.$institution->id
+            .' AND Date(consumptions.created_at) = CURDATE()'
             .' order by foods.name, consumptions.amount_consumed');
 
         

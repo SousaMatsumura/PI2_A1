@@ -13,8 +13,9 @@ class InstitutionMealController extends Controller
     {
         $meals = DB::select('select meal.mealtime as time, meal.name as name,'
         .' meal.amount as amount, meal.`repeat` as `repeat`,'
-        .' DATE_FORMAT(meal.created_at, "%d-%m-%Y") as created_at'
+        .' DATE_FORMAT(meal.created_at, "%d/%m/%Y") as created_at'
         .' from meal where meal.institution_id = '.$institution->id
+        .' AND Date(meal.created_at) = CURDATE()'
         .' order by meal.created_at, meal.mealtime, meal.amount DESC');
         
         return view('secretary.institutions.meal.index', [

@@ -1,3 +1,106 @@
+    <!-- Colocando estoque e consumo juntos, ordenados por data, Precisa disso???
+    @for ($i=0, $j=0; $i < count($foodRecords) && $j < count($consumptions); )
+        @if(date('d-m-Y',strtotime($foodRecords[$i]->created_at)) <=
+            date('d-m-Y',strtotime($consumptions[$j]->created_at)))
+            <table id="" class="table w-100">
+                <thead class="bg-primary text-white">
+                    <tr> <th colspan=3 class="text-center">{{ date('d-m-Y',strtotime($foodRecords[$i]->created_at)) }}</th></tr>
+                    <tr> <th colspan=3 class="text-center">Estoque</th></tr>
+                    <tr>
+                        <th>Alimentos</th>
+                        <th>Unidade</th>
+                        <th>Quantidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td class="align-middle w-50">
+                            {{ $foodRecords[$i]->name }}
+                        </td>
+                        <td class="align-middle">
+                            {{ $foodRecords[$i]->unit }}
+                        </td>
+                        <td class="align-middle">
+                            {{ $foodRecords[$i]->amount }}
+                        </td>
+                    </tr>
+                    @while ($i+1 < count($foodRecords) &&
+                        date('d-m-Y',strtotime($foodRecords[$i]->created_at)) ==
+                            date('d-m-Y',strtotime($foodRecords[$i+1]->created_at)))
+                        @php $i++; @endphp
+                        <tr>
+                            <td class="align-middle w-50">
+                                {{ $foodRecords[$i]->name }}
+                            </td>
+                            <td class="align-middle">
+                                {{ $foodRecords[$i]->unit }}
+                            </td>
+                            <td class="align-middle">
+                                {{ $foodRecords[$i]->amount }}
+                            </td>
+                        </tr>
+                    @endwhile
+                    @if ($i < count($foodRecords))
+                        @php $i++; @endphp
+                    @endif
+                </tbody>
+            </table>
+        @elseif(date('d-m-Y',strtotime($foodRecords[$i]->created_at)) >= 
+            date('d-m-Y',strtotime($consumptions[$j]->created_at)))
+        <table id="" class="table w-100">
+                <thead class="bg-primary text-white">
+                    <tr> <th colspan=3 class="text-center">
+                        {{date('d-m-Y',strtotime($consumptions[$j]->created_at))}}
+                    </th></tr>
+                    <tr> <th colspan=3 class="text-center">Consumo</th></tr>
+                    <tr>
+                        <th>Alimentos</th>
+                        <th>Unidade</th>
+                        <th>Quantidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="align-middle w-50">
+                            {{ $consumptions[$j]->name }}
+                        </td>
+                        <td class="align-middle">
+                            {{ $consumptions[$j]->unit }}
+                        </td>
+                        <td class="align-middle">
+                            {{ $consumptions[$j]->amount }}
+                        </td>
+                    </tr>
+                    @while ($j+1 < count($consumptions) &&
+                        date('d-m-Y',strtotime($consumptions[$j]->created_at)) ==
+                        date('d-m-Y',strtotime($consumptions[$j+1]->created_at)))
+                        @php $j++; @endphp
+                        <tr>
+                            <td class="align-middle w-50">
+                                {{ $consumptions[$j]->name }}
+                            </td>
+                            <td class="align-middle">
+                                {{ $consumptions[$j]->unit }}
+                            </td>
+                            <td class="align-middle">
+                                {{ $consumptions[$j]->amount }}
+                            </td>
+                        </tr>
+                    @endwhile
+                    @if ($j < count($consumptions))
+                        @php $j++; @endphp
+                    @endif
+                </tbody>
+            </table>
+            
+        @endif
+        
+    @endfor
+    <hr>
+    -->
+
+
 @extends('layouts.app')
 
 @section('title', 'Relatório da '.$institution->name)

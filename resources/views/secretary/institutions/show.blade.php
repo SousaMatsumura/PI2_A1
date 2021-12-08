@@ -36,7 +36,7 @@
     <div class="row justify-content-center">
         <div class="col-12 col-sm-4 col-lg-3 my-2 col-6">
             <a href="{{ route('secretary.institution.report.index', $institution) }}" class="btn btn-block btn-primary d-flex flex-sm-column" style="min-height: 60px">
-                <span>Relatório</span>
+                <span class="mt-2">Relatório</span>
             </a>
         </div>
     
@@ -47,12 +47,16 @@
             </a>
         </div>
 
+
+        <!--
         <div class="col-12 col-sm-4 col-lg-3 my-2 col-6">
             <a href="{{ url('/secretaria/instituicao') }}"
                 class="btn btn-block btn-success d-flex flex-sm-column" style="min-height: 60px">
                 <span>Voltar</span>
             </a>
         </div>
+
+        -->
     </div>
 </div>
 

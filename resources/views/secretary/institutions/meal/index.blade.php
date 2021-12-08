@@ -10,14 +10,22 @@
 @endpush
 
 @section('content')
-    <form class="mb-2">
-        <div class="d-flex justify-content-between">
-            <div class="d-flex flex-fill">
-                <input type="text" name="search" class="form-control w-50 mr-2" value="{{ $search }}" placeholder="Pesquisar...">
-                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+    <div class="row">
+        <form class="mb-2 w-50 ml-3">
+            <div class="d-flex justify-content-between">
+                <div class="d-flex flex-fill">
+                    <input type="text" name="search" class="form-control mr-2" value="{{ $search }}" placeholder="Pesquisar...">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                </div>
             </div>
+        </form>
+
+        <div class="col-md text-right mr-2">
+            <a href="{{ route('secretary.institution.show', $institution) }}" class="btn btn-primary">
+                Voltar
+            </a>
         </div>
-    </form>
+    </div>
 
     <!--
     <form class="input-group date datepicker mb-2">
@@ -66,11 +74,10 @@
     <table id="" class="table w-100">
         <thead class="bg-primary text-white">
             <tr>
-                <th>Data</th>
-                <th>Período</th>
-                <th>Name</th>
-                <th>Porções</th>
-                <th>Repetições</th>
+                <th class="w-10">Período</th>
+                <th class="w-50">Name</th>
+                <th class="text-center">Porções</th>
+                <th class="text-center">Repetições</th>
             </tr>
         </thead>
         <tbody>
@@ -79,10 +86,7 @@
                 @if(isset($search) && $search !== ''
                     && str_contains(strtolower($meal->name), strtolower($search)))
                     <tr>
-                        <td class="align-middle">
-                            {{ $meal->created_at }}
-                        </td>
-                        <td class="align-middle">
+                        <td class="w-10">
                             @switch($meal->time)
                                 @case('breakfast')
                                     Café da manhã
@@ -97,23 +101,20 @@
                                     Janta
                             @endswitch
                         </td>
-                        <td class="align-middle">
+                        <td class="w-50">
                             {{ $meal->name }}
                         </td>
-                        <td class="align-middle">
+                        <td class="text-center">
                             {{ $meal->amount }}
                         </td>
-                        <td class="align-middle">
+                        <td class="text-center">
                             {{ $meal->repeat }}
                         </td>
                     </tr>
                 @endif
                 @if(!isset($search) || $search === '')
-                <tr>
-                        <td class="align-middle">
-                            {{ $meal->created_at }}
-                        </td>
-                        <td class="align-middle">
+                    <tr>
+                        <td class="w-10">
                             @switch($meal->time)
                                 @case('breakfast')
                                     Café da manhã
@@ -128,13 +129,13 @@
                                     Janta
                             @endswitch
                         </td>
-                        <td class="align-middle">
+                        <td class="w-50">
                             {{ $meal->name }}
                         </td>
-                        <td class="align-middle">
+                        <td class="text-center">
                             {{ $meal->amount }}
                         </td>
-                        <td class="align-middle">
+                        <td class="text-center">
                             {{ $meal->repeat }}
                         </td>
                     </tr>
@@ -142,12 +143,14 @@
             @endforeach
         </tbody>
     </table>
+    <!--
     <div class="col-12 col-sm-4 col-lg-1 my-2 mt-4 col-6">
         <a href="{{ route('secretary.institution.show', $institution->id) }}"
             class="btn btn-block btn-success d-flex flex-sm-column">
             <span>Voltar</span>
         </a>
     </div>
+    -->
 
     <script>
         $( function() {
