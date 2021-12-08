@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -21,6 +22,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password'
     ];
+
+    public function setPasswordAttribute($password)
+    {
+        if($password) $this->attributes['password'] = bcrypt($password);
+    }
 
     public function isSchool()
     {

@@ -14,16 +14,22 @@ class FoodRecordController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()) {
+            
             $createdAt = Carbon::createFromFormat('d/m/Y', $request->created_at);
 
-            $foodRecords = FoodRecord::whereDate('created_at', $createdAt)
-            ->where('institution_id', $request->institution_id)
+            $foodRecords = FoodRecord::groupByFood()
+            ->whereDate('food_records.created_at', $createdAt)
             ->get();
 
-            return [
-                'foodRecords' => $foodRecords,
-                'route' => route('secretary.school.food_record.update', $request->institution_id)
-            ];
+            $data = [];
+            $data['foodRecords'] = $foodRecords;
+
+            if($foodRecords->count() > 0) {
+                $data['route'] = route('secretary.school.food_record.update', $request->institution_id);
+            }
+
+            return $data;
+            
         }
     
     }
@@ -32,18 +38,17 @@ class FoodRecordController extends Controller
     {
         if($institution->type === 'SCHOOL') {
 
-            $foods = Food::getByInstitution($institution->id)->get();
+            $foods = Food::getByInstitution($institution->id);
 
             return view('secretary.school.food_record.create', compact('institution', 'foods'));    
         }
 
-        return redirect()->route('secretary.institution.index');
+        return $this->redirectRouteWithAlert('danger', 'secretary.institution.index', 'Não é possível acessar essa opção.');
         
     }
 
     public function store(FoodRecordRequest $request, $institutionId)
     {   
-        // return $request->all();
         $createdAt = Carbon::createFromFormat('d/m/Y', $request->food_record['created_at']);
 
         foreach($request->foods as $foodId => $value) {
@@ -51,7 +56,7 @@ class FoodRecordController extends Controller
             DB::beginTransaction();
 
             try {
-                
+            
                 FoodRecord::create([
                     'amount' => $value['amount'] ?? 0,
                     'food_id' => $foodId,
@@ -60,6 +65,7 @@ class FoodRecordController extends Controller
                 ]);
 
                 DB::commit();
+                
 
             } catch(Exception $exception) {
 
@@ -68,7 +74,6 @@ class FoodRecordController extends Controller
                 return $this->redirectBackWithDangerAlert('Não foi possível concluir a operação!'.$exception->getMessage());
 
             }
-            
 
         }
         
@@ -89,16 +94,26 @@ class FoodRecordController extends Controller
                 $foodRecord = FoodRecord::whereDate('created_at', $createdAt)
                 ->where('institution_id', $institutionId)
                 ->where('food_id', $foodId)
-                ->firstOrFail();
+                ->first();
 
-                if($value['amount']) {
-                    $foodRecord->amount = $value['amount'];
-
+                if($foodRecord) {
+                    
+                    $foodRecord->amount = $value['amount'] ?? 0;
                     $foodRecord->save();
 
-                    DB::commit();
+                } else {
+
+                    FoodRecord::create([
+                        'amount' => $value['amount'] ?? 0,
+                        'food_id' => $foodId,
+                        'institution_id' => $institutionId,
+                        'created_at' => $createdAt
+                    ]);
+
                 }
-            
+
+                DB::commit();
+
 
             } catch(Exception $exception) {
 
@@ -107,7 +122,6 @@ class FoodRecordController extends Controller
                 return $this->redirectBackWithDangerAlert('Não foi possível concluir a operação!'.$exception->getMessage());
 
             }
-            
 
         }
         

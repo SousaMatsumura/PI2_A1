@@ -25,14 +25,15 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'consumption.created_at' => ['required', 'date_format:d/m/Y'],
+            'consumption.created_at' => ['required', 'date_format:d/m/Y', 'after_or_equal:'.now()->subDays(7)->format('d/m/Y'), 'before_or_equal:'.now()->format('d/m/Y')],
         ];
 
         $foodRecords = Auth::user()->institution->FoodRecords()->groupByFood()->get();
-
+        // dd($foodRecords->toArray());
         foreach(request()->foods as $key => $value) {
-
-            $maxAmount = $foodRecords->where('food_id', $key)->first()->amount_remaining;
+            // dd($value);
+            // dd($foodRecords->where('id', $key)->first()->amount_remaining);
+            (int) $maxAmount = $foodRecords->where('id', $key)->first()->amount_remaining ?? 0;
             
             $rules['foods.'.$key.'.amount_consumed'] = ['nullable', 'numeric', 'min:0', 'max:'.$maxAmount.''];
 

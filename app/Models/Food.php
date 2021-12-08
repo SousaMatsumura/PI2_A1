@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use DB;
 
 class Food extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     public $table = 'foods';
 
@@ -17,28 +18,61 @@ class Food extends Model
         'unit'
     ];
 
-    protected $appends = [
-        'amount_remaining'
-    ];
-
-    public function scopeGetByInstitution($query, $institutionId)
+    public function scopeWithAmountSum($query, $institutionId)
     {
         return $query->select(
             'foods.id',
             'foods.name',
-            'foods.unit',
-            DB::raw('(SELECT SUM(food_records.amount) FROM food_records WHERE food_records.food_id = foods.id AND food_records.institution_id = '.$institutionId.' ) AS amount'),
-            DB::raw('(SELECT SUM(consumptions.amount_consumed) FROM consumptions WHERE consumptions.food_id = foods.id AND consumptions.institution_id = '.$institutionId.' ) AS amount_consumed'),
-            DB::raw('(SELECT amount - COALESCE(amount_consumed, 0)) AS amount_remaining')
+            'foods.unit'
         )
-        ->groupBy('foods.id');
+        ->withSum(
+            ['records AS amount' => fn ($query) => $query->where('institution_id', $institutionId)],
+            'amount'
+        )
+        ->withSum(
+            ['consumptions AS amount_consumed' => fn ($query) => $query->where('institution_id', $institutionId)],
+            'amount_consumed'
+        );
     }
 
-    public function getAmountRemainingAttribute()
+    public function scopeGetByInstitution($query, $institutionId, $createdAt = null)
     {
-        $amountRemaining = $this->attributes['amount_remaining'] ?? null;
+        $collection = $query->select(
+            'foods.id',
+            'foods.name',
+            'foods.unit'
+        )
+        ->withSum(
+            ['records AS amount' => function($query) use($institutionId, $createdAt) {
+                $query->where('institution_id', $institutionId);
 
-        return $amountRemaining <= 9 ? '0'.$amountRemaining : $amountRemaining;
+                if($createdAt) $query->whereDate('created_at', $createdAt);
+            }],
+            'amount'
+        )
+        ->withSum(
+            ['consumptions AS amount_consumed' => fn ($query) => $query->where('institution_id', $institutionId)],
+            'amount_consumed'
+        )
+        ->get();
+        
+        $collection->map(function($food) {
+            $food->amount = $food->amount ?? 0;
+            $food->amount_consumed = $food->amount_consumed ?? 0;
+            $food->amount_remaining = $food->amount - $food->amount_consumed;
+        });
+
+        return $collection;
+    }
+
+    public function hasRecords()
+    {
+        return $this->records()->exists();
+    }
+
+    public function getRecordsInstitutionNames()
+    {
+        return $this->records()->groupBy('institution_id')->get()->load('institution')->pluck('institution.name');
     }
 
     public function records()

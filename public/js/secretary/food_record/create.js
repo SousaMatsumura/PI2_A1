@@ -2,12 +2,17 @@ var submitButton = $('#submit-button')
 var form = $('#food-record-form')
 var submitRoute = location.href
 var foodsCard = $('#foods-card')
+var today = new Date()
 
 let datepicker = $('#food-record-created-at').datepicker({
     language: 'pt-BR',
     autoclose: true,
-    showOnFocus: false
+    showOnFocus: false,
+    startDate: today,
+    endDate: today,
 })
+
+datepicker.val(today.toLocaleDateString('pt-BR', {timeZone: 'America/Sao_Paulo'}))
 
 jQuery.validator.setDefaults({
     errorElement: 'span',
@@ -37,8 +42,8 @@ const validatedForm = form.validate({
 })
 
 function addLeftZero(input) {
-
-    input = parseInt(input)
+    
+    input = input ? parseInt(input) : 0
 
     if(input <= 9 && input.toString().length < 2) return `0${input.toString()}`
 
@@ -47,10 +52,17 @@ function addLeftZero(input) {
 
 function addInputFoodsRules() {
     $("input[name^='foods']").each(function() {
-    
+        
+        let min = $(this).data('min')
+        // min = parseInt(min)
+
+        console.log(min)
+
         $(this).rules('add', {
+            min: min,
             digits: true,
             messages: {
+                min: `O campo quantidade não pode ser inferior a {0}`,
                 digits: 'O campo entrada deve ser um número.'
             }
         })
@@ -76,14 +88,17 @@ function setForm(params = {}) {
             const foodRecords = response.foodRecords
 
             if(foodRecords.length > 0) {
-
+                
                 foodRecords.forEach(function(food){
-                    $(`[name="foods[${food.food_id}][amount]"]`).val(addLeftZero(food.amount))
+                    $(`[name="foods[${food.id}][amount]"]`).val(addLeftZero(food.amount ?? 0))
                 })
 
-                submitButton.text('Atualizar Entrada de Alimentos')
-                submitRoute = response.route
-                form.append('<input type="hidden" name="_method" value="patch">')
+                if(response.route) {
+                    submitButton.text('Atualizar Entrada de Alimentos')
+                    submitRoute = response.route
+                    form.append('<input type="hidden" name="_method" value="patch">')
+                }
+                
 
             } else {
 
@@ -109,10 +124,6 @@ function setForm(params = {}) {
 
 }
 
-$('#food-record-created-at-datepicker-icon').click(function(){
-    datepicker.datepicker('show')
-})
-
 datepicker.on('changeDate', function(e){
     $(this).valid()
 
@@ -129,6 +140,8 @@ datepicker.on('changeDate', function(e){
 
 $('.digits').mask('0#', {
     onKeyPress: function(value, event, currentField) {
+        
+        value = value ?? '0'
         $(currentField).val(addLeftZero(value))
     }
 })
@@ -141,3 +154,11 @@ if(datepicker.val()) {
         created_at: datepicker.val()
     })
 }
+
+$(window).on('load', function(){
+    $('.food-amount-remaining').each(function(){
+        let value = $(this).text() ? addLeftZero($(this).text()) : '00'
+
+        $(this).text(value)
+    })
+})

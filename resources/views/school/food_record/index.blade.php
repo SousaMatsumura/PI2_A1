@@ -37,10 +37,10 @@
         <tbody>
             @foreach($foodRecords as $foodRecord)
                 <tr>
-                    <td class="text-center">{{ $foodRecord->food_id }}</td>
-                    <td>{{ $foodRecord->food_name }}</td>
-                    <td class="text-center">{{ $foodRecord->food_unit }}</td>
-                    <td class="text-center">{{ $foodRecord->amount_remaining }}</td>
+                    <td class="text-center">{{ $foodRecord->id }}</td>
+                    <td>{{ $foodRecord->name }}</td>
+                    <td class="text-center">{{ $foodRecord->unit }}</td>
+                    <td class="text-center food-amount-remaining">{{ $foodRecord->amount - $foodRecord->amount_consumed }}</td>
                 </tr>
             @endforeach
         </tbody>
@@ -56,3 +56,7 @@
     </div>
 
 @endsection
+
+@push('js')
+    <script src="{{ asset('js/school/food_record/index.js') }}"></script>
+@endpush

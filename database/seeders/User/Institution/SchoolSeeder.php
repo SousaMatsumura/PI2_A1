@@ -37,7 +37,7 @@ class SchoolSeeder extends Seeder
         User::create([
             'name' => 'Ricardo Lucques',
             'username' => 'ricardo',
-            'password' => bcrypt('ricardo'),
+            'password' => 'ricardo',
             'email' => 'ricardolucques@gmail.com',
             'phone' => '(12) 0000-0000',
             'institution_id' => $institution->id
