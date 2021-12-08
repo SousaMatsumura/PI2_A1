@@ -77,7 +77,7 @@
                                                 name="foods[{{ $record->id }}][amount_consumed]" 
                                                 placeholder="00"
                                                 class="form-control form-control-sm border-top-0 border-left-0 border-right-0 rounded-0 text-center digits @error('foods.'.$record->id.'.amount_consumed') is-invalid @enderror"
-                                                data-max="{{ (int)$record->amount_remaining + (int)$record->amount_consumed }}"
+                                                data-max="{{ (int)$record->amount_remaining }}"
                                                 value={{ old('foods.'.$record->id.'.amount_consumed')}}
                                             >
                                             @error('foods.'.$record->id.'.amount_consumed')

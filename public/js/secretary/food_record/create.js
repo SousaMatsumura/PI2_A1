@@ -42,8 +42,8 @@ const validatedForm = form.validate({
 })
 
 function addLeftZero(input) {
-
-    input = parseInt(input)
+    
+    input = input ? parseInt(input) : 0
 
     if(input <= 9 && input.toString().length < 2) return `0${input.toString()}`
 
@@ -52,10 +52,17 @@ function addLeftZero(input) {
 
 function addInputFoodsRules() {
     $("input[name^='foods']").each(function() {
-    
+        
+        let min = $(this).data('min')
+        // min = parseInt(min)
+
+        console.log(min)
+
         $(this).rules('add', {
+            min: min,
             digits: true,
             messages: {
+                min: `O campo quantidade não pode ser inferior a {0}`,
                 digits: 'O campo entrada deve ser um número.'
             }
         })
@@ -75,7 +82,7 @@ function setForm(params = {}) {
             created_at: params.created_at
         },
         success:function(response) {
-            console.log(response)
+            
             foodsCard.hide()
 
             const foodRecords = response.foodRecords
@@ -133,7 +140,8 @@ datepicker.on('changeDate', function(e){
 
 $('.digits').mask('0#', {
     onKeyPress: function(value, event, currentField) {
-        value = value ?? 0
+        
+        value = value ?? '0'
         $(currentField).val(addLeftZero(value))
     }
 })

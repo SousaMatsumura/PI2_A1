@@ -130,6 +130,42 @@
         </div>
     @endif
 
+    @if(session()->has('trashed'))
+        <div id="restore-modal" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h5 class="text-center d-block mb-3">Atenção</h5>
+                        <p class="mb-0 text-center">Existe um funcionário excluído com as mesmas informações.</p>
+                        <ul>
+                            
+                            @if(old('user.username') == session('trashed')['username'])
+                                <li><strong>Username:</strong> {{ session('trashed')['username'] }}</li>
+                            @endif
+
+                            @if(old('user.email') == session('trashed')['email'])
+                                <li><strong>Email:</strong> {{ session('trashed')['email'] }}</li>
+                            @endif
+                            <p class="mb-0 mt-2 small">Demais informações:</p>
+                            <li><strong>Nome:</strong> {{ session('trashed')['name'] }}</li>
+                            <li><strong>Telefone:</strong> {{ session('trashed')['phone'] }}</li>
+                            <li><strong>Sede:</strong> {{ session('trashed')['institution']['name'] }}</li>
+                        </ul>
+                        <p class="text-center mb-0">Deseja restaurar o cadastro do funcionário?</p>
+                    </div>
+                    <div class="modal-footer border-0">
+                        
+                        <form action="{{ route('secretary.user.restore', session('trashed')) }}" method="POST" class="w-100 text-center">
+                            @csrf
+                            <button type="button" class="btn btn-secondary w-25" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary w-25">Restaurar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
 @endsection
 
 @push('js')

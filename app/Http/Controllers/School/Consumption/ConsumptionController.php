@@ -22,10 +22,14 @@ class ConsumptionController extends Controller
             if($request->has('created_at')) {
                 $createdAt = Carbon::createFromFormat('d/m/Y', $request->created_at);
 
-                return [
-                    'consumptions' => Auth::user()->institution->consumptions()->groupByFood()->whereDate('consumptions.created_at', $createdAt)->get(),
-                    'route' => route('school.consumption.update')
-                ];
+                $consumptions = Auth::user()->institution->consumptions()->groupByFood()->whereDate('consumptions.created_at', $createdAt)->get();
+
+                $data = [];
+                $data['consumptions'] = $consumptions;
+
+                if($consumptions->count() > 0) $data['route'] = route('school.consumption.update');
+
+                return $data;
             }
         }
     }
@@ -33,12 +37,6 @@ class ConsumptionController extends Controller
     public function create(Request $request)
     {
         $foodRecords = Food::getByInstitution(Auth::user()->institution_id);
-
-        if($request->has('pesquisa')) {
-            $foodRecords->where('foods.name', 'like', '%'.$request->pesquisa.'%');
-        }
-
-        $foodRecords = $foodRecords->get();
 
         return view('school.consumption.create', compact('foodRecords'));
     }

@@ -14,18 +14,17 @@ class FoodRecordController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()) {
+            
             $createdAt = Carbon::createFromFormat('d/m/Y', $request->created_at);
 
-            $foodRecordsExists = FoodRecord::whereDate('created_at', $createdAt)
-            ->where('institution_id', $request->institution_id)
-            ->exists();
-
-            $foodRecords = Food::getByInstitution($request->institution_id, $createdAt);
+            $foodRecords = FoodRecord::groupByFood()
+            ->whereDate('food_records.created_at', $createdAt)
+            ->get();
 
             $data = [];
             $data['foodRecords'] = $foodRecords;
 
-            if($foodRecordsExists) {
+            if($foodRecords->count() > 0) {
                 $data['route'] = route('secretary.school.food_record.update', $request->institution_id);
             }
 

@@ -18,6 +18,23 @@ class Food extends Model
         'unit'
     ];
 
+    public function scopeWithAmountSum($query, $institutionId)
+    {
+        return $query->select(
+            'foods.id',
+            'foods.name',
+            'foods.unit'
+        )
+        ->withSum(
+            ['records AS amount' => fn ($query) => $query->where('institution_id', $institutionId)],
+            'amount'
+        )
+        ->withSum(
+            ['consumptions AS amount_consumed' => fn ($query) => $query->where('institution_id', $institutionId)],
+            'amount_consumed'
+        );
+    }
+
     public function scopeGetByInstitution($query, $institutionId, $createdAt = null)
     {
         $collection = $query->select(
@@ -31,7 +48,7 @@ class Food extends Model
 
                 if($createdAt) $query->whereDate('created_at', $createdAt);
             }],
-            'amount',
+            'amount'
         )
         ->withSum(
             ['consumptions AS amount_consumed' => fn ($query) => $query->where('institution_id', $institutionId)],
