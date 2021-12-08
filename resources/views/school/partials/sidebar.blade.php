@@ -21,7 +21,7 @@
 </li>
 
 <li class="nav-item">
-    <a class="nav-link" href="{{ route('school.dashboard.index') }}">
+    <a class="nav-link" href="{{ route('school.menu.create') }}">
         <i class="fas fa-fw fa-utensils"></i>
         <span>Cadastrar Cardápio do Dia</span>
     </a>
