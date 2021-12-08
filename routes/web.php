@@ -20,7 +20,8 @@ use App\Http\Controllers\Secretary\{
     School\FoodRecordController as SecretarySchoolFoodRecordController,
     User\UserController as SecretaryUserController,
     Food\FoodController as SecretaryFoodController,
-    Food\RestoreController as SecretaryFoodRestoreController
+    Food\RestoreController as SecretaryFoodRestoreController,
+    User\RestoreController as SecretaryUserRestoreController
 };
 use App\Models\Institution;
 
@@ -78,17 +79,18 @@ Route::middleware('auth')->group(function(){
         // Funcionários (Usuários)
         Route::get('funcionarios', [SecretaryUserController::class, 'index'])->name('secretary.user.index');
         Route::get('funcionario/cadastrar', [SecretaryUserController::class, 'create'])->name('secretary.user.create');
-        Route::post('funcionario/cadastrar', [SecretaryUserController::class, 'store'])->name('secretary.user.store');
+        Route::post('funcionario/cadastrar', [SecretaryUserController::class, 'store'])->name('secretary.user.store')->middleware('restore:user');
         Route::get('funcionario/{user}/editar', [SecretaryUserController::class, 'edit'])->name('secretary.user.edit');
-        Route::put('funcionario/{user}/editar', [SecretaryUserController::class, 'update'])->name('secretary.user.update');
+        Route::put('funcionario/{user}/editar', [SecretaryUserController::class, 'update'])->name('secretary.user.update')->middleware('restore:user');
         Route::delete('funcionario/{user}/excluir', [SecretaryUserController::class, 'destroy'])->name('secretary.user.destroy');
+        Route::post('funcionario/{id}/restaurar', [SecretaryUserRestoreController::class, 'store'])->name('secretary.user.restore');
 
         // Alimentos
         Route::get('alimentos', [SecretaryFoodController::class, 'index'])->name('secretary.food.index');
         Route::get('alimento/cadastrar', [SecretaryFoodController::class, 'create'])->name('secretary.food.create');
-        Route::post('alimento/cadastrar', [SecretaryFoodController::class, 'store'])->name('secretary.food.store')->middleware('retrieve.softdelete:food');
+        Route::post('alimento/cadastrar', [SecretaryFoodController::class, 'store'])->name('secretary.food.store')->middleware('restore:food');
         Route::get('alimento/{food}/editar', [SecretaryFoodController::class, 'edit'])->name('secretary.food.edit');
-        Route::put('alimento/{food}/editar', [SecretaryFoodController::class, 'update'])->name('secretary.food.update')->middleware('retrieve.softdelete:food');
+        Route::put('alimento/{food}/editar', [SecretaryFoodController::class, 'update'])->name('secretary.food.update')->middleware('restore:food');
         Route::delete('alimento/{food}/excluir', [SecretaryFoodController::class, 'destroy'])->name('secretary.food.destroy');
         Route::post('alimento/{id}/restaurar', [SecretaryFoodRestoreController::class, 'store'])->name('secretary.food.restore');
     });

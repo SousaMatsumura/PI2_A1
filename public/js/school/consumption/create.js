@@ -44,7 +44,7 @@ const validatedForm = $('#consumption-form').validate({
 
 function addLeftZero(input) {
 
-    input = parseInt(input)
+    input = input ? parseInt(input) : 0
 
     if(input <= 9 && input.toString().length < 2) return `0${input.toString()}`
 
@@ -91,6 +91,8 @@ function setForm(params = {}) {
             const consumptions = response.consumptions
 
             if(consumptions.length > 0) {
+
+                $('[name^="foods["]').val('')
 
                 consumptions.forEach(function(food){
                     $(`[name="foods[${food.id}][amount_consumed]"]`).val(addLeftZero(food.amount_consumed))
@@ -145,6 +147,8 @@ $('.digits').mask('0#', {
     onKeyPress: function(value, event, currentField) {
         
         let max = parseInt($(currentField).data('max'))
+
+        value = value ?? 0
 
         if(value <= max) {
             $(currentField).val(addLeftZero(value))

@@ -32,8 +32,8 @@ class UpdateRequest extends FormRequest
 
         foreach(request()->foods as $key => $value) {
 
-            (int) $amountRemaining = $foodRecords->where('food_id', $key)->first()->amount_remaining ?? 0;
-            (int) $amountConsumed = $foodRecords->where('food_id', $key)->first()->amount_consumed ?? 0;
+            (int) $amountRemaining = $foodRecords->where('id', $key)->first()->amount_remaining ?? 0;
+            (int) $amountConsumed = $foodRecords->where('id', $key)->first()->amount_consumed ?? 0;
 
             (int) $maxAmount = $amountRemaining + $amountConsumed;
             

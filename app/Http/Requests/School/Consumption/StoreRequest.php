@@ -29,10 +29,11 @@ class StoreRequest extends FormRequest
         ];
 
         $foodRecords = Auth::user()->institution->FoodRecords()->groupByFood()->get();
-
+        // dd($foodRecords->toArray());
         foreach(request()->foods as $key => $value) {
-
-            (int) $maxAmount = $foodRecords->where('food_id', $key)->first()->amount_remaining ?? 0;
+            // dd($value);
+            // dd($foodRecords->where('id', $key)->first()->amount_remaining);
+            (int) $maxAmount = $foodRecords->where('id', $key)->first()->amount_remaining ?? 0;
             
             $rules['foods.'.$key.'.amount_consumed'] = ['nullable', 'numeric', 'min:0', 'max:'.$maxAmount.''];
 

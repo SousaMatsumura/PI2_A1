@@ -1,3 +1,5 @@
+$('#restore-modal').modal('show')
+
 // Mascara
 $('.phone').mask('(00) 0000-00009')
 
