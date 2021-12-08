@@ -14,7 +14,7 @@ class FoodRecordRequest extends FormRequest
     public function rules()
     {
         return [
-            'food_record.created_at' => ['required', 'date_format:d/m/Y'],
+            'food_record.created_at' => ['required', 'date_format:d/m/Y', 'date_equals:'.now()->format('d/m/Y')],
             'foods.*.amount' => ['nullable', 'numeric']
         ];
 
