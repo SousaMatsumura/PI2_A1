@@ -38,7 +38,7 @@
                         </div>
                         
                         @error('menu.created_at')
-                            <span class="text-danger d-block small">
+                            <span class="small text-danger">
                                 {{ $errors->first('menu.created_at') }}
                             </span>
                         @enderror
@@ -58,7 +58,7 @@
                             <div class="form-group">
                                 <textarea name="meals[breakfast][description]" class="form-control @error('meals.breakfast.description') is-invalid @enderror" placeholder="Lanche da Manhã">{{ old('meals.breakfast.description') }}</textarea>
                                 @error('meals.breakfast.description')
-                                    <span class="text-danger d-block small">
+                                    <span class="invalid-feedback bg-danger text-white p-1 rounded">
                                         {{ $errors->first('meals.breakfast.description') }}
                                     </span>
                                 @enderror
@@ -68,7 +68,7 @@
                             <div class="form-group">
                                 <input type="text" name="meals[breakfast][amount]" class="form-control digits @error('meals.breakfast.amount') is-invalid @enderror" placeholder="Quantidade" value="{{ old('meals.breakfast.amount') }}">
                                 @error('meals.breakfast.amount')
-                                    <span class="text-danger d-block small">
+                                    <span class="invalid-feedback bg-danger text-white p-1 rounded">
                                         {{ $errors->first('meals.breakfast.amount') }}
                                     </span>
                                 @enderror
@@ -78,7 +78,7 @@
                             <div class="form-group">
                                 <input type="text" name="meals[breakfast][repeat]" class="form-control digits @error('meals.breakfast.repeat') is-invalid @enderror" placeholder="Repetições" value="{{ old('meals.breakfast.repeat') }}">
                                 @error('meals.breakfast.repeat')
-                                    <span class="text-danger d-block small">
+                                    <span class="invalid-feedback bg-danger text-white p-1 rounded">
                                         {{ $errors->first('meals.breakfast.repeat') }}
                                     </span>
                                 @enderror
@@ -91,7 +91,7 @@
                             <div class="form-group">
                                 <textarea name="meals[lunch][description]" class="form-control @error('meals.lunch.description') is-invalid @enderror" placeholder="Almoço">{{ old('meals.lunch.description') }}</textarea>
                                 @error('meals.lunch.description')
-                                    <span class="text-danger d-block small">
+                                    <span class="invalid-feedback bg-danger text-white p-1 rounded">
                                         {{ $errors->first('meals.lunch.description') }}
                                     </span>
                                 @enderror
@@ -101,7 +101,7 @@
                             <div class="form-group">
                                 <input type="text" name="meals[lunch][amount]" class="form-control digits @error('meals.lunch.amount') is-invalid @enderror" placeholder="Quantidade" value="{{ old('meals.lunch.amount') }}">
                                 @error('meals.lunch.amount')
-                                    <span class="text-danger d-block small">
+                                    <span class="invalid-feedback bg-danger text-white p-1 rounded">
                                         {{ $errors->first('meals.lunch.amount') }}
                                     </span>
                                 @enderror
@@ -111,7 +111,7 @@
                             <div class="form-group">
                                 <input type="text" name="meals[lunch][repeat]" class="form-control digits @error('meals.lunch.repeat') is-invalid @enderror" placeholder="Repetições" value="{{ old('meals.lunch.repeat') }}">
                                 @error('meals.lunch.repeat')
-                                    <span class="text-danger d-block small">
+                                    <span class="invalid-feedback bg-danger text-white p-1 rounded">
                                         {{ $errors->first('meals.lunch.repeat') }}
                                     </span>
                                 @enderror
@@ -124,7 +124,7 @@
                             <div class="form-group">
                                 <textarea name="meals[afternoon_snack][description]" class="form-control @error('meals.afternoon_snack.description') is-invalid @enderror" placeholder="Lanche da Tarde">{{ old('meals.afternoon_snack.description') }}</textarea>
                                 @error('meals.afternoon_snack.description')
-                                    <span class="text-danger d-block small">
+                                    <span class="invalid-feedback bg-danger text-white p-1 rounded">
                                         {{ $errors->first('meals.afternoon_snack.description') }}
                                     </span>
                                 @enderror
@@ -134,7 +134,7 @@
                             <div class="form-group">
                                 <input type="text" name="meals[afternoon_snack][amount]" class="form-control digits @error('meals.afternoon_snack.amount') is-invalid @enderror" placeholder="Quantidade" value="{{ old('meals.afternoon_snack.amount') }}">
                                 @error('meals.afternoon_snack.amount')
-                                    <span class="text-danger d-block small">
+                                    <span class="invalid-feedback bg-danger text-white p-1 rounded">
                                         {{ $errors->first('meals.afternoon_snack.amount') }}
                                     </span>
                                 @enderror
@@ -144,7 +144,7 @@
                             <div class="form-group">
                                 <input type="text" name="meals[afternoon_snack][repeat]" class="form-control digits @error('meals.afternoon_snack.repeat') is-invalid @enderror" placeholder="Repetições" value="{{ old('meals.afternoon_snack.repeat') }}">
                                 @error('meals.afternoon_snack.repeat')
-                                    <span class="text-danger d-block small">
+                                    <span class="invalid-feedback bg-danger text-white p-1 rounded">
                                         {{ $errors->first('meals.afternoon_snack.repeat') }}
                                     </span>
                                 @enderror
@@ -157,7 +157,7 @@
                             <div class="form-group">
                                 <textarea name="meals[dinner][description]" class="form-control @error('meals.dinner.description') is-invalid @enderror" placeholder="Janta">{{ old('meals.dinner.description') }}</textarea>
                                 @error('meals.dinner.description')
-                                    <span class="text-danger d-block small">
+                                    <span class="invalid-feedback bg-danger text-white p-1 rounded">
                                         {{ $errors->first('meals.dinner.description') }}
                                     </span>
                                 @enderror
@@ -167,7 +167,7 @@
                             <div class="form-group">
                                 <input type="text" name="meals[dinner][amount]" class="form-control digits @error('meals.dinner.amount') is-invalid @enderror" placeholder="Quantidade" value="{{ old('meals.dinner.amount') }}">
                                 @error('meals.dinner.amount')
-                                    <span class="text-danger d-block small">
+                                    <span class="invalid-feedback bg-danger text-white p-1 rounded">
                                         {{ $errors->first('meals.dinner.amount') }}
                                     </span>
                                 @enderror
@@ -177,7 +177,7 @@
                             <div class="form-group">
                                 <input type="text" name="meals[dinner][repeat]" class="form-control digits @error('meals.dinner.repeat') is-invalid @enderror" placeholder="Repetições" value="{{ old('meals.dinner.repeat') }}">
                                 @error('meals.dinner.repeat')
-                                    <span class="text-danger d-block small">
+                                    <span class="invalid-feedback bg-danger text-white p-1 rounded">
                                         {{ $errors->first('meals.dinner.repeat') }}
                                     </span>
                                 @enderror
