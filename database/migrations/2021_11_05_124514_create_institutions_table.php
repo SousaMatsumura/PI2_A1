@@ -23,6 +23,7 @@ class CreateInstitutionsTable extends Migration
             $table->string('phone');
             //$table->foreignId('address_id')->constrained();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

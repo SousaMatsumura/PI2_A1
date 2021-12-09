@@ -28,7 +28,7 @@ class RegisterInstitutionRequest extends FormRequest
             'institution.meal_morning_demand' => ['required', 'numeric', 'integer'],
             'institution.meal_afternoon_demand' => ['required', 'numeric', 'integer'],
             'institution.meal_night_demand' => ['required', 'numeric', 'integer'],
-            'institution.phone' => 'required',
+            'institution.phone' => ['required', 'min:14', 'max:15'],
             
             'address.zipcode' => 'required',
             'address.state' => ['required', 'size:2'],
@@ -37,6 +37,25 @@ class RegisterInstitutionRequest extends FormRequest
             'address.number' => ['required', 'numeric', 'integer'],
             'address.district' => 'required',
             'address.complement' => ['nullable', 'max:25']
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'institution.name' => 'nome da instituição',
+            'institution.meal_morning_demand' => 'demanda da manhã',
+            'institution.meal_afternoon_demand' => 'demanda da tarde',
+            'institution.meal_night_demand' => 'demanda da noite',
+            'institution.phone' => 'telefone',
+            
+            'address.zipcode' => 'CEP',
+            'address.state' => 'UF',
+            'address.city' => 'cidade',
+            'address.street' => 'logradouro',
+            'address.number' => 'número',
+            'address.district' => 'bairro',
+            'address.complement' => 'complemento'
         ];
     }
 }

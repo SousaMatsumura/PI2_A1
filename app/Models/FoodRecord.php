@@ -12,20 +12,21 @@ class FoodRecord extends Model
     protected $fillable = [
         'amount',
         'food_id',
-        'institution_id'
+        'institution_id',
+        'created_at'
     ];
 
     public function scopeGroupByFood($query)
     {
         return $query->selectRaw(
-            'foods.id AS food_id, 
-            foods.name AS food_name, 
-            foods.unit AS food_unit, 
+            'foods.id, 
+            foods.name, 
+            foods.unit, 
             SUM(food_records.amount) AS amount,
             (SELECT 
                 SUM(consumptions.amount_consumed) FROM consumptions WHERE consumptions.food_id = foods.id
             ) AS amount_consumed,
-            (SELECT amount - amount_consumed) AS amount_remaining
+            (SELECT amount - COALESCE(amount_consumed, 0)) AS amount_remaining
             '
         )
         ->join('foods', 'foods.id', '=', 'food_records.food_id')
@@ -35,5 +36,10 @@ class FoodRecord extends Model
     public function food()
     {
         return $this->belongsTo(Food::class);
+    }
+
+    public function institution()
+    {
+        return $this->belongsTo(Institution::class);
     }
 }

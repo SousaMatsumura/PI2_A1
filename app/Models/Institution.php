@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Institution extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -15,7 +16,7 @@ class Institution extends Model
         'meal_morning_demand',
         'meal_afternoon_demand',
         'meal_night_demand',
-        'phone'
+        'phone',
     ];
 
     public function address()
@@ -23,7 +24,7 @@ class Institution extends Model
         return $this->hasOne(Address::class);
     }
 
-    public function user()
+    public function users()
     {
         return $this->hasMany(User::class);
     }
@@ -37,9 +38,10 @@ class Institution extends Model
     {
         return $this->hasMany(Consumption::class);
     }
-
+  
     public function menus()
     {
         return $this->hasMany(Menu::class);
+
     }
 }

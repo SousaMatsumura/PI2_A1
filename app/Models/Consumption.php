@@ -19,7 +19,7 @@ class Consumption extends Model
     public function scopeGroupByFood($query)
     {
         $query->selectRaw('consumptions.created_at, foods.id as id, foods.name as food, foods.unit as unit, sum(consumptions.amount_consumed) as amount_consumed')
-        ->join('foods', 'foods.id', '=', 'consumptions.food_id')
+        ->rightJoin('foods', 'foods.id', '=', 'consumptions.food_id')
         ->groupBy('foods.id');
     }
 

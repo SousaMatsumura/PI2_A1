@@ -1,0 +1,145 @@
+@extends('layouts.app')
+
+@section('title', 'Cadastrar Funcionário')
+
+@section('options')
+    <a href="{{ route('secretary.user.index') }}" class="btn btn-primary">
+        Voltar
+    </a>
+@endsection
+
+@section('content')
+
+    <div class="card bg-primary">
+        <div class="card-body p-0 pt-3 px-3">
+
+            <form id="user-form" action="{{ route('secretary.user.store') }}" method="POST">
+                @csrf
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input name="user[name]" type="text" class="form-control @error('user.name') is-invalid @enderror" placeholder="Nome" value="{{ old('user.name') }}">
+                            @error('user.name')
+                                <div class="invalid-feedback bg-danger text-white p-1 rounded">
+                                    {{ $errors->first('user.name') }}
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <select name="user[institution_id]" class="form-control @error('user.institution_id') is-invalid @enderror">
+                                <option disabled selected>Escola / Instituição</option>
+                                @foreach($institutions as $institution)
+                                    <option value="{{ $institution->id }}" {{ old('user.institution_id') == $institution->id ? 'selected' : '' }}>
+                                        {{ $institution->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('user.institution_id')
+                                <div class="invalid-feedback bg-danger text-white p-1 rounded">
+                                    {{ $errors->first('user.institution_id') }}
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input name="user[email]" type="text" class="form-control @error('user.email') is-invalid @enderror" placeholder="Email" value="{{ old('user.email') }}">
+                            @error('user.email')
+                                <div class="invalid-feedback bg-danger text-white p-1 rounded">
+                                    {{ $errors->first('user.email') }}
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input name="user[phone]" type="text" class="form-control phone @error('user.phone') is-invalid @enderror" placeholder="Telefone" value="{{ old('user.phone') }}">
+                            @error('user.phone')
+                                <div class="invalid-feedback bg-danger text-white p-1 rounded">
+                                    {{ $errors->first('user.phone') }}
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input name="user[username]" type="text" class="form-control @error('user.username') is-invalid @enderror" placeholder="Username" value="{{ old('user.username') }}">
+                            @error('user.username')
+                                <div class="invalid-feedback bg-danger text-white p-1 rounded">
+                                    {{ $errors->first('user.username') }}
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input name="user[password]" type="text" class="form-control @error('user.password') is-invalid @enderror" placeholder="Senha">
+                            @error('user.password')
+                                <div class="invalid-feedback bg-danger text-white p-1 rounded">
+                                    {{ $errors->first('user.password') }}
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group text-center">
+                    <button class="btn btn-primary active">Cadastrar Funcionário</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    @if(session()->has('trashed'))
+        <div id="restore-modal" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h5 class="text-center d-block mb-3">Atenção</h5>
+                        <p class="mb-0 text-center">Existe um funcionário excluído com as mesmas informações.</p>
+                        <ul>
+                            
+                            @if(old('user.username') == session('trashed')['username'])
+                                <li><strong>Username:</strong> {{ session('trashed')['username'] }}</li>
+                            @endif
+
+                            @if(old('user.email') == session('trashed')['email'])
+                                <li><strong>Email:</strong> {{ session('trashed')['email'] }}</li>
+                            @endif
+                            <p class="mb-0 mt-2 small">Demais informações:</p>
+                            <li><strong>Nome:</strong> {{ session('trashed')['name'] }}</li>
+                            <li><strong>Telefone:</strong> {{ session('trashed')['phone'] }}</li>
+                            <li><strong>Sede:</strong> {{ session('trashed')['institution']['name'] }}</li>
+                        </ul>
+                        <p class="text-center mb-0">Deseja restaurar o cadastro do funcionário?</p>
+                    </div>
+                    <div class="modal-footer border-0">
+                        
+                        <form action="{{ route('secretary.user.restore', session('trashed')) }}" method="POST" class="w-100 text-center">
+                            @csrf
+                            <button type="button" class="btn btn-secondary w-25" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary w-25">Restaurar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
+@endsection
+
+@push('js')
+    <script src="{{ asset('vendor/jquery-mask/jquery.mask.min.js') }}"></script>
+    <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('js/secretary/user/create.js') }}"></script>
+@endpush

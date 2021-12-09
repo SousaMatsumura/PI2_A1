@@ -17,7 +17,7 @@ class Address extends Model
         'district',
         'city',
         'state',
-        'institution_id'
+        'institution_id',
     ];
 
     public function institution()
