@@ -38,9 +38,10 @@ class Institution extends Model
     {
         return $this->hasMany(Consumption::class);
     }
-
-    public function meals()
+  
+    public function menus()
     {
-        return $this->hasMany(Meal::class);
+        return $this->hasMany(Menu::class);
+
     }
 }
