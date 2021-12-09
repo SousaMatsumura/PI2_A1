@@ -2,11 +2,17 @@ var submitButton = $('#submit-button')
 var form = $('#menu-form')
 var submitRoute = location.href
 var mealsCard = $('#meals-card')
+var startDate = new Date()
+var endDate = new Date()
+
+startDate.setDate(endDate.getDate() - 7)
 
 let datepicker = $('#menu-created-at').datepicker({
     language: 'pt-BR',
     autoclose: true,
-    showOnFocus: false
+    showOnFocus: false,
+    startDate: startDate,
+    endDate: endDate
 })
 
 jQuery.validator.setDefaults({

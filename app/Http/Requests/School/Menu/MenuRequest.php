@@ -24,7 +24,7 @@ class MenuRequest extends FormRequest
     public function rules()
     {
         return [
-            'menu.created_at' => ['required', 'date_format:d/m/Y'],
+            'menu.created_at' => ['required', 'date_format:d/m/Y', 'after_or_equal:'.now()->subDays(7)->format('d/m/Y'), 'before_or_equal:'.now()->format('d/m/Y')],
             'meals.breakfast.description' => ['required'],
             'meals.lunch.description' => ['required'],
             'meals.afternoon_snack.description' => ['required'],
