@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function(){
         Route::post('consumo/cadastrar', [SchoolConsumptionController::class, 'store'])->name('school.consumption.store');
         Route::patch('consumo/atualizar', [SchoolConsumptionController::class, 'update'])->name('school.consumption.update');
 
-        Route::get('cardapios', [SchoolMenuControlller::class, 'create'])->name('school.menu.index');
+        Route::get('cardapios', [SchoolMenuControlller::class, 'index'])->name('school.menu.index');
         Route::get('cardapio', [SchoolMenuControlller::class, 'create'])->name('school.menu.create');
         Route::post('cardapio', [SchoolMenuControlller::class, 'store'])->name('school.menu.store');
         Route::patch('cardapio/atualizar', [SchoolMenuControlller::class, 'update'])->name('school.menu.update');  
