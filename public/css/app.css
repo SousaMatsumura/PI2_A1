@@ -35,3 +35,9 @@
     opacity: 0.5;
     cursor: not-allowed !important;
 }
+
+/* TextArea Resize */
+
+textarea.form-control {
+    resize: none;
+}

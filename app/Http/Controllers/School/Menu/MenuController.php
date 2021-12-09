@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\School\Menu;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\School\Menu\MenuRequest;
 use Illuminate\Http\Request;
+use App\Http\Requests\School\Menu\MenuRequest;
 use DB;
 use Auth;
 use Carbon\Carbon;
-use Exception;
 
 class MenuController extends Controller
 {
@@ -19,7 +18,7 @@ class MenuController extends Controller
                 $createdAt = Carbon::createFromFormat('d/m/Y', $request->created_at);
 
                 return [
-                    'menu' => Auth::user()->institution->menus()->whereDate('created_at', $createdAt)->get(),
+                    'menus' => Auth::user()->institution->menus()->whereDate('created_at', $createdAt)->get(),
                     'route' => route('school.menu.update')
                 ];
             }
@@ -35,7 +34,7 @@ class MenuController extends Controller
     {
         $createdAt = Carbon::createFromFormat('d/m/Y', $request->menu['created_at']);
         
-        foreach($request->meal as $mealtime => $data) {
+        foreach($request->meals as $mealtime => $data) {
 
             DB::beginTransaction();
 
@@ -62,15 +61,14 @@ class MenuController extends Controller
 
         }
         
-        return $this->redirectBackWithSuccessAlert('O cardápio do dia '.$request->menu['created_at'].' foi cadastrado com sucesso!');
-
+        return $this->redirectBackWithSuccessAlert('Cardápio do dia '.$request->menu['created_at'].' foi cadastrado com sucesso!');
     }
 
     public function update(MenuRequest $request)
     {
-        $createdAt = Carbon::createFromFormat('d/m/Y', $request->consumption['created_at']);
+        $createdAt = Carbon::createFromFormat('d/m/Y', $request->menu['created_at']);
         
-        foreach($request->meal as $mealtime => $data) {
+        foreach($request->meals as $mealtime => $data) {
             
             DB::beginTransaction();
 
@@ -81,7 +79,7 @@ class MenuController extends Controller
                 ->where('mealtime', $mealtime)
                 ->firstOrFail();
 
-                $menu->description = $data['amount'];
+                $menu->description = $data['description'];
                 $menu->amount = $data['amount'];
                 $menu->repeat = $data['repeat'];
 
@@ -100,7 +98,6 @@ class MenuController extends Controller
 
         }
         
-        return $this->redirectBackWithSuccessAlert('O cardápio do dia '.$request->menu['created_at'].' foi atualizado com sucesso!');
+        return $this->redirectBackWithSuccessAlert('Cardápio do dia '.$request->menu['created_at'].' foi atualizado com sucesso!');
     }
 }
-
