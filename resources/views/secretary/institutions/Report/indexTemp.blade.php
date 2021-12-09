@@ -1,3 +1,78 @@
+    
+
+
+
+<!-- Filter Backup
+    <div class="row">
+        <form class="mb-2 w-50 ml-3">
+            <div class="d-flex justify-content-between">
+                <div class="d-flex flex-fill">
+                    <input type="text" name="search" class="form-control mr-2" value="{{ $search }}" placeholder="Pesquisar...">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+        </form>
+        <div class="col-md text-right mr-2">
+            <a href="{{ route('secretary.institution.show', $institution) }}" class="btn btn-primary">
+                Voltar
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <form class="mb-2 w-50 ml-3">
+            <div class="d-flex justify-content-between">
+                <div class="d-flex flex-fill">
+                    <label class="col-lg-1 my-auto">Início: </label>
+                    <div class="ml-2 input-group bg-primary rounded">
+                        <input
+                            id="meal-created-at"
+                            type="text"
+                            name="begin"
+                            class="form-control bg-primary text-white border-0"
+                            readonly value="{{ old('begin', isset($begin) ? $begin : \Carbon\Carbon::now()->format('d/m/Y')) }}"
+                            data-url="{{ route('school.meal.index') }}"
+                        >
+                        <div class="input-group-append">
+                            <span class="input-group-text bg-primary border-0" id="meal-created-at-datepicker-icon">
+                                <i class="fa fa-fw fa-calendar text-white"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <label class="col-lg-1 my-auto">Fim: </label>
+                    <div class="input-group bg-primary rounded">
+                        <input
+                            id="end-created-at"
+                            type="text"
+                            name="end"
+                            class="form-control bg-primary text-white border-0 @error('meal.createdAt') is-invalid @enderror"
+                            onkeypress="return false;"
+                            onpaste="return false;"
+                            value="{{ old('end', isset($end) ? $end : \Carbon\Carbon::now()->format('d/m/Y')) }}"
+                            data-url="{{ route('school.meal.index') }}"
+                        >
+                        <div class="input-group-append">
+                            <span class="input-group-text bg-primary border-0" id="end-created-at-datepicker-icon">
+                                <i class="fa fa-fw fa-calendar text-white"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="ml-2 btn btn-primary"><i class="fa fa-filter"></i></button>
+                </div>
+            </div>
+        </form>
+        
+
+    </div>
+
+
+
+
+-->
+
+
     <!-- Colocando estoque e consumo juntos, ordenados por data, Precisa disso???
     @for ($i=0, $j=0; $i < count($foodRecords) && $j < count($consumptions); )
         @if(date('d-m-Y',strtotime($foodRecords[$i]->created_at)) <=
