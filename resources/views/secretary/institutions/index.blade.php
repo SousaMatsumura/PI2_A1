@@ -21,42 +21,40 @@
     <table id="" class="table w-100">
         <thead class="bg-primary text-white">
             <tr>
-                <th>ID</th>
-                <th>Instituição</th>
-                <th class="text-center">Ações</th>
+                <th class="text-center">ID</th>
+                <th class="">Instituição</th>
+                <th class=" align-middle text-center">Ações</th>
             </tr>
         </thead>
         <tbody>
             <!-- CONTEÚDO DA TABELA -->
             @foreach ($institutions as $institution)
-                <tr>
-                    <td class="align-middle">{{ $institution->id }}</td>
-                    <td class="align-middle">{{ $institution->name }}</td>
-                    <td class="align-middle">
-                        <div class="d-flex align-items-center">
-                            <a href="{{ route('secretary.institution.show', $institution->id) }}"
-                                class="btn btn-sm btn-info mr-2"
-                            >
-                                <i class="fa fa-eye"></i>
-                            </a>
-                            <a href="{{ route('secretary.institution.edit', $institution->id) }}"
-                                class="btn btn-sm btn-primary mr-2"
-                            >
-                                <i class="fa fa-edit"></i>
-                            </a>
-                            <form
-                                action="{{ route('secretary.institution.destroy', $institution->id) }}"
-                                method="POST"
-                            >
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger confirm-submit">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                            </form>                    
-                        </div>
-                    </td>
-                </tr>
+                @if ($institution->type != "SECRETARY")
+                    <tr>
+                        <td class="align-middle text-center">{{ $institution->id }}</td>
+                        <td class="align-middle">{{ $institution->name }}</td>
+                        <td class="row justify-content-center">
+                            <!-- <div class="d-flex d-block m-auto"  > -->
+                                <a href="{{ route('secretary.institution.show', $institution->id) }}"
+                                    class="btn btn-sm btn-info mr-2"
+                                >
+                                    <i class="fa fa-eye"></i>
+                                </a>
+
+                                <form
+                                    action="{{ route('secretary.institution.destroy', $institution->id) }}"
+                                    method="POST"
+                                >
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger confirm-submit">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>                    
+                            <!--</div> -->
+                        </td>
+                    </tr>
+                @endif
             @endforeach
         </tbody>
     </table>

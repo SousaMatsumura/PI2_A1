@@ -6,12 +6,14 @@
     <link rel="stylesheet" href="{{ asset('vendor/gijgo/gijgo.min.css') }}">
 @endpush
 
+<!--
 @section('content')
 <form action="{{ route('secretary.institution.update', $institution->id) }}" method="POST" autocomplete="off">
         @method('PUT')
         @include('secretary.institutions._partials.form')
     </form>   
 @endsection
+-->
 
 <!--
 @push('js')

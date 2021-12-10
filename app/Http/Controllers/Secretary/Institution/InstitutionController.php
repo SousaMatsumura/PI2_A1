@@ -55,6 +55,7 @@ class InstitutionController extends Controller
         ]);
     }
 
+    /*
     public function edit(Institution $institution)
     {   
         $address = $institution->address;   
@@ -77,6 +78,7 @@ class InstitutionController extends Controller
             return $this->redirectBackWithDangerAlert('Não foi possível editar a instituição!'.$exception->getMessage());
         }
     }
+    */
 
     public function destroy(Institution $institution)
     {

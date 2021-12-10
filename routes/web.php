@@ -63,8 +63,12 @@ Route::middleware('auth')->group(function(){
         Route::get('instituicao/cadastrar', [InstitutionController::class, 'create'])->name('secretary.institution.create');
         Route::post('instituicao', [InstitutionController::class, 'store'])->name('secretary.institution.store');
         Route::get('escola/{institution}', [InstitutionController::class, 'show'])->name('secretary.institution.show');
+        
+        /*
         Route::get('escola/{institution}/edit', [InstitutionController::class, 'edit'])->name('secretary.institution.edit');
         Route::put('escola/{instituicao}', [InstitutionController::class, 'update'])->name('secretary.institution.update');
+        */
+
         Route::delete('escola/{institution}', [InstitutionController::class, 'destroy'])->name('secretary.institution.destroy');
 
         Route::get('escola/{institution}/data', [InstitutionDataController::class, 'index'])->name('secretary.institution.data.index');
