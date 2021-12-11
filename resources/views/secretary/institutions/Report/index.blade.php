@@ -5,30 +5,31 @@
 @push('css')
     <link rel="stylesheet" href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/print-report.css') }}">
 @endpush
 
 @section('content')
-    <div class="row">
+    <div class="row d-print-none">
         <form class="mb-2 w-80 ml-3">
             <div class="d-flex justify-content-between">
                 <div class="d-flex flex-fill">
-                    <input type="text" name="search" class="col-lg-3 form-control mr-2"
+                    <input type="text" name="search" class="d-print-none col-lg-3 form-control mr-2"
                         value="{{ $search }}" placeholder="Pesquisar...">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                    <button type="submit" class="d-print-none btn btn-primary"><i class="fa fa-search"></i></button>
 
-                    <label class="ml-5 mr-2 my-auto text-right">Início: </label>
-                    <div class="pl-0 col-lg-2 input-group bg-primary rounded">
+                    <label class="d-print-inline-flex ml-5 mr-2 my-auto text-right">Início: </label>
+                    <div class="background-white pl-0 col-lg-2 input-group bg-primary rounded">
                         <input
                             id="begin-created-at"
                             type="text"
                             name="begin"
-                            class="form-control bg-primary text-white border-0"
+                            class="d-print-inline-flex form-control bg-primary text-white border-0"
                             readonly onpaste="return false;" autocomplete="off"
                             onkeypress="return false;"
                             value="{{ old('begin', isset($begin) ? $begin : \Carbon\Carbon::now()->format('d/m/Y')) }}"
                         >
                         <div class="input-group-append">
-                            <span class="input-group-text bg-primary border-0"
+                            <span class="background-white input-group-text bg-primary border-0"
                                 id="begin-created-at-datepicker-icon">
                                 <i class="fa fa-fw fa-calendar text-white"></i>
                             </span>
@@ -36,32 +37,32 @@
                     </div>
 
 
-                    <label class="ml-3 mr-2 my-auto text-right">Fim: </label>
-                    <div class="pl-0 col-lg-2 input-group bg-primary rounded">
+                    <label class="d-print-inline-flex ml-3 mr-2 my-auto text-right">Fim: </label>
+                    <div class="background-white pl-0 col-lg-2 input-group bg-primary rounded">
                         <input
                             id="end-created-at"
                             type="text"
                             name="end"
-                            class="form-control bg-primary text-white border-0"
+                            class="d-print-inline-flex form-control bg-primary text-white border-0"
                             onkeypress="return false;"
                             onpaste="return false;"
                             autocomplete="off"
                             value="{{ old('end', isset($end) ? $end : \Carbon\Carbon::now()->format('d/m/Y')) }}"
                         >
                         <div class="input-group-append">
-                            <span class="input-group-text bg-primary border-0"
+                            <span class="background-white input-group-text bg-primary border-0"
                                 id="end-created-at-datepicker-icon">
                                 <i class="fa fa-fw fa-calendar text-white"></i>
                             </span>
                         </div>
                     </div>
 
-                    <button type="submit" class="ml-2 btn btn-primary"><i class="fa fa-filter"></i></button>
+                    <button type="submit" class="d-print-none ml-2 btn btn-primary"><i class="fa fa-filter"></i></button>
 
                 </div>
             </div>
         </form>
-        <div class="col-md text-right mr-2">
+        <div class="d-print-none col-md text-right mr-2">
             <a href="{{ route('secretary.institution.show', $institution) }}" class="btn btn-primary">
                 Voltar
             </a>
@@ -71,10 +72,10 @@
 
     <!-- food-records -->
 
-    <table id="" class="table w-100">
+    <table id="" class="d-print-table table w-100">
         <thead class="bg-primary text-white">
-            <tr> <th colspan=4 class="text-center">Estoque</th></tr>
-            <tr>
+            <tr class="d-print-table-row"> <th colspan=4 class="text-center">Estoque</th></tr>
+            <tr class="d-print-table-row">
                 <th class="w-10 text-center">Data</th>
                 <th class="w-50">Alimentos</th>
                 <th class="text-center">Unidade</th>
@@ -130,8 +131,8 @@
 
     <table id="" class="table w-100">
         <thead class="bg-primary text-white">
-            <tr> <th colspan=4 class="text-center">Consumo</th></tr>
-            <tr>
+            <tr class="d-print-table-row"> <th colspan=4 class="text-center">Consumo</th></tr>
+            <tr class="d-print-table-row">
                 <th class="w-10 text-center">Data</th>
                 <th class="w-50">Alimentos</th>
                 <th class="text-center">Unidade</th>
@@ -184,8 +185,8 @@
 
     <table id="" class="table w-100">
         <thead class="bg-primary text-white">
-            <tr> <th colspan=5 class="text-center">Cardápio</th></tr>
-            <tr>
+            <tr class="d-print-table-row"> <th colspan=5 class="text-center">Cardápio</th></tr>
+            <tr class="d-print-table-row">
                 <th class="w-10 text-center">Data</th>
                 <th class="w-50">Name</th>
                 <th class="">Período</th>
@@ -263,7 +264,7 @@
         </tbody>
     </table>
     
-    <div class="col-md text-center mr-2">
+    <div class="d-print-none col-md text-center mr-2">
         <a href="#" onclick="window.print();return false;" class="btn btn-primary">
             Imprimir
         </a>

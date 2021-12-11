@@ -20,6 +20,7 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/print-report.css') }}">
     @stack('css')
 </head>
 
@@ -30,7 +31,7 @@
 
         @auth
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="d-print-none navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -140,7 +141,7 @@
             <footer class="sticky-footer ">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright &copy; SEDUC - Gerenciamento de Estoque de Alimentos - 2021</span>
                     </div>
                 </div>
             </footer>
@@ -154,7 +155,7 @@
 
     @auth
     <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
+    <a class="d-print-none scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
     @endauth

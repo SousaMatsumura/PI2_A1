@@ -73,23 +73,22 @@
             </div>
         </div>
     </div>
-
-    <!--
     <div class="row">
-        <div class="col-12 col-sm-4 col-lg-1 my-2 mt-4 col-6">
-            <a href="{{ route('secretary.institution.show', $institution->id) }}"
-                class="btn btn-block btn-primary d-flex flex-sm-column">
-                <span>Voltar</span>
-            </a>
+        <div class="col-lg-1">
+            <div class="bg-light p-1 pt-2 rounded mt-4">
+                <span class="text-dark font-weight-bold">Telefone:</span>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="bg-primary p-1 rounded mt-4">
+                <div class="bg-light p-1 rounded">
+                    <span class="text-dark font-weight-bold">
+                        {{$institution->phone}}
+                    </span>
+                </div>
+            </div>
         </div>
     </div>
 
-        
-        <div class="col-12 col-sm-4 col-lg-1 my-2 mt-4 col-6">
-            <a href="{{ route('secretary.institution.edit', $institution->id) }}"
-                class="btn btn-block btn-success d-flex flex-sm-column">
-                <span>Editar</span>
-            </a>
-        </div>
-        -->
+    
 @endsection
