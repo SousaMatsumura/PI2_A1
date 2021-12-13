@@ -24,14 +24,17 @@
                                 id="food-record-created-at" 
                                 type="text" 
                                 name="food_record[created_at]" 
-                                class="form-control bg-primary text-white border-primary @error('food_record.created_at') border-danger @enderror" 
+                                class="form-control bg-primary text-white border-primary
+                                    @error('food_record.created_at') border-danger @enderror" 
                                 placeholder="Buscar..." 
                                 readonly
                                 value="{{ old('food_record.created_at') }}"
-                                data-url="{{ route('secretary.school.food_record.index', ['institution_id' => $institution->id]) }}"
+                                data-url="{{ route('secretary.school.food_record.index',
+                                    ['institution_id' => $institution->id]) }}"
                             >
                             <div class="input-group-append">
-                                <span class="input-group-text bg-primary border-0" id="food-record-created-at-datepicker-icon">
+                                <span class="input-group-text bg-primary border-0"
+                                    id="food-record-created-at-datepicker-icon">
                                     <i class="fa fa-fw fa-calendar text-white"></i>
                                 </span>
                             </div>
@@ -78,7 +81,7 @@
                                                 type="text" 
                                                 name="foods[{{ $food->id }}][amount]" 
                                                 placeholder="00"
-                                                class="form-control form-control-sm border-top-0 border-left-0 border-right-0 rounded-0 text-center digits @error('foods.'.$food->id.'.amount') is-invalid @enderror"
+                                                class="read-only form-control form-control-sm border-top-0 border-left-0 border-right-0 rounded-0 text-center digits @error('foods.'.$food->id.'.amount') is-invalid @enderror"
                                                 value="{{ old('foods.'.$food->id.'.amount')}}"
                                                 data-min="{{ $food->amount_consumed }}"
                                             >

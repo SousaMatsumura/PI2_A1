@@ -8,11 +8,28 @@ let datepicker = $('#food-record-created-at').datepicker({
     language: 'pt-BR',
     autoclose: true,
     showOnFocus: false,
-    startDate: today,
     endDate: today,
 })
 
+
+
 datepicker.val(today.toLocaleDateString('pt-BR', {timeZone: 'America/Sao_Paulo'}))
+
+$( "#food-record-created-at" ).change(function() {
+    var currentStringDate = $('#food-record-created-at').val().split('/')
+    var currentDate = new Date(currentStringDate[2], currentStringDate[1] - 1, currentStringDate[0])
+    var todayDateOnly = new Date(today.toDateString())
+
+    if(currentDate.valueOf() != todayDateOnly.valueOf()){
+        $('.read-only').attr('readonly', 'readonly');
+    }else{
+        $('.read-only').removeAttr('readonly');
+    }
+});
+
+$('#food-record-created-at-datepicker-icon').click(function() {
+    datepicker.datepicker('show')
+})
 
 jQuery.validator.setDefaults({
     errorElement: 'span',
