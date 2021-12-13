@@ -13,11 +13,8 @@
         <form class="mb-2 w-80 ml-3">
             <div class="d-flex justify-content-between">
                 <div class="d-flex flex-fill">
-                    <input type="text" name="search" class="d-print-none col-lg-3 form-control mr-2"
-                        value="{{ $search }}" placeholder="Pesquisar...">
-                    <button type="submit" class="d-print-none btn btn-primary"><i class="fa fa-search"></i></button>
 
-                    <label class="d-print-inline-flex ml-5 mr-2 my-auto text-right">Início: </label>
+                    <label class="d-print-inline-flex mr-2 my-auto text-right">Início: </label>
                     <div class="background-white pl-0 col-lg-2 input-group bg-primary rounded">
                         <input
                             id="begin-created-at"
@@ -57,7 +54,11 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="d-print-none ml-2 btn btn-primary"><i class="fa fa-filter"></i></button>
+                    <input type="text" name="search" class="d-print-none ml-5  col-lg-3 form-control mr-2"
+                        value="{{ $search }}" placeholder="Pesquisar...">
+
+                    <!-- <button title="filtrar" type="submit" class="d-print-none ml-2 btn btn-primary"><i class="fa fa-filter"></i></button> -->
+                    <button type="submit" class="d-print-none ml-2 btn btn-primary"><i class="fa fa-search"></i></button>
 
                 </div>
             </div>
@@ -277,35 +278,5 @@
     <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js') }}"></script>
-    <script>
-        var endDate = new Date()
-        var beginString = $('#begin-created-at').val().split("/")
-        var inputBegintDate = new Date(beginString[2], beginString[1] - 1, beginString[0])
-        var endString = $('#end-created-at').val().split("/")
-        var inputEndDate = new Date(endString[2], endString[1] - 1, endString[0])
-
-        let beginDatepicker = $('#begin-created-at').datepicker({
-            language: 'pt-BR',
-            autoclose: true,
-            showOnFocus: false,
-            endDate: inputEndDate
-        })
-
-        let endDatepicker = $('#end-created-at').datepicker({
-            language: 'pt-BR',
-            autoclose: true,
-            showOnFocus: false,
-            startDate: inputBegintDate,
-            endDate: endDate
-        })
-
-        $('#begin-created-at-datepicker-icon').click(function() {
-            beginDatepicker.datepicker('show')
-        })
-
-        $('#end-created-at-datepicker-icon').click(function() {
-            endDatepicker.datepicker('show')
-        })
-
-    </script>
+    <script src="{{ asset('js/secretary/report/index.js')}}"></script>
 @endpush
