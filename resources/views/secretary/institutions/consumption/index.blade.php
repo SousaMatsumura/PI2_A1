@@ -8,10 +8,31 @@
 
 @section('content')
     <div class="row">
-        <form class="mb-2 w-50 ml-3">
+        <form class="mb-2 w-80 ml-3">
             <div class="d-flex justify-content-between">
                 <div class="d-flex flex-fill">
-                    <input type="text" name="search" class="form-control mr-2" value="{{ $search }}" placeholder="Pesquisar...">
+
+                    <label class="d-print-inline-flex mr-2 my-auto text-right">Data: </label>
+                    <div class="background-white pl-0 col-lg-3 input-group bg-primary rounded">
+                        <input
+                            id="consumption-created-at"
+                            type="text"
+                            name="consumptionCreatedAt"
+                            class="d-print-inline-flex form-control bg-primary text-white border-0"
+                            readonly onpaste="return false;" autocomplete="off"
+                            onkeypress="return false;"
+                            value="{{ old('consumptionCreatedAt', isset($consumptionCreatedAt)
+                                ? $consumptionCreatedAt : \Carbon\Carbon::now()->format('d/m/Y')) }}"
+                        >
+                        <div class="input-group-append">
+                            <span class="p-0 background-white input-group-text bg-primary border-0"
+                                id="consumption-created-at-datepicker-icon">
+                                <i class="fa fa-fw fa-calendar text-white"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <input type="text" id="search" name="search" class="form-control ml-5 col-lg-5 mr-2" value="{{ $search }}" placeholder="Pesquisar...">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
                 </div>
             </div>
@@ -81,3 +102,97 @@
     </div>
     -->
 @endsection
+
+@push('js')
+
+    <script src="{{ asset('vendor/jquery-mask/jquery.mask.min.js') }}"></script>
+    <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js') }}"></script>
+    <script src="{{ asset('js/secretary/report/index.js')}}"></script>
+
+<script>
+$(document).ready(function () {
+
+    /*** Handle Datepicker */
+
+    var today = new Date();
+    var inputString = $('#consumption-created-at').val().split("/");
+    var inputDate = new Date(inputString[2], inputString[1] - 1, inputString[0]);
+
+    let datepicker = $('#consumption-created-at').datepicker({
+        language: 'pt-BR',
+        autoclose: true,
+        showOnFocus: false,
+        endDate: today,
+    });
+
+    $('#consumption-created-at-datepicker-icon').click(function() {
+        datepicker.datepicker('show')
+    })
+
+
+    $('#consumption-created-at').on("cut copy paste",function(e) {
+        e.preventDefault();
+    });
+
+    $('#consumption-created-at').keydown(function(event) {
+        if (event.ctrlKey==true && (event.which == '118' || event.which == '86')) {
+            event.preventDefault();
+        }
+    });
+
+    $( "#consumption-created-at, #search" ).change(function() {
+        fetch();
+    });
+
+    $("form").submit( function (e){
+        e.preventDefault();
+        //e.stopPropagation();
+        fetch();
+    });
+
+
+    /*** END Handle Datepicker */
+
+
+    /*** Handle Fetch */
+
+    var institution = <?php echo json_encode($institution) ?>;
+
+    fetch();
+
+    function fetch(){
+        $.ajax({
+            type: "GET",
+            url: '/secretaria/escola/' +institution.id+ '/fetch',
+            dataType: 'json',
+            success: function (response){
+                $('tbody').html("");
+                //console.log("FARINHA".toLowerCase() $('#search').val().toLowerCase());
+                //console.log();
+                $.each(response.consumptions, function (key, item){
+                    if($('#consumption-created-at').val() === item.created_at &&
+                        item.name.toLowerCase().includes($('#search').val().toLowerCase())){
+                        
+                        $('tbody').append('<tr>\
+                            <td class="align-middle">'+
+                                item.name
+                            +'</td>\
+                            <td class="align-middle text-center">'+
+                                item.unit
+                            +'</td>\
+                            <td class="align-middle text-center">'+
+                                item.amount
+                            +'</td>\
+                        </tr>');
+                    }
+                });
+            },
+        })
+    };
+
+    /*** END Handle Fetch */
+});
+</script>
+@endpush

@@ -54,7 +54,7 @@
                         </div>
                     </div>
 
-                    <input type="text" name="search" class="d-print-none ml-5  col-lg-3 form-control mr-2"
+                    <input type="text" name="search" class="d-print-none ml-5 col-lg-3 form-control mr-2"
                         value="{{ $search }}" placeholder="Pesquisar...">
 
                     <!-- <button title="filtrar" type="submit" class="d-print-none ml-2 btn btn-primary"><i class="fa fa-filter"></i></button> -->
@@ -273,7 +273,6 @@
 @endsection
 
 @push('js')
-
     <script src="{{ asset('vendor/jquery-mask/jquery.mask.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>

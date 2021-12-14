@@ -43,8 +43,8 @@ $('#begin-created-at, #end-created-at').on("cut copy paste",function(e) {
     e.preventDefault();
  });
 
- $('#begin-created-at, #end-created-at').keydown(function(event) {
+$('#begin-created-at, #end-created-at').keydown(function(event) {
     if (event.ctrlKey==true && (event.which == '118' || event.which == '86')) {
         event.preventDefault();
-     }
+    }
 });
