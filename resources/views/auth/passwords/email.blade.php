@@ -11,6 +11,7 @@
             min-height: 70vh !important;            
             display: flex !important;
             align-items: center !important;
+            flex-direction: column;
         }
 
     </style>
@@ -20,8 +21,18 @@
 
 @section('content')
 
+    @if(session()->has('status'))
+        <div class="alert bg-success alert-dismissible fade show text-white mt-5" role="alert">
+            <strong><i class="fa fa-fw fa-check"></i></strong> {!! session('status') !!}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
     <div class="card w-50 mx-auto my-auto bg-primary text-white">
         <div class="card-body">
+            
             <h1 class="text-center h3 font-weight-bold">Recuperar Senha</h1>
 
             <form id="password-request-form" action="{{ route('password.email') }}" method="POST">
@@ -38,28 +49,11 @@
                 <p class="small">
                     Lembrou sua senha? Clique <a href="{{ route('login') }}" class="text-white font-weight-bold">AQUI</a> para retornar ao login
                 </p>
-                <button type="button" class="btn btn-primary btn-block active" data-toggle="modal" data-target="#wait-modal">
+                <button type="submit" class="btn btn-primary btn-block active">
                     Enviar link para redefinir senha
                 </button>
             </form>
 
-        </div>
-    </div>
-
-    <div id="wait-modal" class="modal fade" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body text-center">
-                    <img src="{{ asset('img/wait.svg') }}" alt="" class="img-fluid w-50">
-                    <p class="m-0 text-uppercase font-weight-bold h4 mt-5">Em desenvolvimento</p>
-                    <p>Estamos trabalhando neste recurso</p>
-                </div>
-                <div class="modal-footer border-0">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">
-                        Fechar
-                    </button>
-                </div>
-            </div>
         </div>
     </div>
 
