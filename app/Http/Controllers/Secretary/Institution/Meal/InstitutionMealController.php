@@ -3,28 +3,25 @@
 namespace App\Http\Controllers\Secretary\Institution\Meal;
 
 use App\Http\Controllers\Controller;
-use App\Models\{Institution};
-use Illuminate\Support\Facades\DB;
+use App\Models\Institution;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class InstitutionMealController extends Controller
 {
     public function index(Institution $institution, Request $request)
-    {
-        $meals = DB::select('select meal.mealtime as time, meal.name as name,'
-        .' meal.amount as amount, meal.`repeat` as `repeat`,'
-        .' DATE_FORMAT(meal.created_at, "%d/%m/%Y") as created_at'
-        .' from meal where meal.institution_id = '.$institution->id
-        .' AND Date(meal.created_at) = CURDATE()'
-        .' order by meal.created_at, meal.mealtime, meal.amount DESC');
+    {   
+
+        if($request->ajax()) {
         
-        return view('secretary.institutions.meal.index', [
-            'meals' => $meals,
-            'institution' => $institution,
-            'testDate' => isset($request->testDate) ? $request->testDate : '',
-            'beginDate' => isset($request->beginDate) ? $request->beginDate : '',
-            'endDate' => isset($request->endDate) ? $request->endDate : '',
-            'search' => isset($request->search) ? $request->search : '',
-        ]);
+            if($request->has('menu.created_at')) {
+                $createdAt = Carbon::createFromFormat('d/m/Y', $request->menu['created_at']);
+                
+                return $institution->menus()->whereDate('created_at', $createdAt)->get();
+            }
+            
+        }
+
+        return view('secretary.institutions.meal.index', compact('institution'));
     }
 }

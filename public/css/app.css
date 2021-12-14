@@ -29,6 +29,7 @@
 
 .datepicker-days .day {
     padding: 8px;
+    cursor: pointer;
 }
 
 .datepicker-days .day.disabled {
@@ -37,7 +38,6 @@
 }
 
 /* TextArea Resize */
-
 textarea.form-control {
     resize: none;
 }
