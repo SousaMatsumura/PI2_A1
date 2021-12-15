@@ -7,8 +7,8 @@ use App\Http\Controllers\School\{
     Dashboard\DashboardController as SchoolDashboardController,
     FoodRecord\FoodRecordController as SchoolFoodRecordControllerController,
     Consumption\ConsumptionController as SchoolConsumptionController,
-    Menu\MenuController as SchoolMenuControlller
-
+    Menu\MenuController as SchoolMenuControlller,
+    Institution\InstitutionController as SchoolInstitutionController
 };
 use App\Http\Controllers\Secretary\{
     Dashboard\DashboardController as SecretaryDashboardController,
@@ -45,7 +45,10 @@ Route::middleware('auth')->group(function(){
         Route::get('cardapios', [SchoolMenuControlller::class, 'index'])->name('school.menu.index');
         Route::get('cardapio', [SchoolMenuControlller::class, 'create'])->name('school.menu.create');
         Route::post('cardapio', [SchoolMenuControlller::class, 'store'])->name('school.menu.store');
-        Route::patch('cardapio/atualizar', [SchoolMenuControlller::class, 'update'])->name('school.menu.update');  
+        Route::patch('cardapio/atualizar', [SchoolMenuControlller::class, 'update'])->name('school.menu.update');
+
+        Route::get('cadastro', [SchoolInstitutionController::class, 'edit'])->name('school.institution.edit');
+        Route::patch('cadastro', [SchoolInstitutionController::class, 'update'])->name('school.institution.update');
 
     });
 
