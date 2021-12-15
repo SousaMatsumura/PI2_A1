@@ -21,7 +21,8 @@ class SchoolSeeder extends Seeder
         $institution = Institution::create([
             'name' => 'Ciefi Prof. Ricardo Luques Sammarco Serra',
             'type' => 'SCHOOL',
-            'phone' => '(12) 3888-4186'
+            'phone' => '(12) 3888-4186',
+            'students' => 300
         ]);
         
         $address = Address::create([
