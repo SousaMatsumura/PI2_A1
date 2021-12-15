@@ -75,12 +75,12 @@ Route::middleware('auth')->group(function(){
         Route::delete('escola/{institution}', [InstitutionController::class, 'destroy'])->name('secretary.institution.destroy');
 
         Route::get('escola/{institution}/data', [InstitutionDataController::class, 'index'])->name('secretary.institution.data.index');
-        Route::get('escola/{institution}/consumption', [InstitutionConsumptionController::class, 'index'])->name('secretary.institution.consumption.index');
+        Route::get('escola/{institution}/consumo', [InstitutionConsumptionController::class, 'index'])->name('secretary.institution.consumption.index');
         Route::get('escola/{institution}/consumption/fetch', [InstitutionConsumptionController::class, 'fetch'])->name('secretary.institution.consumption.fetch');
-        Route::get('escola/{institution}/foodRecord', [InstitutionFoodRecordController::class, 'index'])->name('secretary.institution.foodRecord.index');
-        Route::get('escola/{institution}/report', [InstitutionReportController::class, 'index'])->name('secretary.institution.report.index');
+        Route::get('escola/{institution}/estoque', [InstitutionFoodRecordController::class, 'index'])->name('secretary.institution.foodRecord.index');
+        Route::get('escola/{institution}/relatorio', [InstitutionReportController::class, 'index'])->name('secretary.institution.report.index');
         Route::get('escola/{institution}/report/fetch', [InstitutionReportController::class, 'fetch'])->name('secretary.institution.report.fetch');
-        Route::get('escola/{institution}/meal', [InstitutionMealController::class, 'index'])->name('secretary.institution.meal.index');
+        Route::get('escola/{institution}/cardapio', [InstitutionMealController::class, 'index'])->name('secretary.institution.meal.index');
         
         
         

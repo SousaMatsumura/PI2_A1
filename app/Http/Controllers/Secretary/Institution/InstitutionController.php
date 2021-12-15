@@ -17,14 +17,19 @@ class InstitutionController extends Controller
     public function index(Request $request)
     {
         $institutions = Institution::query();
+        $noInstitution = false;
 
         if(isset($request->search) && $request->search !== ''){
             $institutions->where('name', 'like', '%' . $request->search . '%');
+            if(!$institutions->first()){ $noInstitution = true;}
         }
         
+        
+
         return view('secretary.institutions.index', [
             'institutions' => $institutions->paginate(5),
             'search' => isset($request->search) ? $request->search : '',
+            'noInstitution' => $noInstitution,
         ]);
     }
 

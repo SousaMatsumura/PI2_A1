@@ -393,6 +393,15 @@ $(document).ready(function () {
                         </tr>');
                     }
                 });
+
+                if(isEmpty($('#food-records-tbody'))){
+                    $('#food-records-tbody').append('<tr>\
+                        <td colspan=4 class="align-middle card-body text-center">'+
+                            '<p class="font-weight-bold mb-0">Não há registros.'
+                        +'</td>'+   
+                    '</tr>');
+                }
+
                 /*** END Handle FoodRecords */
 
                 /*** Handle Consumptions */
@@ -418,6 +427,15 @@ $(document).ready(function () {
                         </tr>');
                     }
                 });
+
+                if(isEmpty($('#consumptions-tbody'))){
+                    $('#consumptions-tbody').append('<tr>\
+                        <td colspan=4 class="align-middle card-body text-center">'+
+                            '<p class="font-weight-bold mb-0">Não há registros.'
+                        +'</td>'+   
+                    '</tr>');
+                }
+
                 /*** END Handle Consumptions */
 
                 /*** Handle Menus */
@@ -446,6 +464,15 @@ $(document).ready(function () {
                         </tr>');
                     }
                 });
+
+                if(isEmpty($('#menus-tbody'))){
+                    $('#menus-tbody').append('<tr>\
+                        <td colspan=5 class="align-middle card-body text-center">'+
+                            '<p class="font-weight-bold mb-0">Não há registros.'
+                        +'</td>'+   
+                    '</tr>');
+                }
+
                 /*** END Handle Menus */
             },
         })
@@ -458,6 +485,10 @@ $(document).ready(function () {
             case "afternoon snack": return "Lanche da tarde";
             default: return "Janta";
         }
+    }
+
+    function isEmpty( el ){
+        return !$.trim(el.html());
     }
 
     /*** END Handle Fetch */

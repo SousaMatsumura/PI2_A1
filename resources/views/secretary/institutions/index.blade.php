@@ -11,7 +11,7 @@
     <form class="mb-2">
         <div class="d-flex justify-content-between">
             <div class="d-flex flex-fill">
-                <input type="text" name="search" class="form-control w-50 mr-2" value="{{ $search }}" placeholder="Pesquisar...">
+                <input type="text" id="search" name="search" class="form-control w-50 mr-2" value="{{ $search }}" placeholder="Pesquisar...">
                 <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
             </div>
             <a href="{{ route('secretary.institution.create') }}" class="btn btn-primary">Nova instituição</a>
@@ -77,6 +77,24 @@
             if(confirmation){
                 const form = $(this).parent();
                 form.trigger('submit');
+            }
+        });
+
+        $(document).ready(function () {
+            var noInstitution = <?php echo json_encode($noInstitution) ?>;
+            
+            function isEmpty( el ){
+                return !$.trim(el.html());
+            }
+            //console.log();
+            if(noInstitution){
+                
+                $('tbody').append('<tr>\
+                    <td colspan=3 class="align-middle card-body bg-primary text-white rounded text-center">'+
+                        '<i class="fa fa-fw fa-search fa-3x mb-2"></i>\
+                        <p class="mb-0">Não há instituição registrada com a busca "'+$('#search').val()+'".'
+                    +'</td>'+   
+                '</tr>');
             }
         });
     </script>
