@@ -54,10 +54,10 @@
                 
             </div>
         </div>
-        {{-- @dd($foods->toArray()) --}}
+        
         <div id="foods-card" class="card">
-            <div class="card-body p-2 bg-primary">
-                <div class="p-2 bg-white">
+            <div class="card-body p-2 bg-primary rounded">
+                <div class="p-2 bg-white rounded">
 
                     <table id="foods-table" class="table table-borderless table-sm w-100 m-0">
                         <thead>
@@ -82,8 +82,7 @@
                                                 name="foods[{{ $food->id }}][amount]" 
                                                 placeholder="00"
                                                 class="read-only form-control form-control-sm border-top-0 border-left-0 border-right-0 rounded-0 text-center digits @error('foods.'.$food->id.'.amount') is-invalid @enderror"
-                                                value="{{ old('foods.'.$food->id.'.amount')}}"
-                                                data-min="{{ $food->amount_consumed }}"
+                                                value="{{ old('foods.'.$food->id.'.amount') }}"
                                             >
                                             @error('foods.'.$food->id.'.amount')
                                                 <span class="text-danger d-block small text-center">

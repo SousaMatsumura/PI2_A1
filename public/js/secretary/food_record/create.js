@@ -67,30 +67,6 @@ function addLeftZero(input) {
     return input
 }
 
-function addInputFoodsRules() {
-    $("input[name^='foods']").each(function() {
-        
-        let min = $(this).data('min')
-        // min = parseInt(min)
-
-        console.log(min)
-
-        $(this).rules('add', {
-            min: min,
-            digits: true,
-            messages: {
-                min: `O campo quantidade não pode ser inferior a {0}`,
-                digits: 'O campo entrada deve ser um número.'
-            }
-        })
-
-        $(this).valid()
-
-        validatedForm.valid()
-
-    })
-}
-
 function setForm(params = {}) {
 
     $.ajax({
@@ -107,8 +83,32 @@ function setForm(params = {}) {
             if(foodRecords.length > 0) {
                 
                 foodRecords.forEach(function(food){
-                    $(`[name="foods[${food.id}][amount]"]`).val(addLeftZero(food.amount ?? 0))
+
+                    let input = $(`[name="foods[${food.id}][amount]"]`)
+
+                    input.val(addLeftZero(food.amount ?? 0))
+
+                    let min = 0
+                    let inputValue = parseInt(input.val())
+                    let amountRemaining = parseInt(input.parents('tr').find('.food-amount-remaining').text())
+
+                    min = inputValue - amountRemaining
+
+                    input.rules('add', {
+                        min: min,
+                        digits: true,
+                        messages: {
+                            min: `O campo quantidade não pode ser inferior a {0}`,
+                            digits: 'O campo entrada deve ser um número.'
+                        }
+                    })
+            
+                    input.valid()
+            
+                    validatedForm.valid()
+
                 })
+
 
                 if(response.route) {
                     submitButton.text('Atualizar Entrada de Alimentos')
@@ -129,7 +129,6 @@ function setForm(params = {}) {
 
             form.prop('action', submitRoute)
 
-            addInputFoodsRules()
 
             foodsCard.fadeIn().show()
 
@@ -162,8 +161,6 @@ $('.digits').mask('0#', {
         $(currentField).val(addLeftZero(value))
     }
 })
-
-addInputFoodsRules()
 
 if(datepicker.val()) {
     setForm({
