@@ -13,6 +13,15 @@ $('#consumption-created-at-datepicker-icon').click(function(){
     datepicker.datepicker('show')
 })
 
+function addLeftZero(input) {
+
+    input = input ? parseInt(input) : 0
+
+    if(input <= 9 && input.toString().length < 2) return `0${input.toString()}`
+
+    return input
+}
+
 function fetchConsumptions() {
 
     $('[id^="food-"]').text('00')
@@ -32,7 +41,7 @@ function fetchConsumptions() {
             if(response.length > 0) {
 
                 response.forEach(function(food){
-                    $(`#food-${food.food_id}-amount_consumed`).text(food.amount_consumed).hide().fadeIn()
+                    $(`#food-${food.food_id}-amount_consumed`).text(addLeftZero(food.amount_consumed)).hide().fadeIn()
                 })
             }
 
