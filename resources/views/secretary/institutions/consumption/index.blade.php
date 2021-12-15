@@ -1,224 +1,88 @@
 @extends('layouts.app')
 
-@section('title', 'Consumo de '.$institution->name)
+@section('title', 'Consumo Diário: '.$institution->name)
 
 @push('css')
-    <link rel="stylesheet" href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}">
 @endpush
 
 @section('content')
-    <div class="row">
-        <form class="mb-2 w-80 ml-3">
-            <div class="d-flex justify-content-between">
-                <div class="d-flex flex-fill">
+    <div class="mb-4">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-auto d-flex align-items-center py-0 pr-0">
+                    <label class="my-auto">Dia: </label>
+                </div>
+                <div class="col-md-4">
 
-                    <label class="d-print-inline-flex mr-2 my-auto text-right">Data: </label>
-                    <div class="background-white pl-0 col-lg-3 input-group bg-primary rounded">
-                        <input
-                            id="consumption-created-at"
-                            type="text"
-                            name="consumptionCreatedAt"
-                            class="d-print-inline-flex form-control bg-primary text-white border-0"
-                            readonly onpaste="return false;" autocomplete="off"
-                            onkeypress="return false;"
-                            value="{{ old('consumptionCreatedAt', isset($consumptionCreatedAt)
-                                ? $consumptionCreatedAt : \Carbon\Carbon::now()->format('d/m/Y')) }}"
+                    <div class="input-group bg-primary rounded">
+                        <input 
+                            id="consumption-created-at" 
+                            type="text" 
+                            name="consumption[created_at]" 
+                            class="form-control bg-primary text-white border-primary
+                                @error('consumption.created_at') border-danger @enderror" 
+                            placeholder="Buscar..." 
+                            readonly
+                            value="{{ old('consumption.created_at') }}"
+                            data-url="{{ route('secretary.institution.consumption.index', $institution) }}"
                         >
                         <div class="input-group-append">
-                            <span class="p-0 background-white input-group-text bg-primary border-0"
+                            <span class="input-group-text bg-primary border-0"
                                 id="consumption-created-at-datepicker-icon">
                                 <i class="fa fa-fw fa-calendar text-white"></i>
                             </span>
                         </div>
                     </div>
-
-                    <input type="text" id="search" name="search" class="form-control ml-5 col-lg-5 mr-2" value="{{ $search }}" placeholder="Pesquisar...">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                    
+                    @error('consumption.created_at')
+                        <span class="text-danger d-block small">
+                            {{ $errors->first('consumption.created_at') }}
+                        </span>
+                    @enderror
+                </div>
+                <div class="col-md text-right">
+                    <a href="{{ route('secretary.institution.show', $institution) }}" class="btn btn-primary">Voltar</a>
                 </div>
             </div>
-        </form>
-
-        <div class="col-md text-right mr-2">
-            <a href="{{ route('secretary.institution.show', $institution) }}" class="btn btn-primary">
-                Voltar
-            </a>
+            
+            
         </div>
     </div>
 
-    <table id="" class="table w-100">
-        <thead class="bg-primary text-white">
-            <tr>
-                <th>Alimentos</th>
-                <th class="text-center">Unidade de medida</th>
-                <th class="text-center">Quantidade consumida</th>
-                <!-- <th>Responsável</th> -->
-            </tr>
-        </thead>
-        <tbody>
-            <!-- CONTEÚDO DA TABELA -->
-            @foreach ($consumptions as $consumption)
-                @if(isset($search) && $search !== ''
-                    && str_contains(strtolower($consumption->name), strtolower($search)))
-                    <tr>
-                        <td class="align-middle">
-                            {{ $consumption->name }}
-                        </td>
-                        <td class="align-middle text-center">
-                            {{ $consumption->unit }}
-                        </td>
-                        <td class="align-middle text-center">
-                            {{ $consumption->amount }}
-                        </td>
-                        <!-- <td class="align-middle">
-                            {{ $consumption->amount }}
-                        </td> -->
-                    </tr>
-                @endif
-                @if(!isset($search) || $search === '')
-                    <tr>
-                        <td class="align-middle">
-                            {{ $consumption->name }}
-                        </td>
-                        <td class="align-middle text-center">
-                            {{ $consumption->unit }}
-                        </td>
-                        <td class="align-middle text-center">
-                            {{ $consumption->amount }}
-                        </td>
-                        <!-- <td class="align-middle">
-                            {{ $consumption->amount }}
-                        </td> -->
-                    </tr>
-                @endif
-            @endforeach
+    <div id="foods-card" class="card">
+        <div class="card-body p-2 bg-primary">
+            <div class="p-2 bg-white">
 
-        </tbody>
-    </table>
-    <!--
-    <div class="col-12 col-sm-4 col-lg-1 my-2 mt-4 col-6">
-        <a href="{{ route('secretary.institution.show', $institution->id) }}"
-            class="btn btn-block btn-success d-flex flex-sm-column">
-            <span>Voltar</span>
-        </a>
+                <table id="foods-table" class="table table-borderless table-sm w-100 m-0">
+                    <thead>
+                        <tr class="bg-white border-bottom">
+                            <th class="p-2">Alimentos</th>
+                            <th class="text-center">Unidade de Medida</th>
+                            <th class="text-center">Quantidade Consumida</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        @foreach($foodRecords as $record)
+                            <tr class="bg-white">
+                                <td class="p-2">{{ $record->name }}</td>
+                                <td class="text-center">{{ $record->unit }}</td>
+                                <td id="food-{{ $record->id }}-amount_consumed" class="w-25 text-center"></td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+        
+                </table>
+            </div>
+           
+        </div>
     </div>
-    -->
+
 @endsection
 
 @push('js')
-
-    <script src="{{ asset('vendor/jquery-mask/jquery.mask.min.js') }}"></script>
-    <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js') }}"></script>
-    <script src="{{ asset('js/secretary/report/index.js')}}"></script>
-    
-<script>
-$(document).ready(function () {
-
-/*** Handle Datepicker */
-
-var today = new Date();
-var inputString = $('#consumption-created-at').val().split("/");
-var inputDate = new Date(inputString[2], inputString[1] - 1, inputString[0]);
-
-let datepicker = $('#consumption-created-at').datepicker({
-    language: 'pt-BR',
-    autoclose: true,
-    showOnFocus: false,
-    endDate: today,
-});
-
-$('#consumption-created-at-datepicker-icon').click(function() {
-    datepicker.datepicker('show')
-})
-
-
-$('#consumption-created-at').on("cut copy paste",function(e) {
-    e.preventDefault();
-});
-
-$('#consumption-created-at').keydown(function(event) {
-    if (event.ctrlKey==true && (event.which == '118' || event.which == '86')) {
-        event.preventDefault();
-    }
-});
-
-$( "#consumption-created-at, #search" ).change(function() {
-    fetch();
-});
-
-$("form").submit( function (e){
-    e.preventDefault();
-    //e.stopPropagation();
-    fetch();
-});
-
-
-/*** END Handle Datepicker */
-
-
-/*** Handle Fetch */
-
-var institution = <?php echo json_encode($institution) ?>;
-
-fetch();
-
-function getCurrentDate(s){
-    string = s.split("/");
-    return new Date(string[2], string[1] - 1, string[0]);
-}
-
-function stringDateEqualDate(s, r){
-    d1 = getCurrentDate(s);
-    d2 = getCurrentDate(r);
-    return d1.getYear() === d2.getYear() &&
-        d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
-}
-
-function fetch(){
-    $.ajax({
-        type: "GET",
-        url: '/secretaria/escola/' +institution.id+ '/consumption/fetch',
-        dataType: 'json',
-        success: function (response){
-            $('tbody').html("");
-            $.each(response.consumptions, function (key, item){
-
-                if(stringDateEqualDate(item.created_at, $('#consumption-created-at').val()) &&
-                    item.name.toLowerCase().includes($('#search').val().toLowerCase())){
-                       
-                    $('tbody').append('<tr>\
-                        <td class="align-middle">'+
-                            item.name
-                        +'</td>\
-                        <td class="align-middle text-center">'+
-                            item.unit
-                        +'</td>\
-                        <td class="align-middle text-center">'+
-                            item.amount
-                        +'</td>\
-                    </tr>');
-                }
-            });
-            if(isEmpty($('tbody'))){
-                $('tbody').append('<tr>\
-                    <td colspan=4 class="align-middle card-body bg-primary text-white rounded text-center">'+
-                        '<i class="fa fa-fw fa-calendar fa-3x mb-2"></i>\
-                        <p class="mb-0">Não há consumo registrado no dia '+datepicker.val()+'.'
-                        
-                    +'</td>'+   
-                '</tr>');
-            }
-        },
-    })
-};
-
-function isEmpty( el ){
-    return !$.trim(el.html());
-}
-
-/*** END Handle Fetch */
-
-});
-</script>
+    <script src="{{ asset('js/secretary/school/consumption/index.js') }}"></script>
 @endpush
