@@ -1,5 +1,76 @@
     
+<!--  Old meal tbody
 
+    <tbody>
+
+            @foreach ($meals as $meal)
+                @if(isset($search) && $search !== ''
+                    && str_contains(strtolower($meal->name), strtolower($search)))
+                    <tr>
+                        <td class="w-10 text-center">
+                            {{ $meal->created_at }}
+                        </td>
+                        <td class="w-50">
+                            {{ $meal->name }}
+                        </td>
+                        <td class="">
+                            @switch($meal->time)
+                                @case('breakfast')
+                                    Café da manhã
+                                    @break
+                                @case( 'lunch')
+                                    Almoço
+                                    @break
+                                @case('afternoon snack')
+                                    Lanche da tarde
+                                    @break
+                                @default
+                                    Janta
+                            @endswitch
+                        </td>
+                        <td class="text-center">
+                            {{ $meal->amount }}
+                        </td>
+                        <td class="text-center">
+                            {{ $meal->repeat }}
+                        </td>
+                    </tr>
+                @endif
+                @if(!isset($search) || $search === '')
+                    <tr>
+                        <td class="w-10 text-center">
+                            {{ $meal->created_at }}
+                        </td>
+                        <td class="w-50">
+                            {{ $meal->name }}
+                        </td>
+                        <td class="">
+                            @switch($meal->time)
+                                @case('breakfast')
+                                    Café da manhã
+                                    @break
+                                @case( 'lunch')
+                                    Almoço
+                                    @break
+                                @case('afternoon snack')
+                                    Lanche da tarde
+                                    @break
+                                @default
+                                    Janta
+                            @endswitch
+                        </td>
+                        <td class="text-center">
+                            {{ $meal->amount }}
+                        </td>
+                        <td class="text-center">
+                            {{ $meal->repeat }}
+                        </td>
+                    </tr>
+                @endif
+            @endforeach
+        </tbody>
+
+ -->
 
 
 <!-- Filter Backup

@@ -36,6 +36,7 @@ class InstitutionReportController extends Controller
             .Carbon::createFromFormat('d/m/Y', $request->end)->format('Y-m-d')
             .'" order by consumptions.created_at, consumptions.amount_consumed DESC');
 
+        /*
         $meals = DB::select('select meal.mealtime as time, meal.name as name,'
             .' meal.amount as amount, meal.`repeat` as `repeat`,'
             .' DATE_FORMAT(meal.created_at, "%d/%m/%Y") as created_at'
@@ -45,16 +46,57 @@ class InstitutionReportController extends Controller
             .'" AND Date(meal.created_at) <= "'
             .Carbon::createFromFormat('d/m/Y', $request->end)->format('Y-m-d')
             .'" order by meal.created_at, meal.mealtime, meal.amount DESC');
+            */
             
+        $menus = DB::select('select menus.mealtime as time, menus.description as name,'
+            .' menus.amount as amount, menus.`repeat` as `repeat`,'
+            .' DATE_FORMAT(menus.created_at, "%d/%m/%Y") as created_at'
+            .' from menus where menus.institution_id = '.$institution->id
+            .' AND Date(menus.created_at) >= "'
+            .Carbon::createFromFormat('d/m/Y', $request->begin)->format('Y-m-d')
+            .'" AND Date(menus.created_at) <= "'
+            .Carbon::createFromFormat('d/m/Y', $request->end)->format('Y-m-d')
+            .'" order by menus.created_at, menus.mealtime, menus.amount DESC');
+
         return view('secretary.institutions.report.index', [
             'foodRecords' => $foodRecords,
             'consumptions' => $consumptions,
-            'meals' => $meals,
+            //'meals' => $meals,
+            'menus' => $menus,
             'institution' => $institution,
             'search' => isset($request->search) ? $request->search : '',
             'begin' => isset($request->begin) ? $request->begin : '',
             'end' => isset($request->end) ? $request->end : '',
         ]);
 
+    }
+
+    public function fetch(Institution $institution){
+        
+        $foodRecords = DB::select('select foods.name as name, foods.unit as unit,'
+            .' food_records.amount as amount, DATE_FORMAT(food_records.created_at, "%d/%m/%Y") as created_at'
+            .' from food_records, foods where foods.id = food_records.food_id AND'
+            .' food_records.institution_id = '.$institution->id
+            .' order by food_records.created_at, food_records.amount DESC');
+
+        $consumptions = DB::select('select foods.name as name, foods.unit as unit,'
+            .' consumptions.amount_consumed as amount,'
+            .' DATE_FORMAT(consumptions.created_at, "%d/%m/%Y") as created_at'
+            .' from consumptions, foods where foods.id = consumptions.food_id AND'
+            .' consumptions.institution_id = '.$institution->id
+            .' order by consumptions.created_at, consumptions.amount_consumed DESC');
+        
+        $menus = DB::select('select menus.mealtime as time, menus.description as name,'
+        .' menus.amount as amount, menus.`repeat` as `repeat`,'
+        .' DATE_FORMAT(menus.created_at, "%d/%m/%Y") as created_at'
+        .' from menus where menus.institution_id = '.$institution->id
+        .' order by menus.created_at, menus.mealtime, menus.amount DESC');
+
+        return response()->json([
+            'foodRecords' => $foodRecords,
+            'consumptions' => $consumptions,
+            'menus' => $menus,
+            'institution' => $institution,
+        ]);
     }
 }

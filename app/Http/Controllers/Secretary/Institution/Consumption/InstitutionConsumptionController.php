@@ -17,12 +17,7 @@ class InstitutionConsumptionController extends Controller
             $request->consumptionCreatedAt = Carbon::now()->format('d/m/Y');
         }
 
-        /*$consumptions = DB::select('select foods.name as name, foods.unit as unit,'
-            .' consumptions.amount_consumed as amount from consumptions, foods where'
-            .' foods.id = consumptions.food_id AND consumptions.institution_id = '.$institution->id
-            .' AND Date(consumptions.created_at) = CURDATE()'
-            .' order by foods.name, consumptions.amount_consumed'); */
-
+        
         $consumptions = DB::select('select foods.name as name, foods.unit as unit,'
         .' consumptions.amount_consumed as amount,'
         .' DATE_FORMAT(consumptions.created_at, "%d/%m/%Y") as created_at'
@@ -32,7 +27,16 @@ class InstitutionConsumptionController extends Controller
         .Carbon::createFromFormat('d/m/Y', $request->consumptionCreatedAt)->format('Y-m-d')
         .'" order by consumptions.created_at, consumptions.amount_consumed DESC');
 
-        
+        /*** Tentativa de usar o paginate, não consegui por enquanto porque ele recarrega
+         * a página e eu aprendi a fazer fetch com ajax para evitar isso.
+         * Talvez depois consiga usar o paginate sem recarregar a pagina...
+        $consumptions = DB::table('consumptions')
+            ->join('foods', 'foods.id', '=', 'consumptions.food_id')
+            ->where('consumptions.institution_id', '=', $institution->id)
+            ->select('foods.name as name', 'foods.unit as unit', 'consumptions.amount_consumed as amount'
+                , DB::raw('DATE_FORMAT(consumptions.created_at, "%d/%m/%Y") as created_at'))
+            ->orderBy('consumptions.created_at')->orderByDesc('consumptions.amount_consumed')
+            ->paginate(5);*/
         
         return view('secretary.institutions.consumption.index', [
             'consumptions' => $consumptions,

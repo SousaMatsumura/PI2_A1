@@ -110,7 +110,7 @@
     <script src="{{ asset('vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js') }}"></script>
     <script src="{{ asset('js/secretary/report/index.js')}}"></script>
-
+    
 <script>
 $(document).ready(function () {
 
@@ -162,19 +162,30 @@ $(document).ready(function () {
 
     fetch();
 
+    function getCurrentDate(s){
+        string = s.split("/");
+        return new Date(string[2], string[1] - 1, string[0]);
+    }
+
+    function stringDateEqualDate(s, r){
+        d1 = getCurrentDate(s);
+        d2 = getCurrentDate(r);
+        return d1.getYear() === d2.getYear() &&
+            d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
+    }
+
     function fetch(){
         $.ajax({
             type: "GET",
-            url: '/secretaria/escola/' +institution.id+ '/fetch',
+            url: '/secretaria/escola/' +institution.id+ '/consumption/fetch',
             dataType: 'json',
             success: function (response){
                 $('tbody').html("");
-                //console.log("FARINHA".toLowerCase() $('#search').val().toLowerCase());
-                //console.log();
                 $.each(response.consumptions, function (key, item){
-                    if($('#consumption-created-at').val() === item.created_at &&
+
+                    if(stringDateEqualDate(item.created_at, $('#consumption-created-at').val()) &&
                         item.name.toLowerCase().includes($('#search').val().toLowerCase())){
-                        
+                           
                         $('tbody').append('<tr>\
                             <td class="align-middle">'+
                                 item.name
@@ -193,6 +204,7 @@ $(document).ready(function () {
     };
 
     /*** END Handle Fetch */
+
 });
 </script>
 @endpush
