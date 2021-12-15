@@ -17,6 +17,7 @@ class Institution extends Model
         'meal_afternoon_demand',
         'meal_night_demand',
         'phone',
+        'students'
     ];
 
     public function address()

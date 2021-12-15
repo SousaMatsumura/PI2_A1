@@ -19,3 +19,10 @@
         <span>Cadastrar Cardápio do Dia</span>
     </a>
 </li>
+
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('school.institution.edit') }}">
+        <i class="fas fa-fw fa-edit"></i>
+        <span>Cadastro da Escola</span>
+    </a>
+</li>
