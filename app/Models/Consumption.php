@@ -16,6 +16,13 @@ class Consumption extends Model
         'created_at'
     ];
 
+    public function getAmountConsumedAttribute()
+    {
+        $amount = $this->attributes['amount_consumed'];
+
+        return $amount <= 9 ? '0'.$amount : $amount;
+    }
+
     public function scopeGroupByFood($query)
     {
         $query->selectRaw('consumptions.created_at, foods.id as id, foods.name as food, foods.unit as unit, sum(consumptions.amount_consumed) as amount_consumed')

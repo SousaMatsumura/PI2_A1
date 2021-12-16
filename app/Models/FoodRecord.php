@@ -16,6 +16,13 @@ class FoodRecord extends Model
         'created_at'
     ];
 
+    public function getAmountAttribute()
+    {
+        $amount = $this->attributes['amount'];
+
+        return $amount <= 9 ? '0'.$amount : $amount;
+    }
+
     public function scopeGroupByFood($query)
     {
         return $query->selectRaw(

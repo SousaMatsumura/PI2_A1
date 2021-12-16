@@ -1,5 +1,5 @@
 <?php 
-// 'breakfast', 'lunch', 'afternoon_snack', 'dinner
+
 return [
     'food_units' => [
         ['key' => 'KG', 'label' => 'Kilo'],

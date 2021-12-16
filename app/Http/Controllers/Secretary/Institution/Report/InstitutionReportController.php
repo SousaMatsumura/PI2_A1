@@ -6,10 +6,35 @@ use App\Http\Controllers\Controller;
 use App\Models\{FoodRecord, Institution};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
 
 class InstitutionReportController extends Controller
 {
+
+    public function create(Institution $institution, Request $request)
+    {
+        $data = [];
+        $data['institution'] = $institution;
+
+        if($request->has('inicio') && $request->has('final')) {
+
+            $begin = Carbon::createFromFormat('d/m/Y', $request->inicio);
+            $end = Carbon::createFromFormat('d/m/Y', $request->final);
+
+            $data['foodRecords'] = $institution->foodRecords()->whereBetween('created_at', [$begin, $end])->get();
+            $data['consumptions'] = $institution->consumptions()->whereBetween('created_at', [$begin, $end])->get();
+            $data['menus'] = $institution->menus()->whereBetween('created_at', [$begin, $end])->get();
+
+        }
+        
+        return view('secretary.institutions.report.create', $data);
+    }
+
+    public function store()
+    {
+
+    }
+
     public function index(Institution $institution, Request $request)
     {
         if(!isset($request->begin)){ $request->begin = Carbon::now()->format('d/m/Y');}

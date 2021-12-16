@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Relatório da '.$institution->name)
+@section('title', $institution->name)
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}">

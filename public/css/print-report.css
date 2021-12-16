@@ -31,4 +31,17 @@
     .background-white{
         background-color: white !important;
     }
+
+    .btn {
+        display: none !important;
+    }
+
+    .form-control {
+        border: none;
+        color: #000 !important;
+    }
+
+    .fa {
+        display: none;
+    }
 }

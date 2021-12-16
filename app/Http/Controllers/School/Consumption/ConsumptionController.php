@@ -47,16 +47,14 @@ class ConsumptionController extends Controller
         
         foreach($request->foods as $foodId => $value) {
             
-            if($value['amount_consumed']) {
-
-                DB::beginTransaction();
+            DB::beginTransaction();
 
                 try {
                     
                     Auth::user()->institution->consumptions()->create([
                         'created_at' => $createdAt,
                         'food_id' => $foodId,
-                        'amount_consumed' => $value['amount_consumed']
+                        'amount_consumed' => $value['amount_consumed'] ?? 0
                     ]);
 
                     DB::commit();
@@ -68,8 +66,6 @@ class ConsumptionController extends Controller
                     return $this->redirectBackWithDangerAlert('Não foi possível concluir a operação!'.$exception->getMessage());
 
                 }
-
-            }
             
         }
         
