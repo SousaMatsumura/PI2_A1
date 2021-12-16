@@ -21,9 +21,9 @@ class InstitutionReportController extends Controller
             $begin = Carbon::createFromFormat('d/m/Y', $request->inicio);
             $end = Carbon::createFromFormat('d/m/Y', $request->final);
 
-            $data['foodRecords'] = $institution->foodRecords()->whereBetween('created_at', [$begin, $end])->get();
-            $data['consumptions'] = $institution->consumptions()->whereBetween('created_at', [$begin, $end])->get();
-            $data['menus'] = $institution->menus()->whereBetween('created_at', [$begin, $end])->get();
+            $data['foodRecords'] = $institution->foodRecords()->whereBetween('created_at', [$begin, $end])->orderBy('created_at')->get();
+            $data['consumptions'] = $institution->consumptions()->whereBetween('created_at', [$begin, $end])->orderBy('created_at')->get();
+            $data['menus'] = $institution->menus()->whereBetween('created_at', [$begin, $end])->orderBy('created_at')->get();
 
         }
         
